@@ -1,0 +1,80 @@
+                              =====First Integral Method======                         
+Equations are written in MAPLE language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: conjugate(u(t,x))^2*u(t,x)^3+2*u(t,x)*diff(conjugate(u(t,x))*u(t,x),x$1)+I*diff(u(t,x),t$1)+diff(u(t,x),x$2) = 0;
+Real part of Diff. Equ.: U(xi)^5+k_1^2*diff(U(xi),xi$2)-U(xi)*p_0+4*U(xi)^2*k_1*diff(U(xi),xi$1)-U(xi)*p_1^2 = 0;
+Imaginary part of Diff. Equ.: k_0*diff(U(xi),xi$1)+2*k_1*diff(U(xi),xi$1)*p_1 = 0;
+Imaginary part of Diff. Equ. is integrable.
+After integration, Imaginary part: 2*U(xi)*k_1*p_1+k_0*U(xi) = 0;
+We derive solutions of real part of Diff. Equ. with the condition:
+ k_0 = -2*k_1*p_1;
+u = U(xi)*exp(I*(t*p_0+x*p_1)),
+where xi = k_1*x-2*k_1*t*p_1;
+The value of N is: 1;
+
+****************************************************************************************************
+
+-a_1*X_^5+a_1*X_*p_0+a_1*X_*p_1^2+Y_*Diff(a_0,X_,1)*k_1^2+Y_^2*k_1^2*Diff(a_1,X_,1) = k_1^2*g_*a_0+Y_^2*a_1*k_1^2*h_+Y_*a_1*k_1^2*g_+Y_*k_1^2*a_0*h_+4*Y_*a_1*X_^2*k_1
+Comparing the coefficients of Y_^i (i =2 .., 0) in both sides, we have
+
+k_1^2*Diff(a_1,X_,1) = a_1*k_1^2*h_,
+Diff(a_0,X_,1)*k_1^2 = 4*a_1*X_^2*k_1+k_1^2*a_0*h_+a_1*k_1^2*g_,
+-a_1*X_^5+a_1*X_*p_0+a_1*X_*p_1^2 = k_1^2*g_*a_0,
+assuming a_1 = 1, in first equation, we get h_ = 0;
+Balancing degrees of X_ we get, degrees of (a_0, g_) = (3, 2)
+
+                                //////////Degrees of (a_0, g_) = (3, 2)//////////
+                 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+hence a_0 = a_00+X_*a_01+X_^2*a_02+X_^3*a_03,
+      g_ = g_0+g_2*X_^2+X_*g_1;
+Substituting a_1,.. a_0, g_ into all equation and setting all the coefficients of powers of  X_ to zero,
+Y_^0X_^0: -a_00*g_0*k_1^2 = 0,
+Y_^0X_^1: -g_0*k_1^2*a_01-a_00*k_1^2*g_1+p_1^2+p_0 = 0,
+Y_^0X_^2: -k_1^2*a_01*g_1-g_0*k_1^2*a_02-a_00*g_2*k_1^2 = 0,
+Y_^0X_^3: -k_1^2*g_1*a_02-g_0*k_1^2*a_03-g_2*k_1^2*a_01 = 0,
+Y_^0X_^4: -k_1^2*g_1*a_03-g_2*k_1^2*a_02 = 0,
+Y_^0X_^5: -1-g_2*k_1^2*a_03 = 0,
+Y_^1X_^0: -g_0*k_1^2+k_1^2*a_01 = 0,
+Y_^1X_^1: -k_1^2*g_1+2*k_1^2*a_02 = 0,
+Y_^1X_^2: -4*k_1-g_2*k_1^2+3*k_1^2*a_03 = 0,
+Y_^1X_^3: 0 = 0,
+Y_^1X_^4: 0 = 0,
+Y_^1X_^5: 0 = 0,
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {k_1,p_0,p_1,a_00,a_01,a_02,a_03,g_0,g_1,g_2}->
+
+{a_02=0,a_00=0,g_1=0,p_0=(g_0+p_1*a_03)*(g_0-p_1*a_03)*a_03^(-2),g_2=-a_03,k_1=a_03^(-1),a_01=g_0}
+U(xi)^3*a_03+diff(U(xi),xi$1)+U(xi)*g_0 = 0,
+solution(s) of input Diff. Equ. is (are)=>
+u = exp(I*(g_0+p_1*a_03)*t*(g_0-p_1*a_03)*a_03^(-2)+I*x*p_1)*sqrt(-g_0*(1+sinh(-C_*g_0-2*g_0*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*a_03+cosh(-C_*g_0-2*g_0*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*a_03)^(-1)*(cosh(-C_*g_0-2*g_0*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))+sinh(-C_*g_0-2*g_0*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))));
+u = (exp(2*g_0*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*C_-g_0^(-1)*a_03)^(-1/2)*exp(I*(g_0+p_1*a_03)*t*(g_0-p_1*a_03)*a_03^(-2)+I*x*p_1);
+u = exp(I*(g_0+p_1*a_03)*t*(g_0-p_1*a_03)*a_03^(-2)+I*x*p_1)*sqrt(-1/2*g_0*tanh(C_-g_0*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*a_03^(-1)-1/2*g_0*a_03^(-1));
+u = exp(I*(g_0+p_1*a_03)*t*(g_0-p_1*a_03)*a_03^(-2)+I*x*p_1)*sqrt(-1/2*g_0*a_03^(-1)-1/2*g_0*coth(C_-g_0*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*a_03^(-1));
+
+{a_02=0,a_00=0,g_1=0,p_0=(a_01-p_1*a_03)*(a_01+p_1*a_03)*a_03^(-2),g_2=-a_03,k_1=a_03^(-1),g_0=a_01}
+U(xi)^3*a_03+U(xi)*a_01+diff(U(xi),xi$1) = 0,
+solution(s) of input Diff. Equ. is (are)=>
+u = exp(I*(a_01-p_1*a_03)*t*(a_01+p_1*a_03)*a_03^(-2)+I*x*p_1)*sqrt(-a_01*(1+sinh(-C_*a_01-2*a_01*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*a_03+cosh(-C_*a_01-2*a_01*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*a_03)^(-1)*(cosh(-C_*a_01-2*a_01*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))+sinh(-C_*a_01-2*a_01*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))));
+u = exp(I*(a_01-p_1*a_03)*t*(a_01+p_1*a_03)*a_03^(-2)+I*x*p_1)*(-a_01^(-1)*a_03+C_*exp(2*a_01*(x*a_03^(-1)-2*t*p_1*a_03^(-1))))^(-1/2);
+u = exp(I*(a_01-p_1*a_03)*t*(a_01+p_1*a_03)*a_03^(-2)+I*x*p_1)*sqrt(-1/2*a_01*tanh(C_-a_01*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*a_03^(-1)-1/2*a_01*a_03^(-1));
+u = exp(I*(a_01-p_1*a_03)*t*(a_01+p_1*a_03)*a_03^(-2)+I*x*p_1)*sqrt(-1/2*a_01*a_03^(-1)-1/2*a_01*coth(C_-a_01*(x*a_03^(-1)-2*t*p_1*a_03^(-1)))*a_03^(-1));
+
+{a_02=0,p_0=-p_1^2,a_00=0,g_1=0,g_2=-a_03,a_01=0,k_1=a_03^(-1),g_0=0}
+U(xi)^3*a_03+diff(U(xi),xi$1) = 0,
+solution(s) of input Diff. Equ. is (are)=>
+u = exp(I*x*p_1-I*t*p_1^2)*(C_+2*(x*a_03^(-1)-2*t*p_1*a_03^(-1))*a_03)^(-1/2);
+
+{a_02=0,k_1=1/3*a_03^(-1),p_0=-p_1^2,a_00=0,g_2=-9*a_03,g_1=0,a_01=0,g_0=0}
+U(xi)^3*a_03+diff(U(xi),xi$1) = 0,
+solution(s) of input Diff. Equ. is (are)=>
+u = exp(I*x*p_1-I*t*p_1^2)*(C_+2/3*(x*a_03^(-1)-2*t*p_1*a_03^(-1))*a_03)^(-1/2);
+
+
+****************************************************************************************************
+****************************************************************************************************
+
+Time: 1.386 seconds

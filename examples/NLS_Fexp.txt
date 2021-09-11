@@ -1,0 +1,98 @@
+                              =====F-Expansion Method======                         
+Equations are written in MAPLE language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: conjugate(u(t,x))*u(t,x)^2*q-p*diff(u(t,x),x$2)+I*diff(u(t,x),t$1) = 0;
+Real part of Diff. Equ.: -U(xi)*p_0+q*U(xi)^3-p*diff(U(xi),xi$2)*k_1^2+p*p_1^2*U(xi) = 0;
+Imaginary part of Diff. Equ.: diff(U(xi),xi$1)*k_0-2*diff(U(xi),xi$1)*p*p_1*k_1 = 0;
+Imaginary part of Diff. Equ. is integrable.
+After integration, Imaginary part: k_0*U(xi)-2*p*p_1*U(xi)*k_1 = 0;
+We derive solutions of real part of Diff. Equ. with the condition:
+ p = 1/2*p_1^(-1)*k_0*k_1^(-1);
+u = U(xi)*exp(I*(t*p_0+p_1*x)),
+where xi = k_1*x+k_0*t;
+The value of N is: 1;
+U = a_0+F*a_1+b_1*F^(-1);
+The first-order nonlinear ODE: diff(F(xi),xi) = sqrt(A_0+F^2*A_2);
+
+****************************************************************************************************
+
+The system of algebraic equations are: 
+Diff(F,xi,1)^0F^0: -2*b_1*k_0*A_0*k_1^2+2*b_1^3*p_1*q*k_1 = 0;
+Diff(F,xi,1)^0F^1: 6*b_1^2*p_1*q*a_0*k_1 = 0;
+Diff(F,xi,1)^0F^2: 6*b_1*p_1*q*a_0^2*k_1-b_1*k_0*k_1^2*A_2+b_1*p_1^2*k_0+6*b_1^2*p_1*q*k_1*a_1-2*b_1*p_1*k_1*p_0 = 0;
+Diff(F,xi,1)^0F^3: 2*p_1*q*a_0^3*k_1+12*b_1*p_1*q*a_0*k_1*a_1+p_1^2*k_0*a_0-2*p_1*a_0*k_1*p_0 = 0;
+Diff(F,xi,1)^0F^4: p_1^2*k_0*a_1+6*b_1*p_1*q*k_1*a_1^2-k_0*k_1^2*A_2*a_1-2*p_1*k_1*a_1*p_0+6*p_1*q*a_0^2*k_1*a_1 = 0;
+Diff(F,xi,1)^0F^5: 6*p_1*q*a_0*k_1*a_1^2 = 0;
+Diff(F,xi,1)^0F^6: 2*p_1*q*k_1*a_1^3 = 0;
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {k_0,k_1,p_0,p_1,a_0,a_1,b_1}->
+
+{p_1=0,k_1=0}
+U = a_0+F*a_1+b_1*F^(-1),
+where F is the solution of
+diff(F(xi),xi) = sqrt(A_0+F^2*A_2);
+solution(s) of input Diff. Equ. is (are)=>
+u = 1/2*exp(I*t*p_0)*(2*a_0+4*b_1*(exp(2*k_0*t*sqrt(A_2))-exp(2*C_*sqrt(A_2))*A_0)^(-1)*exp(-(C_+k_0*t)*sqrt(A_2))^(-1)*sqrt(A_2)+(exp(2*k_0*t*sqrt(A_2))-exp(2*C_*sqrt(A_2))*A_0)*exp(-(C_+k_0*t)*sqrt(A_2))*A_2^(-1/2)*a_1);
+u = -1/2*(exp(-(C_+k_0*t)*sqrt(A_2))*A_2^(-1/2)*(exp(2*k_0*t*sqrt(A_2))*A_0-exp(2*C_*sqrt(A_2)))*a_1+4*b_1*exp(-(C_+k_0*t)*sqrt(A_2))^(-1)*sqrt(A_2)*(exp(2*k_0*t*sqrt(A_2))*A_0-exp(2*C_*sqrt(A_2)))^(-1)-2*a_0)*exp(I*t*p_0);
+u = exp(I*t*p_0)*(a_0+sqrt(-A_0*A_2)*A_2^(-1)*a_1*cosh(k_0*t*sqrt(A_2)+C_)+b_1*(-A_0*A_2)^(-1/2)*A_2*cosh(k_0*t*sqrt(A_2)+C_)^(-1));
+u = exp(I*t*p_0)*(a_0-sqrt(-A_0*A_2)*A_2^(-1)*a_1*cosh(k_0*t*sqrt(A_2)+C_)-b_1*(-A_0*A_2)^(-1/2)*A_2*cosh(k_0*t*sqrt(A_2)+C_)^(-1));
+u = exp(I*t*p_0)*(b_1*(A_0*A_2)^(-1/2)*sinh(k_0*t*sqrt(A_2)+C_)^(-1)*A_2+a_0+sqrt(A_0*A_2)*sinh(k_0*t*sqrt(A_2)+C_)*A_2^(-1)*a_1);
+u = -exp(I*t*p_0)*(b_1*(A_0*A_2)^(-1/2)*sinh(k_0*t*sqrt(A_2)+C_)^(-1)*A_2-a_0+sqrt(A_0*A_2)*sinh(k_0*t*sqrt(A_2)+C_)*A_2^(-1)*a_1);
+
+{b_1=0,a_1=0,a_0=0}
+solution(s) of input Diff. Equ. is (are)=>
+u = 0;
+
+{b_1=0,p_1=0,a_1=0}
+solution(s) of input Diff. Equ. is (are)=>
+u = exp(I*t*p_0)*a_0;
+
+{p_1=b_1^(-2)*k_0*q^(-1)*A_0*k_1,p_0=1/2*b_1^(-2)*(k_0^2*A_0^2-b_1^4*q^2*A_2)*q^(-1)*A_0^(-1),a_1=0,a_0=0}
+U = b_1*F^(-1),
+where F is the solution of
+diff(F(xi),xi) = sqrt(A_0+F^2*A_2);
+solution(s) of input Diff. Equ. is (are)=>
+u = 2*b_1*exp((1/2*I)*b_1^(-2)*(k_0^2*A_0^2-b_1^4*q^2*A_2)*q^(-1)*A_0^(-1)*t+I*b_1^(-2)*k_0*q^(-1)*A_0*k_1*x)*(exp(2*(k_1*x+k_0*t)*sqrt(A_2))-exp(2*C_*sqrt(A_2))*A_0)^(-1)*sqrt(A_2)*exp(-sqrt(A_2)*(k_1*x+C_+k_0*t))^(-1);
+u = 2*b_1*exp((1/2*I)*b_1^(-2)*(k_0^2*A_0^2-b_1^4*q^2*A_2)*q^(-1)*A_0^(-1)*t+I*b_1^(-2)*k_0*q^(-1)*A_0*k_1*x)*(exp(2*C_*sqrt(A_2))-exp(2*(k_1*x+k_0*t)*sqrt(A_2))*A_0)^(-1)*sqrt(A_2)*exp(-sqrt(A_2)*(k_1*x+C_+k_0*t))^(-1);
+u = b_1*exp((1/2*I)*b_1^(-2)*(k_0^2*A_0^2-b_1^4*q^2*A_2)*q^(-1)*A_0^(-1)*t+I*b_1^(-2)*k_0*q^(-1)*A_0*k_1*x)*cosh((k_1*x+k_0*t)*sqrt(A_2)+C_)^(-1)*(-A_0*A_2)^(-1/2)*A_2;
+u = -b_1*exp((1/2*I)*b_1^(-2)*(k_0^2*A_0^2-b_1^4*q^2*A_2)*q^(-1)*A_0^(-1)*t+I*b_1^(-2)*k_0*q^(-1)*A_0*k_1*x)*cosh((k_1*x+k_0*t)*sqrt(A_2)+C_)^(-1)*(-A_0*A_2)^(-1/2)*A_2;
+u = b_1*sinh((k_1*x+k_0*t)*sqrt(A_2)+C_)^(-1)*exp((1/2*I)*b_1^(-2)*(k_0^2*A_0^2-b_1^4*q^2*A_2)*q^(-1)*A_0^(-1)*t+I*b_1^(-2)*k_0*q^(-1)*A_0*k_1*x)*(A_0*A_2)^(-1/2)*A_2;
+u = -b_1*sinh((k_1*x+k_0*t)*sqrt(A_2)+C_)^(-1)*exp((1/2*I)*b_1^(-2)*(k_0^2*A_0^2-b_1^4*q^2*A_2)*q^(-1)*A_0^(-1)*t+I*b_1^(-2)*k_0*q^(-1)*A_0*k_1*x)*(A_0*A_2)^(-1/2)*A_2;
+
+{p_1=0,k_0=0}
+U = a_0+F*a_1+b_1*F^(-1),
+where F is the solution of
+diff(F(xi),xi) = sqrt(A_0+F^2*A_2);
+solution(s) of input Diff. Equ. is (are)=>
+u = -1/2*exp(I*t*p_0)*(exp(-(k_1*x+C_)*sqrt(A_2))*A_2^(-1/2)*a_1*(exp(2*C_*sqrt(A_2))*A_0-exp(2*k_1*sqrt(A_2)*x))-2*a_0+4*b_1*exp(-(k_1*x+C_)*sqrt(A_2))^(-1)*sqrt(A_2)*(exp(2*C_*sqrt(A_2))*A_0-exp(2*k_1*sqrt(A_2)*x))^(-1));
+u = -1/2*(4*b_1*(A_0*exp(2*k_1*sqrt(A_2)*x)-exp(2*C_*sqrt(A_2)))^(-1)*exp(-(k_1*x+C_)*sqrt(A_2))^(-1)*sqrt(A_2)-2*a_0+(A_0*exp(2*k_1*sqrt(A_2)*x)-exp(2*C_*sqrt(A_2)))*exp(-(k_1*x+C_)*sqrt(A_2))*A_2^(-1/2)*a_1)*exp(I*t*p_0);
+u = exp(I*t*p_0)*(a_0+b_1*(-A_0*A_2)^(-1/2)*cosh(C_+k_1*sqrt(A_2)*x)^(-1)*A_2+sqrt(-A_0*A_2)*cosh(C_+k_1*sqrt(A_2)*x)*A_2^(-1)*a_1);
+u = exp(I*t*p_0)*(a_0-b_1*(-A_0*A_2)^(-1/2)*cosh(C_+k_1*sqrt(A_2)*x)^(-1)*A_2-sqrt(-A_0*A_2)*cosh(C_+k_1*sqrt(A_2)*x)*A_2^(-1)*a_1);
+u = exp(I*t*p_0)*(a_0+sqrt(A_0*A_2)*A_2^(-1)*a_1*sinh(C_+k_1*sqrt(A_2)*x)+b_1*(A_0*A_2)^(-1/2)*A_2*sinh(C_+k_1*sqrt(A_2)*x)^(-1));
+u = exp(I*t*p_0)*(a_0-sqrt(A_0*A_2)*A_2^(-1)*a_1*sinh(C_+k_1*sqrt(A_2)*x)-b_1*(A_0*A_2)^(-1/2)*A_2*sinh(C_+k_1*sqrt(A_2)*x)^(-1));
+
+{b_1=0,p_1=-2*k_0^(-1)*(q*a_0^2-p_0)*k_1,a_1=0}
+solution(s) of input Diff. Equ. is (are)=>
+u = a_0*exp(-(2*I)*k_0^(-1)*(q*a_0^2-p_0)*k_1*x+I*t*p_0);
+
+{k_0=0,k_1=0}
+U = a_0+F*a_1+b_1*F^(-1),
+where F is the solution of
+diff(F(xi),xi) = sqrt(A_0+F^2*A_2);
+solution(s) of input Diff. Equ. is (are)=>
+u = -1/2*(4*b_1*(-1+exp(2*C_*sqrt(A_2))*A_0)^(-1)*sqrt(A_2)*exp(-C_*sqrt(A_2))^(-1)-2*a_0+(-1+exp(2*C_*sqrt(A_2))*A_0)*A_2^(-1/2)*a_1*exp(-C_*sqrt(A_2)))*exp(I*t*p_0+I*p_1*x);
+u = 1/2*(4*b_1*(exp(2*C_*sqrt(A_2))-A_0)^(-1)*sqrt(A_2)*exp(-C_*sqrt(A_2))^(-1)+2*a_0+(exp(2*C_*sqrt(A_2))-A_0)*A_2^(-1/2)*a_1*exp(-C_*sqrt(A_2)))*exp(I*t*p_0+I*p_1*x);
+u = (a_0+b_1*cosh(C_)^(-1)*(-A_0*A_2)^(-1/2)*A_2+cosh(C_)*sqrt(-A_0*A_2)*A_2^(-1)*a_1)*exp(I*t*p_0+I*p_1*x);
+u = (a_0-b_1*cosh(C_)^(-1)*(-A_0*A_2)^(-1/2)*A_2-cosh(C_)*sqrt(-A_0*A_2)*A_2^(-1)*a_1)*exp(I*t*p_0+I*p_1*x);
+u = (a_0+b_1*sinh(C_)^(-1)*(A_0*A_2)^(-1/2)*A_2+sinh(C_)*sqrt(A_0*A_2)*A_2^(-1)*a_1)*exp(I*t*p_0+I*p_1*x);
+u = (a_0-b_1*sinh(C_)^(-1)*(A_0*A_2)^(-1/2)*A_2-sinh(C_)*sqrt(A_0*A_2)*A_2^(-1)*a_1)*exp(I*t*p_0+I*p_1*x);
+
+
+****************************************************************************************************
+****************************************************************************************************
+
+Time: 0.76 seconds

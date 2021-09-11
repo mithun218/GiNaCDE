@@ -1,0 +1,61 @@
+                              =====First Integral Method======                         
+Equations are written in MATHEMATICA language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: u[t]^3*c+u[t]*b+D[u[t],{t,2}] = 0;
+The value of N is: 1;
+
+****************************************************************************************************
+
+-X_^3*c*a_1+Y_^2*Diff[a_1,X_,1]-X_*a_1*b+Y_*Diff[a_0,X_,1] = a_1*h_*Y_^2+a_0*h_*Y_+a_0*g_+g_*a_1*Y_
+Comparing the coefficients of Y_^i (i =2 .., 0) in both sides, we have
+
+Diff[a_1,X_,1] = a_1*h_,
+Diff[a_0,X_,1] = g_*a_1+a_0*h_,
+-X_^3*c*a_1-X_*a_1*b = a_0*g_,
+assuming a_1 = 1, in first equation, we get h_ = 0;
+Balancing degrees of X_ we get, degrees of (a_0, g_) = (2, 1)
+
+                                //////////Degrees of (a_0, g_) = (2, 1)//////////
+                 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+hence a_0 = X_^2*a_02+a_00+X_*a_01,
+      g_ = X_*g_1+g_0;
+Substituting a_1,.. a_0, g_ into all equation and setting all the coefficients of powers of  X_ to zero,
+Y_^0X_^0: -g_0*a_00 = 0,
+Y_^0X_^1: -g_1*a_00-a_01*g_0-b = 0,
+Y_^0X_^2: -a_02*g_0-g_1*a_01 = 0,
+Y_^0X_^3: -c-g_1*a_02 = 0,
+Y_^1X_^0: a_01-g_0 = 0,
+Y_^1X_^1: -g_1+2*a_02 = 0,
+Y_^1X_^2: 0 = 0,
+Y_^1X_^3: 0 = 0,
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {b,c,a_00,a_01,a_02,g_0,g_1}->
+
+{g_1=-a_00^(-1)*b,a_02=-1/2*a_00^(-1)*b,a_01=0,c=-1/2*a_00^(-2)*b^2,g_0=0}
+D[u[t],{t,1}]-1/2*u[t]^2*a_00^(-1)*b+a_00 = 0,
+Solution[s] of input Diff. Equ. is (are)=>
+u = -Sqrt[2]*Tanh[C_+1/2*t*Sqrt[2]*Sqrt[b]]*a_00*b^(-1/2);
+u = -Sqrt[2]*Coth[C_+1/2*t*Sqrt[2]*Sqrt[b]]*a_00*b^(-1/2);
+u = -Sqrt[2]*Tanh[C_+1/2*t*Sqrt[2]*Sqrt[b]]^(-1)*a_00*b^(-1/2);
+u = -Sqrt[2]*Coth[C_+1/2*t*Sqrt[2]*Sqrt[b]]^(-1)*a_00*b^(-1/2);
+u = 2*(2*C_*Cosh[C_+1/2*t*Sqrt[2]*Sqrt[b]]-Sqrt[2]*a_00^(-1)*Sinh[C_+1/2*t*Sqrt[2]*Sqrt[b]]*Sqrt[b])^(-1)*Sech[C_+1/2*t*Sqrt[2]*Sqrt[b]]-Sqrt[2]*Tanh[C_+1/2*t*Sqrt[2]*Sqrt[b]]*a_00*b^(-1/2);
+
+{c=0,a_02=0,g_1=0,a_00=0,a_01=g_0,b=-g_0^2}
+D[u[t],{t,1}]+u[t]*g_0 = 0,
+Solution[s] of input Diff. Equ. is (are)=>
+u = C_*Exp[-t*g_0];
+
+{c=-2*a_02^2,a_01=0,g_1=2*a_02,b=0,a_00=0,g_0=0}
+D[u[t],{t,1}]+u[t]^2*a_02 = 0,
+Solution[s] of input Diff. Equ. is (are)=>
+u = (t*a_02+C_)^(-1);
+
+
+****************************************************************************************************
+****************************************************************************************************
+
+Time: 0.146 seconds

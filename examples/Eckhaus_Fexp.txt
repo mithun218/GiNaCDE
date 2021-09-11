@@ -1,0 +1,61 @@
+                              =====F-Expansion Method======                         
+Equations are written in MAPLE language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: conjugate(u(t,x))^2*u(t,x)^3+2*u(t,x)*diff(conjugate(u(t,x))*u(t,x),x$1)+I*diff(u(t,x),t$1)+diff(u(t,x),x$2) = 0;
+Real part of Diff. Equ.: U(xi)^5+k_1^2*diff(U(xi),xi$2)-U(xi)*p_0+4*U(xi)^2*k_1*diff(U(xi),xi$1)-U(xi)*p_1^2 = 0;
+Imaginary part of Diff. Equ.: k_0*diff(U(xi),xi$1)+2*k_1*diff(U(xi),xi$1)*p_1 = 0;
+Imaginary part of Diff. Equ. is integrable.
+After integration, Imaginary part: 2*U(xi)*k_1*p_1+k_0*U(xi) = 0;
+We derive solutions of real part of Diff. Equ. with the condition:
+ k_0 = -2*k_1*p_1;
+u = U(xi)*exp(I*(t*p_0+x*p_1)),
+where xi = k_1*x-2*k_1*t*p_1;
+The value of N is: 1/2;
+U = b_1*F^(-1/2)+a_1*sqrt(F)+a_0;
+The first-order nonlinear ODE: diff(F(xi),xi) = sqrt(A_0+F*A_1);
+
+****************************************************************************************************
+
+The system of algebraic equations are: 
+Diff(F,xi,1)^0F^(0/2): 3*A_0*k_1^2*b_1+4*b_1^5 = 0;
+Diff(F,xi,1)^1F^(0/2): -8*k_1*b_1^3 = 0;
+Diff(F,xi,1)^0F^(1/2): 20*b_1^4*a_0 = 0;
+Diff(F,xi,1)^1F^(1/2): -16*k_1*b_1^2*a_0 = 0;
+Diff(F,xi,1)^0F^(2/2): 40*b_1^3*a_0^2+20*a_1*b_1^4+2*k_1^2*b_1*A_1-a_1*A_0*k_1^2 = 0;
+Diff(F,xi,1)^1F^(2/2): -8*k_1*b_1*a_0^2-8*a_1*k_1*b_1^2 = 0;
+Diff(F,xi,1)^0F^(3/2): 40*b_1^2*a_0^3+80*a_1*b_1^3*a_0 = 0;
+Diff(F,xi,1)^1F^(3/2): 0 = 0;
+Diff(F,xi,1)^0F^(4/2): -4*b_1*p_0+40*a_1^2*b_1^3+20*b_1*a_0^4-4*b_1*p_1^2+120*a_1*b_1^2*a_0^2 = 0;
+Diff(F,xi,1)^1F^(4/2): 8*a_1^2*k_1*b_1+8*a_1*k_1*a_0^2 = 0;
+Diff(F,xi,1)^0F^(5/2): 80*a_1*b_1*a_0^3+120*a_1^2*b_1^2*a_0-4*a_0*p_1^2-4*p_0*a_0+4*a_0^5 = 0;
+Diff(F,xi,1)^1F^(5/2): 16*a_1^2*k_1*a_0 = 0;
+Diff(F,xi,1)^0F^(6/2): 20*a_1*a_0^4+40*a_1^3*b_1^2-4*a_1*p_0-4*a_1*p_1^2+120*a_1^2*b_1*a_0^2 = 0;
+Diff(F,xi,1)^1F^(6/2): 8*a_1^3*k_1 = 0;
+Diff(F,xi,1)^0F^(7/2): 80*a_1^3*b_1*a_0+40*a_1^2*a_0^3 = 0;
+Diff(F,xi,1)^1F^(7/2): 0 = 0;
+Diff(F,xi,1)^0F^(8/2): 40*a_1^3*a_0^2+20*a_1^4*b_1 = 0;
+Diff(F,xi,1)^1F^(8/2): 0 = 0;
+Diff(F,xi,1)^0F^(9/2): 20*a_1^4*a_0 = 0;
+Diff(F,xi,1)^1F^(9/2): 0 = 0;
+Diff(F,xi,1)^0F^(10/2): 4*a_1^5 = 0;
+Diff(F,xi,1)^1F^(10/2): 0 = 0;
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {k_1,p_0,p_1,a_0,a_1,b_1}->
+
+{a_1=0,b_1=0,p_0=(a_0^2-p_1)*(a_0^2+p_1)}
+solution(s) of input Diff. Equ. is (are)=>
+u = exp(I*x*p_1+I*(a_0^2-p_1)*t*(a_0^2+p_1))*a_0;
+
+{a_1=0,b_1=0,a_0=0}
+solution(s) of input Diff. Equ. is (are)=>
+u = 0;
+
+
+****************************************************************************************************
+****************************************************************************************************
+
+Time: 0.223 seconds

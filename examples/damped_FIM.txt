@@ -1,0 +1,48 @@
+                              =====First Integral Method======                         
+Equations are written in MAPLE language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: diff(u(x),x$2)+diff(u(x),x$1)+u(x)*w^2 = 0;
+The value of N is: 1;
+
+****************************************************************************************************
+
+-a_1*w^2*X_+Y_^2*Diff(a_1,X_,1)+Y_*Diff(a_0,X_,1) = a_1*Y_+g_*a_0+h_*Y_*a_0+a_1*h_*Y_^2+a_1*g_*Y_
+Comparing the coefficients of Y_^i (i =2 .., 0) in both sides, we have
+
+Diff(a_1,X_,1) = a_1*h_,
+Diff(a_0,X_,1) = a_1+h_*a_0+a_1*g_,
+-a_1*w^2*X_ = g_*a_0,
+assuming a_1 = 1, in first equation, we get h_ = 0;
+Balancing degrees of X_ we get, degrees of (a_0, g_) = (1, 0)
+
+                                //////////Degrees of (a_0, g_) = (1, 0)//////////
+                 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+hence a_0 = a_00+a_01*X_,
+      g_ = g_0;
+Substituting a_1,.. a_0, g_ into all equation and setting all the coefficients of powers of  X_ to zero,
+Y_^0X_^0: -g_0*a_00 = 0,
+Y_^0X_^1: -w^2-a_01*g_0 = 0,
+Y_^1X_^0: -1+a_01-g_0 = 0,
+Y_^1X_^1: 0 = 0,
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {a_00,a_01,g_0}->
+
+{a_01=-2*(-1+sqrt(1-2*w)*sqrt(1+2*w))^(-1)*w^2,a_00=0,g_0=-1/2+1/2*sqrt(1-2*w)*sqrt(1+2*w)}
+diff(u(x),x$1)-2*u(x)*(-1+sqrt(1-2*w)*sqrt(1+2*w))^(-1)*w^2 = 0,
+solution(s) of input Diff. Equ. is (are)=>
+u = exp(2*(-1+sqrt(1-2*w)*sqrt(1+2*w))^(-1)*x*w^2)*C_;
+
+{a_00=0,a_01=2*(1+sqrt(1-2*w)*sqrt(1+2*w))^(-1)*w^2,g_0=-1/2-1/2*sqrt(1-2*w)*sqrt(1+2*w)}
+diff(u(x),x$1)+2*u(x)*(1+sqrt(1-2*w)*sqrt(1+2*w))^(-1)*w^2 = 0,
+solution(s) of input Diff. Equ. is (are)=>
+u = exp(-2*(1+sqrt(1-2*w)*sqrt(1+2*w))^(-1)*x*w^2)*C_;
+
+
+****************************************************************************************************
+****************************************************************************************************
+
+Time: 0.087 seconds

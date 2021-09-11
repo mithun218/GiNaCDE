@@ -1,0 +1,8 @@
+                              =====Modified F-Expansion Method======                         
+Equations are written in MAPLE language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: -diff(u(t,x),x$4)+diff(u(t,x),t$2)-3*diff(u(t,x)^2,x$2)-diff(u(t,x),x$2) = 0;
+The Diff. Equ. is integrable;
+ic_2: 0
+Evaluation stop: independent variable present in diff. Equ.;
