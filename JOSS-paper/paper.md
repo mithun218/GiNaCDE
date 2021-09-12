@@ -47,7 +47,7 @@ The F-expansion method was first proposed by Zhou et al. [@fexpn024].
 The first integral method was first introduced by Feng [@fim0] in solving the Compound Burgers-KdV Equation, which is based on the ring theory of commutative algebra.
 Later, these methods have been further improved in a number of research works. Following some research works [@fexpn024][@fexpn024_1][@fexpn123][@0246][@234][@modfexpn][@fim0][@mirza][@complexTwt1], GiNaCDE intends to gather and unify the possible combinations of the different revised versions of these methods for improvements of solution procedures. In this context, on the base of some research works [@fexpn024][@fexpn024_1][@fexpn123][@0246][@234][@modfexpn][@fim0][@mirza][@complexTwt1] of these methods, we have presented the high-performance algorithms of F-expansion, modified F-expansion and first integral methods in the documentation[^1] file. The software uses these algorithms to solve the NLPDEs and NLODEs.
 
-[^1]: https://github.com/mithun218/GiNaCDE/doc/documentation.pdf
+[^1]: https://github.com/mithun218/GiNaCDE/blob/master/doc/documentation.pdf
 
 
 
