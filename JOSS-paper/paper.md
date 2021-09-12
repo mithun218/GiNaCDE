@@ -39,6 +39,8 @@ To the best of our knowledge, the computer packages implementing F-expansion and
 Keeping in mind all the above points of view, we have been motivated to develop a free and open-source computer package or C++ library called GiNaCDE, which implements the F-expansion and first integral methods. The symbolic manipulations of GiNaCDE depend only on GiNaC [@ginac]. There are several advantages to use GiNaC over other CAS. GiNaC is a free and open-source pure C++ library. It can accept C++ programming language, a general-purpose object-oriented programming (OOP) language, and it is fast like commercially available computer algebra systems.
 Besides the library version of GiNaCDE, we have also developed a GUI version of GiNaCDE called GiNaCDE GUI, which facilitates users to solve NLPDEs automatically without writing programming and compilation each time. This GUI version guides us in each step to obtain the output results.
 
+We have successfully solved more than 30 NLPDEs, such as Eckhaus equation, Seventh-order SawadaKotara equations, Fifth-order Generalized KdV equation, Perturbed NLS Equation with Kerr Law Nonlinearity, KudryashovSinelshchikov Equation, etc., using the GiNaCDE library, and it gives results not more than 100 seconds.
+
 # Algorithms
 
 The F-expansion method was first proposed by Zhou et al. [@fexpn024].
@@ -47,8 +49,6 @@ Later, these methods have been further improved in a number of research works. F
 
 [^1]: https://github.com/mithun218/GiNaCDE/doc/documentation.pdf
 
-# Example
-We have successfully solved more than 25 NLPDEs, such as Eckhaus equation, Seventh-order SawadaKotara equations, Fifth-order Generalized KdV equation, Perturbed NLS Equation with Kerr Law Nonlinearity, KudryashovSinelshchikov Equation, etc., using the GiNaCDE library, and it gives results not more than 100 seconds.
 
 
 # References
