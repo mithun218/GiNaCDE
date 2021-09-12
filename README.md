@@ -66,7 +66,7 @@ The [`test`](test/) folder contains tests. These tests can be executed using the
 ```
     $ ctest
 ```
-These automated tests verify the functionality of the software. 
+These automated tests verify the functionalities of the software. 
 ## Execution
 GiNaCDE library can be executed in C++ code with GNU compiler collection, `GCC >= 4.9`. To run `GiNaCDE GUI`, 
 `gtools` just click on `GiNaCDE_gui.exe`, `gtools.exe` files respectively. Then GiNaCDE GUI is executed in a GUI framework, 
