@@ -66,7 +66,7 @@ The [`test`](test/) folder contains tests. These tests can be executed using the
 ```
     $ ctest
 ```
-
+These automated tests verify the functionality of the software. 
 ## Execution
 GiNaCDE library can be executed in C++ code with GNU compiler collection, `GCC >= 4.9`. To run `GiNaCDE GUI`, 
 `gtools` just click on `GiNaCDE_gui.exe`, `gtools.exe` files respectively. Then GiNaCDE GUI is executed in a GUI framework, 
@@ -81,7 +81,7 @@ Besides this, the solutions of the NLPDE are collected by a programming variable
 
 ## Examples
 The [`examples`](examples/) folder contains all the examples which solve some NLPDEs, such as, Eckhaus equation, Seventh-order SawadaKotara equations, Fifth-order Generalized KdV equation, Perturbed NLS Equation with Kerr Law Nonlinearity, KudryashovSinelshchikov Equation, etc.
-Output text files after executing each example have been provided. 
+We have provided output text files after executing each example. 
     
 ### Additional notes
 Please note that one can obtain different results in output files compared to those provided by us in the [`examples`](examples/) folder for each example. 
