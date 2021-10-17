@@ -311,7 +311,7 @@ ex expandinv::operator()(const ex& e)
 /**doing factors of fractional power bases, function arguments. **/
 ex arguSimplify::operator()(const ex &e)
 {
-    return (Simplify(Factor(e, factor_all))).map(*this);
+    return (Simplify(Factor(e))).map(*this);
 }
 
 /** doing number simplify. **/
@@ -394,25 +394,25 @@ ex powBaseSubsLessThanDegLvl_1::operator()(const ex& _e)
 /** It is level 1 implementation of fracPowBasSubs. **/
 ex fracPowBasSubsLvl_1::operator()(const ex& e)
 {
-    if(is_a<power>(e)&&Denom(e.op(1))!=_ex1)
+    if(is_a<power>(e)&&denom(e.op(1))!=_ex1)
     {
         numer_denomClt = (e.op(0)).numer_denom();
 
         tem = Simplify(collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(0)))))/
                        collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(1))))));
 
-        if((!baseCltLvl_1.empty() && baseCltLvl_1.find(pow(tem,pow(Denom(e.op(1)),_ex_1)))==baseCltLvl_1.end())
+        if((!baseCltLvl_1.empty() && baseCltLvl_1.find(pow(tem,pow(denom(e.op(1)),_ex_1)))==baseCltLvl_1.end())
             || baseCltLvl_1.empty())
         {
             j=j+1;
 
             str = "genSymb1_" + to_string(j);
             expr = reader(str);
-            baseCltLvl_1[pow(tem,pow(Denom(e.op(1)),_ex_1))]=expr;
+            baseCltLvl_1[pow(tem,pow(denom(e.op(1)),_ex_1))]=expr;
         }
 
-        if(!baseCltLvl_1.empty() && baseCltLvl_1.find(pow(tem,pow(Denom(e.op(1)),_ex_1)))!=baseCltLvl_1.end())
-            return pow(baseCltLvl_1[pow(tem,pow(Denom(e.op(1)),_ex_1))],Numer(e.op(1)));
+        if(!baseCltLvl_1.empty() && baseCltLvl_1.find(pow(tem,pow(denom(e.op(1)),_ex_1)))!=baseCltLvl_1.end())
+            return pow(baseCltLvl_1[pow(tem,pow(denom(e.op(1)),_ex_1))],numer(e.op(1)));
     }
 
     return e.map(*this);
@@ -423,7 +423,7 @@ ex fracPowBasSubsLvl_1::operator()(const ex& e)
  * such as numeric, symbols, add container. This class has been used in Factor function before factoring.    **/
 ex fracPowBasSubsFactor::operator()(const ex& e)
 {
-    if(is_a<power>(e)&&Denom(e.op(1))!=_ex1)
+    if(is_a<power>(e)&&denom(e.op(1))!=_ex1)
     {
 
         numer_denomClt = (e.op(0)).numer_denom();
@@ -431,18 +431,18 @@ ex fracPowBasSubsFactor::operator()(const ex& e)
         tem = Simplify(collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(0)))))/
                        collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(1))))));
 
-        if((!baseClt.empty() && baseClt.find(pow(tem,pow(Denom(e.op(1)),_ex_1)))==baseClt.end())
+        if((!baseClt.empty() && baseClt.find(pow(tem,pow(denom(e.op(1)),_ex_1)))==baseClt.end())
             || baseClt.empty())
         {
             j=j+1;
 
             str = "genSymb1_" + to_string(j);
             expr = reader(str);
-            baseClt[pow(tem,pow(Denom(e.op(1)),_ex_1))]=expr;
+            baseClt[pow(tem,pow(denom(e.op(1)),_ex_1))]=expr;
         }
 
-        if(!baseClt.empty() && baseClt.find(pow(tem,pow(Denom(e.op(1)),_ex_1)))!=baseClt.end())
-            return pow(baseClt[pow(tem,pow(Denom(e.op(1)),_ex_1))],Numer(e.op(1)));
+        if(!baseClt.empty() && baseClt.find(pow(tem,pow(denom(e.op(1)),_ex_1)))!=baseClt.end())
+            return pow(baseClt[pow(tem,pow(denom(e.op(1)),_ex_1))],numer(e.op(1)));
     }
 
     return e.map(*this);
@@ -486,7 +486,7 @@ ex powBaseSubsLessThanDeg::operator()(const ex& _e)
 ex fracNumericPowBasSubs::operator()(const ex& e)
 {
     if(is_a<power>(e) && (is_a<numeric>(e.op(0))||is_a<symbol>(e.op(0)))&&
-        ((e.op(1)).info(info_flags::negative)||Denom(e.op(1))!=_ex1))
+        ((e.op(1)).info(info_flags::negative)||denom(e.op(1))!=_ex1))
     {
         if((!baseClt.empty() && baseClt.find(e.op(1))==baseClt.end())
             || baseClt.empty())
@@ -511,7 +511,7 @@ ex fracNumericPowBasSubs::operator()(const ex& e)
 /** replacing base of fractional power with generated symbols. This simplifies all fractional power with base expressions.  **/
 ex fracPowBasSubs::operator()(const ex& e)
 {
-    if(is_a<power>(e)&&Denom(e.op(1))!=_ex1)
+    if(is_a<power>(e)&&denom(e.op(1))!=_ex1)
     {
 
         numer_denomClt = (e.op(0)).numer_denom();
@@ -530,16 +530,16 @@ ex fracPowBasSubs::operator()(const ex& e)
                     for(int i = 0; i <=degree(tem,(*it).second); i++)
                     {
                         numer_denomClt = (tem.coeff((*it).second,i)).numer_denom();
-                        temtemexpr_ = temtemexpr_+ pow((*it).second,i)*Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify((numer_denomClt.op(0)),AlgSimp,false), factor_all))))/
-                                                                                        (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify((numer_denomClt.op(1)),AlgSimp,false), factor_all)))),AlgSimp,false);
+                        temtemexpr_ = temtemexpr_+ pow((*it).second,i)*Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify((numer_denomClt.op(0)),AlgSimp,false)))))/
+                                                                                        (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify((numer_denomClt.op(1)),AlgSimp,false))))),AlgSimp,false);
                     }
                     tem = temtemexpr_;
                 }
                 else
                 {
                     numer_denomClt = tem.numer_denom();
-                    tem = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),AlgSimp,false), factor_all))))/
-                                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),AlgSimp,false), factor_all)))),AlgSimp,false);
+                    tem = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),AlgSimp,false)))))/
+                                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),AlgSimp,false))))),AlgSimp,false);
                 }
             }
 
@@ -547,18 +547,18 @@ ex fracPowBasSubs::operator()(const ex& e)
             Lvl_1.set();
         }
 
-        if((!baseClt.empty() && baseClt.find(pow(tem,pow(Denom(e.op(1)),_ex_1)))==baseClt.end())
+        if((!baseClt.empty() && baseClt.find(pow(tem,pow(denom(e.op(1)),_ex_1)))==baseClt.end())
            || baseClt.empty())
         {
             j=j+1;
 
             str = "genSymb4_" + to_string(j);
             expr = reader(str);
-            baseClt[pow(tem,pow(Denom(e.op(1)),_ex_1))]=expr;
+            baseClt[pow(tem,pow(denom(e.op(1)),_ex_1))]=expr;
         }
 
-        if(!baseClt.empty() && baseClt.find(pow(tem,pow(Denom(e.op(1)),_ex_1)))!=baseClt.end())
-            return pow(baseClt[pow(tem,pow(Denom(e.op(1)),_ex_1))],Numer(e.op(1)));
+        if(!baseClt.empty() && baseClt.find(pow(tem,pow(denom(e.op(1)),_ex_1)))!=baseClt.end())
+            return pow(baseClt[pow(tem,pow(denom(e.op(1)),_ex_1))],numer(e.op(1)));
 
     }
 
@@ -637,8 +637,8 @@ ex simplify(const ex& expr_, int rules)
             temBaseClt = fracNumericPowBasSubsE.baseClt;
 
             numer_denomClt = temexpr_.numer_denom();
-            temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false), factor_all))))/
-                                    (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false), factor_all)))),rules,false);
+            temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false)))))/
+                                    (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false))))),rules,false);
             temexpr_ = Simplify(genSymbSubs(temexpr_,temBaseClt),rules,false);
         }
 
@@ -669,16 +669,16 @@ ex simplify(const ex& expr_, int rules)
                     for(int i = 0; i <=degree(temexpr_,(*it).second); i++)
                     {
                         numer_denomClt = (temexpr_.coeff((*it).second,i)).numer_denom();
-                        temtemexpr_ = temtemexpr_+ pow((*it).second,i)*Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify((numer_denomClt.op(0)),rules,false), factor_all))))/
-                                                                 (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify((numer_denomClt.op(1)),rules,false), factor_all)))),rules,false);
+                        temtemexpr_ = temtemexpr_+ pow((*it).second,i)*Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify((numer_denomClt.op(0)),rules,false)))))/
+                                                                 (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify((numer_denomClt.op(1)),rules,false))))),rules,false);
                     }
                     temexpr_ = temtemexpr_;
                 }
                 else
                 {
                     numer_denomClt = temexpr_.numer_denom();
-                    temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false), factor_all))))/
-                                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false), factor_all)))),rules,false);
+                    temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false)))))/
+                                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false))))),rules,false);
                 }
             }
 
@@ -686,8 +686,8 @@ ex simplify(const ex& expr_, int rules)
         }
 
         numer_denomClt = temexpr_.numer_denom();
-        temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false), factor_all))))/
-                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false), factor_all)))),rules,false);
+        temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false)))))/
+                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false))))),rules,false);
 
 
         temexpr_ = Simplify(genSymbSubs(temexpr_,temexprToSymMap),rules,false);
@@ -713,7 +713,7 @@ ex simplifyRecur(const ex& expr_, int rules)
     do
     {
         prev = curr;
-        curr = simplify(prev);
+        curr = simplify(prev, rules);
     }while(prev!=curr);
 
     return  curr;

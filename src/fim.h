@@ -7,7 +7,11 @@
 
 #ifndef FIM_H_INCLUDED
 #define FIM_H_INCLUDED
+
 #include <ginac/ginac.h>
+
+using namespace std;
+using namespace GiNaC;
 
 /** degree of a particular variable **/
 class degreePartiVar:public map_function

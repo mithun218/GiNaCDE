@@ -989,7 +989,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
 
     #ifdef GiNaCDE_gui
     stringstream temstr;
-    GError *er=NULL;
+
     temstr << "The results are written in " << filename <<" file.             " << "Time:"
     << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" ;
 

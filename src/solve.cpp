@@ -932,14 +932,14 @@ ex solvec::sysequ_red(const exset& sysequ_, const exset& var_)
                 int solu_ext = 0;
                 lst tem_one_solu;
 
-                solu_ext = this->one_eq_solutions(Simplify(Numer(eqDivider[eqDividerSz])), (*solu_var)); // attempt 1 for getting solutions
+                solu_ext = this->one_eq_solutions(Simplify(numer(eqDivider[eqDividerSz])), (*solu_var)); // attempt 1 for getting solutions
 
                 if(nops(one_eq_solu))
                 {
                     lst one_eq_solu_test = {};
                     for(auto itr1 = one_eq_solu.begin(); itr1 != one_eq_solu.end(); itr1++)
                     {
-                        if(simplifyRecur((Numer(eqDivider[eqDividerSz])).subs(*itr1))==_ex0)
+                        if(simplifyRecur((numer(eqDivider[eqDividerSz])).subs(*itr1))==_ex0)
                             one_eq_solu_test.append(*itr1);
                     }
 
@@ -960,7 +960,7 @@ ex solvec::sysequ_red(const exset& sysequ_, const exset& var_)
 
                         for(auto j = sysequ.begin(); j != sysequ.end();)
                         {
-                            denoma = Denom(*j);
+                            denoma = denom(*j);
                             if(denoma != _ex1 && denoma.has((*solu_var)))
                             {
                                 try
@@ -1014,13 +1014,13 @@ ex solvec::sysequ_red(const exset& sysequ_, const exset& var_)
                    for(lst::const_iterator k = tem_one_solu.begin(); k != tem_one_solu.end(); k++) // searching final solutions taking each solution of low variable equation
                    {
 
-                       soluClt.append((*k).lhs() == Simplify(Factor(Numer((*k).rhs()), factor_all))/Simplify(Factor(Denom((*k).rhs()), factor_all)));
+                       soluClt.append((*k).lhs() == Simplify(Factor(numer((*k).rhs())))/Simplify(Factor(denom((*k).rhs()))));
 
                        for(auto j = sysequ.begin(); j != sysequ.end(); j++)
                        {
                             try
                             {
-                                subs_simp = Numer(simplify(Numer(simplify(*j)).subs(simplify(*k)))); // GiNaC Bugs: wrong numer
+                                subs_simp = numer(simplify(numer(simplify(*j)).subs(simplify(*k)))); // GiNaC Bugs: wrong numer
                             }                                                                        // numer(1/2*b/((1 + 3*sqrt(a)*(-2 + 9*a)^(-1/2))*(-1 + 3*sqrt(a)*(-2 + 9*a)^(-1/2))));
                             catch(GiNaC::pole_error){return _ex_1;}                                  //  -> -(-2+9*a)*b
                             catch(cln::runtime_exception){return _ex_1;}                             // To avoid Bugs: get numer after simplify
@@ -1193,7 +1193,7 @@ exsetlst solvec::operator()(const lst & equ_, const lst& var_)
 
         for (lst::const_iterator i = equ_.begin(); i != equ_.end(); ++i)
         {
-            numera = simplify(Numer(*i));
+            numera = simplify(numer(*i));
 
             for( auto itr = _var.begin(); itr != _var.end(); itr++ )
             {

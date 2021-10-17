@@ -46,7 +46,7 @@ bool cancel = false;
 
 static int phasepart_okbutton_clicked(GtkWidget* okbutton,gpointer dialog)
 {
-    GdkColor gtk_color;
+    //GdkColor gtk_color;
     //gdk_color_parse ("#FF0000", &gtk_color);
 
     bool isValid = true;
@@ -104,7 +104,7 @@ static gboolean key_press_cb(GtkWidget *w, GdkEvent *ev, gpointer data)
 static int twc_okbutton_clicked(GtkWidget* okbutton,gpointer dialog)
 {
     bool isValid = true;
-    GdkColor gtk_color;
+    //GdkColor gtk_color;
     //gdk_color_parse ("#FF0000", &gtk_color);
 
     entryText.clear();
@@ -1688,7 +1688,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
             GtkWidget *Eqlbl = gtk_label_new(&nlodeEq[0]);
 
             GtkWidget *table2 = gtk_grid_new();
-            gtk_grid_attach(GTK_GRID(table2),Eqlbl,0,0,2,2);
+            gtk_grid_attach(GTK_GRID(table2),Eqlbl,0,0,2,1);
             entrylbl.clear();
             entry.clear();
             entryText.clear();
@@ -1760,7 +1760,8 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         }
         #endif // GiNaCDE_gui
 
-        if((temdiffeq.subs(Diff(wild(0), wild(1), wild(2)) == symb_)).has(*indpndt_vars.begin()))
+        if((temdiffeq.subs(Diff(wild(0), wild(1), wild(2)) == symb_)).has(*indpndt_vars.begin())
+            && temdiffeq.has(Diff(wild(0),wild(1),wild(2))))
         {
             cout << "Evaluation stop: independent variable present in diff. Equ.;" << endl;
             solutions << "Evaluation stop: independent variable present in diff. Equ.;" << endl;

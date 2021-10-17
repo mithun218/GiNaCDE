@@ -7,6 +7,7 @@
 
 #ifndef UTILITY_H_INCLUDED
 #define UTILITY_H_INCLUDED
+
 #include <ginac/ginac.h>
 #include <chrono>
 #include "inifcns.h"
@@ -21,7 +22,7 @@
  #endif
 
 
-#define factor_all 18
+//#define factor_all 18
 #define Gtolerance GiNaC::pow(10,-10)
 //#define GiNaCDE_gui
 
@@ -142,11 +143,7 @@ public:
 };
 
 /** Calculating Factor of irrational function without expand. **/
-ex Factor(const ex&, const int& options = 0);
-
-/** Calculating numerator & denominator without expand **/
-ex Numer(const ex&);
-ex Denom(const ex&);
+ex Factor(const ex&);
 
 /** calculating gcd of list of expressions **/
 ex Gcd(lst _exp);

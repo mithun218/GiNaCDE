@@ -7,6 +7,7 @@
 
 #ifndef OUTFORM_H_INCLUDED
 #define OUTFORM_H_INCLUDED
+
 #include <ginac/ginac.h>
 
 using namespace std;

@@ -561,7 +561,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                  text_positivePart = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(positivePartWid)),
                  text_negativePart = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(negativePartWid)),
                  text_asolve = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(asolve));
-    int method;
+    int method = FIM;
 
     if(text_positivePart == "yes")
         positivePart = true;
@@ -739,9 +739,6 @@ int main(int argc,char* argv[])
     gtk_init (&argc, &argv);
 
     GtkWidget *menu_bar, *outputFormatLbl, *fileNameLbl, *evaluateBtn, *table;
-
-    //gdk_color_parse ("#FF0000", &gtk_color);
-    PangoFontDescription *fontdesc = pango_font_description_from_string("monospace 10");
 
     status_bar = gtk_statusbar_new ();
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);

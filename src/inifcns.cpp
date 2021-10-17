@@ -20,15 +20,6 @@ const numeric *_num0_p = (const numeric *)&dynallocate<numeric>(0);
 const numeric *_num1_p = (const numeric *)&dynallocate<numeric>(1);
  //-------------------------------------------------
 
-static bool has_pi(const ex & the_ex) {
-        if (is_exactly_a<constant>(the_ex) and ex_to<constant>(the_ex) == Pi)
-                return true;
-        for (size_t i=0; i<the_ex.nops(); ++i)
-                if (has_pi(the_ex.op(i)))
-                        return true;
-        return false;
-}
-
 
 
  //////////

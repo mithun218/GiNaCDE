@@ -161,7 +161,7 @@ ex powBaseSubs::operator()(const ex& _e)
 
 /** Polynomial factorization with number containing decimal point and higher degree with "add" base.
     prefactor terms are skipping. **/
-ex Factor(const ex& expr, const int& options)
+ex Factor(const ex& expr)
 {
     ex temex;
     if(expr.has(I)) // avoiding I in function. Inbuilt factor does not work when I is present.
@@ -213,16 +213,6 @@ ex Factor(const ex& expr, const int& options)
     }
     else
         return expr;
-}
-
-/** Calculating numerator & denominator without expand **/
-ex Numer(const ex& _expr)
-{
-    return numer(_expr);
-}
-ex Denom(const ex& _expr)
-{
-    return denom(_expr);
 }
 
 /** calculating gcd of list of expressions (also support rational number: such as {8/7,b/7*b} ) **/

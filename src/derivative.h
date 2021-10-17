@@ -7,6 +7,8 @@
 #ifndef DERIVATIVE_H_INCLUDED
 #define DERIVATIVE_H_INCLUDED
 
+#include <ginac/ginac.h>
+
 using namespace std;
 using namespace GiNaC;
 

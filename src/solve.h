@@ -9,6 +9,7 @@
 #define SOLVE_H_INCLUDED
 
 #include <ginac/ginac.h>
+#include "utility.h"
 
 using namespace std;
 using namespace GiNaC;
