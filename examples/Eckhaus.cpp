@@ -27,7 +27,7 @@ int main()
     positivePart=true;
     negativePart=true;
     paraInDiffSolve=lst{};
-    filename="Eckhaus_Fexp.txt";
+    filename="EckhausFexp.txt";
     desolve(pde, {u}, F_expansion);
 
     //mF-expansion method//
@@ -37,13 +37,13 @@ int main()
     positivePart=true;
     negativePart=true;
     paraInDiffSolve=lst{};
-    filename="Eckhaus_mF.txt";
+    filename="EckhausmF.txt";
     desolve(pde, {u}, mF_expansion);
 
     //FIM method//
     twcPhase=lst{lst{k_0,k_1},lst{p_0,p_1}};
     paraInDiffSolve=lst{};
-    filename="Eckhaus_FIM.txt";
+    filename="EckhausFIM.txt";
     desolve(pde, {u}, FIM);
 
     return 0;
