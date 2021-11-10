@@ -135,6 +135,8 @@ IF(GINACDE_BUILD_STATIC_LIBS)
     set(testlibs ${CORELIBS} GiNaCDE_static)
 ENDIF()
 
+add_subdirectory(examples EXCLUDE_FROM_ALL)
+
 add_executable(test1 test/test1.cpp)
 target_link_libraries(test1 ${testlibs})
 
@@ -166,4 +168,3 @@ ENDIF()
 # Installing headers
 install (FILES ${GINACDE_HEADERS} DESTINATION include/GiNaCDE)
 install (FILES "${PROJECT_BINARY_DIR}/version.h" DESTINATION include/GiNaCDE)
-
