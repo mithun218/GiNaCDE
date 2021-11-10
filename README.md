@@ -82,7 +82,13 @@ Besides this, the solutions of the NLPDE are collected by a programming variable
 ## Examples
 The [`examples`](examples/) folder contains all the examples which solve some NLPDEs, such as, Eckhaus equation, Seventh-order SawadaKotara equations, Fifth-order Generalized KdV equation, Perturbed NLS Equation with Kerr Law Nonlinearity, KudryashovSinelshchikov Equation, etc.
 We have provided output text files after executing each example. 
-    
+
+To compile the examples, move to the `build-dir` created earlier for building GiNaCDE, and execute
+```
+$ make examples
+```
+The executables will be placed into the `build-dir/bin` directory.
+
 ### Additional notes
 Please note that one can obtain different results in output files compared to those provided by us in the [`examples`](examples/) folder for each example. 
 This happens because of the GiNaC library.
