@@ -1,13 +1,13 @@
 
 /** @file KS.cpp
  *
- *   This program solves the Kudryashov–Sinelshchikov equation:
+ *   This program solves the Kudryashov-Sinelshchikov equation:
         {u_{3x}} + gu{u_x} - n{u_{2x}} - \left( {u{u_{2x}} + u_x^2} \right)d - k{u_x}{u_{2x}} - e\left( {u{u_{3x}} + {u_x}{u_{2x}}} \right) + {u_t} = 0,
     */
 
 
 
-#include <GiNaCDE/GiNaCDE.h>
+#include <GiNaCDE.h>
 
 
 int main()
