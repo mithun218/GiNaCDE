@@ -401,7 +401,13 @@ string diffformchange(const ex& diffeq, const lst& dpndt_vars, const exset& indp
 void writetofile(stringstream& stringbuf)
 {
     ofstream outfile;
-    if(output == maple)
+    if(output == mathematica)
+    {
+        outfile.open(filename);
+        outfile << gmathematica(replacestring(stringbuf.str(), "==", "="));
+        outfile.close();
+    }
+    else if(output == maple)
     {
         outfile.open(filename);
         outfile << replacestring(stringbuf.str(), "==", "=");
@@ -410,9 +416,10 @@ void writetofile(stringstream& stringbuf)
     else
     {
         outfile.open(filename);
-        outfile << gmathematica(replacestring(stringbuf.str(), "==", "="));
+        outfile << stringbuf.str();
         outfile.close();
     }
+
 }
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////

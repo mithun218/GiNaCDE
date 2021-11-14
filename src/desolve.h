@@ -11,8 +11,8 @@
 #include <ginac/ginac.h>
 
 #define F_expansion 4
-#define mF_expansion 6
-#define FIM 7
+#define mF_expansion 5
+#define FIM 6
 
 #define riccati 7
 #define bernouli 8

@@ -788,8 +788,10 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
     if(output==maple )
         solutions <<  "Equations are written in MAPLE language." << endl;
-    else
+    else if(output==mathematica)
         solutions <<  "Equations are written in MATHEMATICA language." << endl;
+    else
+        solutions <<  "Equations are written in GiNaC language." << endl;
 
     const string out = outstr("-", 100);
     solutions << out << endl << endl;
@@ -848,19 +850,28 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         depend(U, {*it});
     }
 
-    solutions << "Input equation is: ";
-    solutions << diffformchange(diffeq, dpndt_vars, indpndt_vars) << " = 0;" << endl;
+
     cout<<endl<<endl;
+    solutions << "Input equation is: ";
     cout << "Input equation is: ";
 
-    if(output == mathematica)
+    if(output == maple)
     {
+        solutions << diffformchange(diffeq, dpndt_vars, indpndt_vars) << " = 0;" << endl;
+        cout << diffformchange(diffeq, dpndt_vars, indpndt_vars) << " = 0;" << endl;
+    }
+    else if(output == mathematica)
+    {
+        solutions <<  gmathematica(diffformchange(diffeq, dpndt_vars, indpndt_vars)) << " = 0;" << endl;
         cout <<  gmathematica(diffformchange(diffeq, dpndt_vars, indpndt_vars)) << " = 0;" << endl;
     }
     else
     {
-        cout << diffformchange(diffeq, dpndt_vars, indpndt_vars) << " = 0;" << endl;
+        solutions << diffeq << " = 0;" << endl;
+        cout << diffeq << " = 0;" << endl;
     }
+
+
 
     // converting pde to twf(travelling wave form)
     if(nops(twcPhase)!=2)
@@ -1786,17 +1797,21 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         if(output == mathematica)
             solutions << dpndt_vars.op(0) << " = " << U << "[xi], " << endl;
-        else
+        else if(output == maple)
             solutions << dpndt_vars.op(0) << " = " << U << "(xi), " << endl;
+        else
+            solutions << dpndt_vars.op(0) << " = " << U << ", " << endl;
         solutions << "where xi = " << tw_coordi << ";" << endl;
     }
     else if( tw_coordi != _ex0 && phasepart )
     {
         if(output == mathematica)
             solutions << dpndt_vars.op(0) << " = " << U << "[xi]*exp(I*(" << tw_coordiPhase << "))," << endl;
-        else
+        else if(output == maple)
             solutions << dpndt_vars.op(0) << " = " << U << "(xi)*exp(I*(" << tw_coordiPhase << "))," << endl;
-        solutions << "where xi = " << tw_coordi << ";" << endl;
+        else
+            solutions << dpndt_vars.op(0) << " = " << U << "*exp(I*(" << tw_coordiPhase << "))," << endl;
+        solutions << "where U is the function of xi and xi = " << tw_coordi << ";" << endl;
     }
 
     if(!temdiffeq.has(Diff(wild(0),wild(1),wild(2))))

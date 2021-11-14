@@ -15,6 +15,7 @@ using namespace GiNaC;
 
 #define maple 8
 #define mathematica 9
+#define ginac 10
 
 extern int output;
 

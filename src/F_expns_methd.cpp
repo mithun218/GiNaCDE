@@ -123,22 +123,14 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     solutions << dpndt_varChng << " = " << solu_form << ";" << endl;
     cout << dpndt_varChng << " = " << solu_form << ";" << endl;
 
-    if( method == mF_expansion )
-    {
-        solutions << "The first-order nonlinear ODE: ";
-        if(output == mathematica)
-            solutions <<  "D[F[" <<indpndt_var << "]," << indpndt_var << "] = "<<F_ode <<";" << endl;
-        else
-            solutions << "diff(F(" <<indpndt_var << ")," << indpndt_var << ") = "<<F_ode <<";" << endl;
-    }
+
+    solutions << "The first-order nonlinear ODE: ";
+    if(output == mathematica)
+        solutions <<  "D[F[" <<indpndt_var << "]," << indpndt_var << "] = "<<F_ode <<";" << endl;
+    else if(output == maple)
+        solutions << "diff(F(" <<indpndt_var << ")," << indpndt_var << ") = "<<F_ode <<";" << endl;
     else
-    {
-        solutions << "The first-order nonlinear ODE: ";
-        if(output == mathematica)
-            solutions <<  "D[F[" <<indpndt_var << "]," << indpndt_var << "] = "<<F_ode <<";" << endl;
-        else
-            solutions << "diff(F(" <<indpndt_var << ")," << indpndt_var << ") = "<<F_ode <<";" << endl;
-    }
+        solutions << "diff(F," << indpndt_var << ",1) = "<<F_ode <<";" << endl;
 
     solutions << "\n" << out << endl << endl;
 
@@ -302,8 +294,10 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                     solutions << "where F is the solution of" << endl;
                     if(output == mathematica)
                         solutions <<  "D[F[" <<indpndt_var << "]," << indpndt_var << "] = "<<F_odesubs <<";" << endl;
-                    else
+                    else if(output == maple)
                         solutions << "diff(F(" <<indpndt_var << ")," << indpndt_var << ") = "<<F_odesubs <<";" << endl;
+                    else
+                        solutions << "diff(F," << indpndt_var << ",1) = "<<F_odesubs <<";" << endl;;
 
                     odetype = odeType_check(F_odesubs, F);
                     degAcoeff.remove_all();
