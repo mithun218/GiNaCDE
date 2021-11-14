@@ -620,6 +620,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     lst sysequ,temvariables;
     ex finalequSubs;
     const string outBkslash = outstr("\\",100);
+    int solNum = 1; // counts solution numbers
     for(unsigned blnci1 = 0;blnci1<balancedDegree.size();blnci1++)
     {
         if(Nvalue==1)
@@ -893,13 +894,14 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
                                             {
                                                 if(!is_a<lst>(*it2))
                                                 {
-                                                    solutions << dpndt_var << " = "  << (temit)*exp( I*tw_coordiPhaseSubs ) <<";"<< endl;
+                                                    solutions<<"solution #"<<solNum<<"  " << dpndt_var << " = "  << (temit)*exp( I*tw_coordiPhaseSubs ) <<";"<< endl;
+                                                    solNum = solNum + 1;
 
                                                     solutionClt[solutionClt.size()-1].append(dpndt_var  ==  (temit)*exp( I*tw_coordiPhaseSubs ));
                                                 }
                                                 else // for handling solutions with conditions
                                                 {
-                                                    solutions << dpndt_var << " = "  << (temit)*exp( I*tw_coordiPhaseSubs ) <<" (with condition(s) ";
+                                                    solutions<<"solution #"<<solNum<<"  " << dpndt_var << " = "  << (temit)*exp( I*tw_coordiPhaseSubs ) <<" (with condition(s) ";
 
                                                     lst temList = {};
                                                     temList.append(dpndt_var  ==  (temit)*exp( I*tw_coordiPhaseSubs ));
@@ -910,6 +912,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
                                                     }
 
                                                     solutions<<");"<<endl;
+                                                    solNum = solNum + 1;
 
                                                     solutionClt[solutionClt.size()-1].append(temList);
 
@@ -920,13 +923,14 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
                                         {
                                             if(!is_a<lst>(*it2))
                                             {
-                                                solutions << dpndt_var << " = "  << (temit)*exp( I*tw_coordiPhaseSubs ) <<";"<< endl;
+                                                solutions<<"solution #"<<solNum<<"  " << dpndt_var << " = "  << (temit)*exp( I*tw_coordiPhaseSubs ) <<";"<< endl;
+                                                solNum = solNum + 1;
 
                                                 solutionClt[solutionClt.size()-1].append(dpndt_var  ==  (temit)*exp( I*tw_coordiPhaseSubs ));
                                             }
                                             else // for handling solutions with conditions
                                             {
-                                                solutions << dpndt_var << " = "  << (temit)*exp( I*tw_coordiPhaseSubs ) <<" (with condition(s) ";
+                                                solutions<<"solution #"<<solNum<<"  " << dpndt_var << " = "  << (temit)*exp( I*tw_coordiPhaseSubs ) <<" (with condition(s) ";
 
                                                 lst temList = {};
                                                 temList.append(dpndt_var  ==  (temit)*exp( I*tw_coordiPhaseSubs ));
@@ -937,6 +941,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
                                                 }
 
                                                 solutions<<");"<<endl;
+                                                solNum = solNum + 1;
 
                                                 solutionClt[solutionClt.size()-1].append(temList);
 
