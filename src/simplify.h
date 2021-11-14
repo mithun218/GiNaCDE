@@ -11,6 +11,9 @@
 #define TrigSimp 1
 #define TrigCombine 2
 #define logSimp 3
+#define JacobiSimp 4
+#define AlgSimp2 5
+#define HyperSimp 6
 
 
 #include <iostream>
@@ -20,13 +23,14 @@
 using namespace std;
 using namespace GiNaC;
 
-extern size_t expandLevel, addNumFrFactr, largstNumsimp; // this variable control expression to expand upto a specified  degree
+extern size_t expandLevel, addNumFrFactr;// these variables limit the simplification of algebraic expressions
+extern long long int largstNumsimp; // this is the maximum number for simplification
 
 class simplifyc
 {
     //int rules = AlgSimp;
-    exmap AlgSimpRules, TrigSimpRules1, TrigSimpRules2, TrigSimpRules3, TrigSimpRules4,
-          TrigCombineRules, logSimpRules;
+    exmap AlgSimpRules,AlgSimpRules2, TrigSimpRules1, TrigSimpRules2, HyperSimpRules1, HyperSimpRules2,
+          TrigCombineRules, logSimpRules, JacobiSimpRules1, JacobiSimpRules2;
     int SetRules(int m = AlgSimp);
 public:
     simplifyc(){}
