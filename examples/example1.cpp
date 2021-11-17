@@ -30,6 +30,7 @@ int main()
    ode = Diff(u,x,2) + a*u*Diff(u,x,1) + b*u*u*u; // modified Painlev-Ince equation
    filename = "Painlev_FIM.txt";
    desolve(ode,{u},FIM);
+   output = ginac;
    filename = "Painlev_FIMextravar.txt";
    paraInDiffSolve = lst{a,b};
    desolve(ode,{u},FIM);

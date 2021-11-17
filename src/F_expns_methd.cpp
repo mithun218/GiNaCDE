@@ -166,9 +166,9 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                 coeffs.append((solu_form_subs.coeff(F, i)).coeff(Fd_, j));
 
                 if(denom(Nvalue) != _ex1)
-                    solutions <<Diff(F, indpndt_var, 1) << "^" << j << "F^(" << i<<"/"<<denom(Nvalue) << "): "  << (solu_form_subs.coeff(F, i)).coeff(Fd_, j)<< " = 0;" << endl;
+                    solutions <<Diff(F, indpndt_var, 1) << "^" << j <<"*"<< "F^(" << i<<"/"<<denom(Nvalue) << "): "  << (solu_form_subs.coeff(F, i)).coeff(Fd_, j)<< " = 0;" << endl;
                 else
-                    solutions <<Diff(F, indpndt_var, 1) << "^" << j << F << "^" << i << ": " << (solu_form_subs.coeff(F, i)).coeff(Fd_, j)<< " = 0;" << endl;
+                    solutions <<Diff(F, indpndt_var, 1) << "^" << j <<"*"<< F << "^" << i << ": " << (solu_form_subs.coeff(F, i)).coeff(Fd_, j)<< " = 0;" << endl;
             }
         }
 
@@ -240,7 +240,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     if(solu_set_clt.empty())
     {
         solutions << "No solution of the above equations exist;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "No solution exist;");
@@ -522,7 +522,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     auto dur = endTime-beginTime;
     cout << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
     solutions << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
-    writetofile(solutions);
+    writetofile(solutions, dpndt_var);
 
     #ifdef GiNaCDE_gui
     stringstream temstr;

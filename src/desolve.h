@@ -42,6 +42,11 @@ extern lst twcPhase, paraInDiffSolve, degAcoeff;
 
 int desolve(const ex& diffeq, const lst& dpndt_vars , const int& method, bool test=false);
 
+//This function can check the solutions of the input differential equation.
+//Currently, this function is unable to check all solutions reported by GiNaCDE due to some simplification problems.
+//I hope that this function can be improved in future.
+//Now, I will suggest to use Maple or Mathematica software to check the solutions.
+ex checkSolu(const string& diff_equ, const string& solutions, const string& algebraic_solutions="", const string& solutions_conditions="");
 
 /** summing power of each term and the summed powers are collected in n_pow_clt. **/
 class find_n_power

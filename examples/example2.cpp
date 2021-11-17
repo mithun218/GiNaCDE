@@ -101,7 +101,7 @@ int main()
     desolve(pde, {u}, mF_expansion);
 
     pde = Diff(u,t,1)+2*a*u*Diff(u,x,1)-3*b*u*u*Diff(u,x,1)+Diff(u,x,3);  // Gardner equation
-    output = maple;
+    output = mathematica;
     twcPhase=lst{lst{k_0,k_1},lst{}};
     filename = "gardner_Fex.txt";
     ASolve = true;
@@ -119,6 +119,7 @@ int main()
     positivePart = true;
     negativePart = false;
     desolve(pde, {u}, mF_expansion);
+    output = ginac;
     filename = "cahnAllen_FIM.txt";
     desolve(pde, {u}, FIM);
 

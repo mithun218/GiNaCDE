@@ -133,7 +133,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         solutions << "Evaluation stop: order of ode should be 2;" << endl;
         cout << "Evaluation stop: order of ode should be 2;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: order of ode should be 2;");
@@ -151,7 +151,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
        solutions << "Evaluation stop: unsupported ode;" << endl;
        cout << "Evaluation stop: unsupported ode;" <<hdifftrml<<"  "<<diffeq<< endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported ode;");
@@ -189,7 +189,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         solutions << "Evaluation stop: provide minimum Value of N: " << lhsodetrm.degree(Y_) - 1 << endl;
         cout << "Evaluation stop: provide minimum Value of N: " << lhsodetrm.degree(Y_) - 1 << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "No solution exist;");
@@ -204,7 +204,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         solutions << "Evaluation stop: unsupported ode;" << endl;
         cout << "Evaluation stop: unsupported ode;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported ode;");
@@ -301,7 +301,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         solutions << "Evaluation stop: unsupported ode;" << endl;
         cout << "Evaluation stop: unsupported ode;3" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported ode;");
@@ -570,7 +570,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         cout << "Evaluation stop: Balancing degree of X_ is failure." << endl;
         solutions << "Evaluation stop: Balancing degree of X_ is failure." << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Balancing degree of X_ is failure.");
@@ -710,7 +710,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
             for(int j = 0; j < finalequSubs.degree(X_) + 1; j++ )
             {
                 sysequ.append((finalequSubs.coeff(Y_, i)).coeff(X_, j));
-                solutions <<Y_<<"^"<<i<< X_ << "^" << j << ": " << finalequSubs.coeff(Y_, i).coeff(X_, j) << " = 0," << endl;
+                solutions <<Y_<<"^"<<i<<"*"<< X_ << "^" << j << ": " << finalequSubs.coeff(Y_, i).coeff(X_, j) << " = 0," << endl;
             }
         }
 
@@ -990,7 +990,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     auto dur = endTime-beginTime;
     cout << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
     solutions << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
-    writetofile(solutions);
+    writetofile(solutions, dpndt_var);
 
     #ifdef GiNaCDE_gui
     stringstream temstr;

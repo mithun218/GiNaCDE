@@ -27,7 +27,17 @@ int main()
     positivePart=true;
     negativePart=true;
     paraInDiffSolve=lst{};
-    filename="NLS_Fexp.txt";
+    filename="NLS_Fexp(maple).txt";
+    desolve(pde,{u},F_expansion);
+
+    output=ginac;
+    twcPhase=lst{lst{k_0,k_1},lst{p_0,p_1}};
+    degAcoeff=lst{2,A_0,0,A_2};
+    ASolve=false;
+    positivePart=true;
+    negativePart=true;
+    paraInDiffSolve=lst{};
+    filename="NLS_Fexp(ginac).txt";
     desolve(pde,{u},F_expansion);
 
     output=mathematica;

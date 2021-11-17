@@ -27,7 +27,7 @@ ex chi, xi;
 
 ex NValue = 0;
 
-lst twcPhase={}, degAcoeff={}, paraInDiffSolve = {};
+lst twcPhase= {}, degAcoeff={}, paraInDiffSolve = {};
 
 
 
@@ -670,7 +670,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout <<"Evaluation stop: Please provide highest positive integer delta of 1st order NLODE in 'degAcoeff';"<<endl;
         solutions << "Evaluation stop: Please provide highest positive integer delta of 1st order NLODE in 'degAcoeff';"<<endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Please provide highest positive integer delta of 1st order NLODE in 'degAcoeff';");
         //gtk_show_uri(gdk_screen_get_default(),&CurrentPath[0],GDK_CURRENT_TIME,NULL);
@@ -682,7 +682,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout <<"Evaluation stop: delta of 1st order NLODE in 'degAcoeff' should be positive integer;"<<endl;
         solutions << "Evaluation stop: delta of 1st order NLODE in 'degAcoeff' should be positive integer;"<<endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: delta of 1st order NLODE in 'degAcoeff' should be positive integer;");
         //gtk_show_uri(gdk_screen_get_default(),&CurrentPath[0],GDK_CURRENT_TIME,NULL);
@@ -694,7 +694,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout <<"Evaluation stop: Please provide all coefficients of 1st order NLODE in 'degAcoeff';"<<endl;
         solutions << "Evaluation stop: Please provide all coefficients of 1st order NLODE in 'degAcoeff';"<<endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Please provide all coefficients of 1st order NLODE in 'degAcoeff';");
         //gtk_show_uri(gdk_screen_get_default(),&CurrentPath[0],GDK_CURRENT_TIME,NULL);
@@ -706,7 +706,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout <<"Evaluation stop: Minimum one part (positivePart or negativePart) should be \"yes\";"<<endl;
         solutions << "Evaluation stop: Minimum one part (positivePart or negativePart) should be \"yes\";"<<endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
         return -1;
     }
 
@@ -714,7 +714,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout <<"Evaluation stop: For FIM method, value of N is either 1 or 2';"<<endl;
         solutions << "Evaluation stop: For FIM method, value of N is either 1 or 2';"<<endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: For FIM method, value of N is eighter 1 or 2';");
         //gtk_show_uri(gdk_screen_get_default(),&CurrentPath[0],GDK_CURRENT_TIME,NULL);
@@ -730,7 +730,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout << "Evaluation stop: unsupported diff. Equ.;" << endl;
         solutions << "Evaluation stop: unsupported diff. Equ.;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported diff. Equ.;");
@@ -745,7 +745,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout << "Evaluation stop: it is not a diff. Equ.;" << endl;
         solutions << "Evaluation stop: it is not a diff. Equ.;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: It is not a diff. Equ.;");
@@ -812,7 +812,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout << "Evaluation stop: independent vars present in diff. Equ.;" << endl;
         solutions << "Evaluation stop: independent vars present in diff. Equ.;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: independent vars present in diff. Equ.;");
@@ -833,7 +833,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     {
         cout << "Evaluation stop: Please provide dependency of all independent variables" <<endl;
         solutions << "Evaluation stop: Please provide dependency of all independent variables" <<endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Please provide dependency of all independent variables");
         //gtk_show_uri(gdk_screen_get_default(),&CurrentPath[0],GDK_CURRENT_TIME,NULL);
@@ -874,11 +874,11 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
 
     // converting pde to twf(travelling wave form)
-    if(nops(twcPhase)!=2)
+    if( indpndt_vars.size() > 1 && nops(twcPhase)!=2)
     {
         cout << "Evaluation stop: please use 'twcPhase' properly;" << endl;
         solutions << "Evaluation stop: please use 'twcPhase' properly;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: please use 'twcPhase' properly;");
@@ -886,7 +886,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         #endif // GiNaCDE_gui
         return -1;
     }
-    lst twc=ex_to<lst>(twcPhase[0]), phase=ex_to<lst>(twcPhase[1]);
+    lst twc, phase;
 
     ex tw_coordi = _ex0, tw_coordiPhase = _ex0;
 
@@ -897,13 +897,15 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
     if(indpndt_vars.size() > 1)
     {
+        twc=ex_to<lst>(twcPhase[0]), phase=ex_to<lst>(twcPhase[1]);
+
         for(auto it = indpndt_vars.begin(); it != indpndt_vars.end(); it++)
         {
             if((temdiffeq.subs(Diff(wild(0), wild(1), wild(2)) == xi)).has(*it))
             {
                 cout << "Evaluation stop: unsupported diff. Equ.;" << endl;
                 solutions << "Evaluation stop: unsupported diff. Equ.;" << endl;
-                writetofile(solutions);
+                writetofile(solutions, dpndt_vars.op(0));
 
                 #ifdef GiNaCDE_gui
                 gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported diff. Equ.;");
@@ -988,7 +990,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         {
             cout << "Evaluation stop: please provide constants in traveling wave coordinate(twc);" << endl;
             solutions << "Evaluation stop: please provide constants in traveling wave coordinate(twc);" << endl;
-            writetofile(solutions);
+            writetofile(solutions, dpndt_vars.op(0));
 
             #ifdef GiNaCDE_gui
             gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: please provide constants in traveling wave coordinates(twc);");
@@ -1001,7 +1003,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         {
             cout << "Evaluation stop: please provide constants for each independent variables in twc part of 'twcPhase';" << endl;
             solutions << "Evaluation stop: please provide constants for each independent variables in twc part of 'twcPhase';" << endl;
-            writetofile(solutions);
+            writetofile(solutions, dpndt_vars.op(0));
 
             #ifdef GiNaCDE_gui
             gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: please provide constants for each independent variables in twc part of 'twcPhase';");
@@ -1021,18 +1023,24 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
         replaceIex = replaceI(temdiffeq);
         const ex conjuFreeex = conjuFreee(temdiffeq);
-        if(replaceIex != temdiffeq || conjuFreeex != temdiffeq)
+        if(replaceIex != temdiffeq || conjuFreeex != temdiffeq) //complex NLPDE
         {
             #ifndef GiNaCDE_gui
             if(nops(phase)==0)
+            {
+                cout <<  "Evaluation stop: please provide phase part for complex NLPDE;"  << endl;
+                solutions << "Evaluation stop: please provide phase part for complex NLPDE;" << endl;
+                writetofile(solutions, dpndt_vars.op(0));
                 phasepart=false;
+                return -1;
+            }
             else
             {
                 if(nops(phase)!=nops(twc))
                 {
                     cout <<  "Evaluation stop: please provide constants for each independent variables in phase part of 'twcPhase';"  << endl;
                     solutions << "Evaluation stop: please provide constants for each independent variables in phase part of 'twcPhase';" << endl;
-                    writetofile(solutions);
+                    writetofile(solutions, dpndt_vars.op(0));
                     return -1;
                 }
                 phasepart=true;
@@ -1158,7 +1166,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
             {
                 cout << "Evaluation stop: unsupported diff. Equ.; " <<temdiffeq<< endl;
                 solutions << "Evaluation stop: unsupported diff. Equ.;" << endl;
-                writetofile(solutions);
+                writetofile(solutions, dpndt_vars.op(0));
 
                 #ifdef GiNaCDE_gui
                 gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported diff. Equ.;");
@@ -1198,9 +1206,12 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
        // temdiffeq = evaluate(temdiffeq);
     }
-    else
+    else // ODE
     {
         U = dpndt_vars.op(0);
+        twcPhase = lst{lst{},lst{}};
+        twc = {};
+        phase = {};
     }
 
 
@@ -1212,7 +1223,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
         cout << "Evaluation stop: unsupported diff. Equ.;" << endl;
         solutions << "Evaluation stop: unsupported diff. Equ.;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported diff. Equ.;");
@@ -1298,7 +1309,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                 {
                     cout << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
                     solutions << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
-                    writetofile(solutions);
+                    writetofile(solutions, dpndt_vars.op(0));
 
 #ifdef GiNaCDE_gui
                     gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Unable to separate real and imaginary parts;");
@@ -1387,7 +1398,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                     {
                         cout << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
                         solutions << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
-                        writetofile(solutions);
+                        writetofile(solutions, dpndt_vars.op(0));
 
 #ifdef GiNaCDE_gui
                         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Unable to separate real and imaginary parts;");
@@ -1405,7 +1416,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                     {
                         cout << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
                         solutions << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
-                        writetofile(solutions);
+                        writetofile(solutions, dpndt_vars.op(0));
 
                         #ifdef GiNaCDE_gui
                         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Unable to separate real and imaginary parts;");
@@ -1470,7 +1481,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                             temdiffeq = imagepart;
                             remainingDiffpart = realpart;
                             solutions << "We derive solutions of imaginary part of Diff. Equ. with the condition:"
-                                         "\n "<<(*realpartSolu.begin()).op(0).lhs()<<" = "<<(*realpartSolu.begin()).op(0).rhs()<<";"<<endl;
+                                         "\n "<<(*realpartSolu.begin()).op(0).lhs()<<" == "<<(*realpartSolu.begin()).op(0).rhs()<<";"<<endl;
 
                             constraints.append((*realpartSolu.begin()).op(0).lhs()==(*realpartSolu.begin()).op(0).rhs());
 
@@ -1494,7 +1505,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                         {
                             cout << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
                             solutions << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
-                            writetofile(solutions);
+                            writetofile(solutions, dpndt_vars.op(0));
 
 #ifdef GiNaCDE_gui
                             gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Unable to separate real and imaginary parts;");
@@ -1552,7 +1563,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                             i++;
 
                             if(i<repls.size())
-                                solutions<<" = ";
+                                solutions<<" == ";
                             else if(i==repls.size())
                                 solutions<<"; "<<endl;;
                         }
@@ -1572,7 +1583,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                     {
                         cout << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
                         solutions << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
-                        writetofile(solutions);
+                        writetofile(solutions, dpndt_vars.op(0));
 
 #ifdef GiNaCDE_gui
                         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Unable to separate real and imaginary parts;");
@@ -1603,7 +1614,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         {
             cout << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
             solutions << "Evaluation stop: unable to separate real and imaginary parts;" << endl;
-            writetofile(solutions);
+            writetofile(solutions, dpndt_vars.op(0));
 
             #ifdef GiNaCDE_gui
             gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Unable to separate real and imaginary parts;");
@@ -1776,7 +1787,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         {
             cout << "Evaluation stop: independent variable present in diff. Equ.;" << endl;
             solutions << "Evaluation stop: independent variable present in diff. Equ.;" << endl;
-            writetofile(solutions);
+            writetofile(solutions, dpndt_vars.op(0));
 
             #ifdef GiNaCDE_gui
             gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: independent variable present in diff. Equ.;");
@@ -1825,7 +1836,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         if(solu_set_clt.empty())
         {
             solutions<<"No solution exist;"<<endl;
-            writetofile(solutions);
+            writetofile(solutions, dpndt_vars.op(0));
 
             #ifdef GiNaCDE_gui
             gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "No solution exist;");
@@ -1854,7 +1865,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         auto dur = endTime-beginTime;
         cout << " Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
         solutions << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_vars.op(0));
 
         #ifdef GiNaCDE_gui
         stringstream temstr;
@@ -1884,7 +1895,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
             if(NValue < 0)
             {
                 solutions<<"Negative value of N is not allowed;"<<endl;
-                writetofile(solutions);
+                writetofile(solutions, dpndt_vars.op(0));
 
                 #ifdef GiNaCDE_gui
                 gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Negative value of N is not allowed;");
@@ -1963,7 +1974,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                 {
                     solutions << "Evaluation stop: The value of N exceeds maximum value (10).\n"
                                   "Please try other value of N assigning NValue. Ex: NValue = 2." <<endl;
-                    writetofile(solutions);
+                    writetofile(solutions, dpndt_vars.op(0));
                     cout << "Evaluation stop: The value of N exceeds maximum value (10).\n"
                              "Please try other value of N assigning NValue. Ex: NValue = 2." <<endl;
 
@@ -1979,7 +1990,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                 if(evalf((NvalueInt-_ex2)/(denoma-_ex1)) < 0)
                 {
                     solutions<<"Negative value of N is not allowed;"<<endl;
-                    writetofile(solutions);
+                    writetofile(solutions, dpndt_vars.op(0));
 
                     #ifdef GiNaCDE_gui
                     gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Negative value of N is not allowed;");
@@ -2014,6 +2025,67 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     depend.clear(U, xi);
 
     return ret;
+}
+
+
+ex checkSolu(const string& diff_equ, const string& solutions, const string& algebraic_solutions, const string& solutions_conditions)
+{
+    string solutionsR = replacestring(solutions, "==","=");
+
+
+    ex diff_equex;
+    lst solutionslst={}, algebraic_solutionslst={},solutions_conditionslst={};
+    vector<string> temSplit;
+
+    temSplit = split(solutionsR,'=');
+    solutionslst.append(reader(temSplit[0])==reader(temSplit[1]));
+
+    // it handles complex NLPDE
+    if(solutions_conditions != "")
+    {
+        string diff_equStr = diff_equ;
+        temSplit[0].erase(std::remove(temSplit[0].begin(), temSplit[0].end(), ' '), temSplit[0].end());
+        diff_equex = reader(replacestring(diff_equ, "conjugate("+temSplit[0]+")",temSplit[0]+"c_"));
+        replaceI replaceI;
+        ex replaceIex = subs(replaceI(reader(temSplit[1])),symb_==-I);
+        solutionslst.append(reader(temSplit[0]+"c_")==replaceIex);
+    }
+
+    if(algebraic_solutions != "")
+    {
+        string algebraic_solutionsR = replacestring(algebraic_solutions, "==","=");
+
+        algebraic_solutionsR.erase(std::remove(algebraic_solutionsR.begin(),algebraic_solutionsR.end(),'{'),algebraic_solutionsR.end());
+        algebraic_solutionsR.erase(std::remove(algebraic_solutionsR.begin(),algebraic_solutionsR.end(),'}'),algebraic_solutionsR.end());
+
+        vector<string> algebraic_solutionsSplit = split(algebraic_solutionsR,',');
+        if(sizeof (algebraic_solutionsSplit) != 0)
+        {
+            for(auto itr = algebraic_solutionsSplit.begin(); itr != algebraic_solutionsSplit.end(); itr++)
+            {
+                temSplit = split(*itr,'=');
+                algebraic_solutionslst.append(reader(temSplit[0])==reader(temSplit[1]));
+            }
+        }
+    }
+
+    if(solutions_conditions != "")
+    {
+        string solutions_conditionsR = replacestring(solutions_conditions, "==","=");
+        temSplit = split(solutions_conditionsR,'=');
+        solutions_conditionslst.append(reader(temSplit[0])==reader(temSplit[1]));
+    }
+
+
+    if(nops(algebraic_solutionslst) != 0)
+        diff_equex = subs(diff_equex,algebraic_solutionslst);
+    if(nops(solutions_conditionslst) != 0)
+        diff_equex = subs(diff_equex,solutions_conditionslst);
+
+    diff_equex = simplify(simplify(simplify(evaluate(subs(diff_equex,solutionslst)),JacobiSimp),HyperSimp),AlgSimp);
+
+    return diff_equex;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////
