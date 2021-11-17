@@ -897,7 +897,9 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
     if(indpndt_vars.size() > 1)
     {
+#ifndef GiNaCDE_gui
         twc=ex_to<lst>(twcPhase[0]), phase=ex_to<lst>(twcPhase[1]);
+#endif //GiNaCDE_gui
 
         for(auto it = indpndt_vars.begin(); it != indpndt_vars.end(); it++)
         {
@@ -918,6 +920,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         //Creating wave vector(k) & velocity(v)
 
         string tem1;
+
         #ifdef GiNaCDE_gui
         string tem;
 

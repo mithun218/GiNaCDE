@@ -105,7 +105,7 @@ static void entry_insert_integer(GtkEditable *entry, char *New, gint len, gpoint
 static void deg_okbutton_clicked(GtkWidget* okbutton,gpointer dialog)
 {
     odedegs = gtk_entry_get_text(GTK_ENTRY(nlodeDeg));
-    
+
     if(odedegs!="")
         gtk_widget_destroy(GTK_WIDGET(dialog));
 }
@@ -121,7 +121,7 @@ static void Acoeff_okbutton_clicked(GtkWidget* okbutton,gpointer dialog)
 
     if(odedegsStr=="")
     {
-        isValid = false; 
+        isValid = false;
 
         /*char *str = g_strdup_printf ("<span font=\"14\" color=\"red\">"
                                "<b>\t\tRed: %d</b>"
@@ -358,7 +358,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                    "%s"
                  "</span>",
                  gtk_label_get_text(GTK_LABEL(dpndtVarLbl)));
-        gtk_label_set_markup(GTK_LABEL(dpndtVarLbl), strLbl);        
+        gtk_label_set_markup(GTK_LABEL(dpndtVarLbl), strLbl);
         //gtk_widget_modify_fg(dpndtVarLbl, GTK_STATE_NORMAL, &gtk_color);
         isValid = false;
     }
@@ -375,7 +375,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                        "%s"
                      "</span>",
                      gtk_label_get_text(GTK_LABEL(dpndtVarLbl)));
-            gtk_label_set_markup(GTK_LABEL(dpndtVarLbl), strLbl);              
+            gtk_label_set_markup(GTK_LABEL(dpndtVarLbl), strLbl);
             //gtk_widget_modify_fg(dpndtVarLbl, GTK_STATE_NORMAL, &gtk_color);
             isValid = false;
         }
@@ -387,7 +387,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                    "%s"
                  "</span>",
                  gtk_label_get_text(GTK_LABEL(indpndtVarLbl)));
-        gtk_label_set_markup(GTK_LABEL(indpndtVarLbl), strLbl);          
+        gtk_label_set_markup(GTK_LABEL(indpndtVarLbl), strLbl);
         //gtk_widget_modify_fg(indpndtVarLbl, GTK_STATE_NORMAL, &gtk_color);
         isValid = false;
     }
@@ -415,7 +415,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                            "%s"
                          "</span>",
                          gtk_label_get_text(GTK_LABEL(indpndtVarLbl)));
-                    gtk_label_set_markup(GTK_LABEL(indpndtVarLbl), strLbl);                 
+                    gtk_label_set_markup(GTK_LABEL(indpndtVarLbl), strLbl);
                     //gtk_widget_modify_fg(indpndtVarLbl, GTK_STATE_NORMAL, &gtk_color);
                     isValid = false;
                 }
@@ -434,7 +434,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                        "%s"
                      "</span>",
                      gtk_label_get_text(GTK_LABEL(indpndtVarLbl)));
-            gtk_label_set_markup(GTK_LABEL(indpndtVarLbl), strLbl);             
+            gtk_label_set_markup(GTK_LABEL(indpndtVarLbl), strLbl);
             //gtk_widget_modify_fg(indpndtVarLbl, GTK_STATE_NORMAL, &gtk_color);
             isValid = false;
         }
@@ -467,7 +467,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                            "%s"
                          "</span>",
                          gtk_label_get_text(GTK_LABEL(extraVarLbl)));
-                    gtk_label_set_markup(GTK_LABEL(extraVarLbl), strLbl);                 
+                    gtk_label_set_markup(GTK_LABEL(extraVarLbl), strLbl);
                     //gtk_widget_modify_fg(extraVarLbl, GTK_STATE_NORMAL, &gtk_color);
                     isValid = false;
                 }
@@ -480,7 +480,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                    "%s"
                  "</span>",
                  gtk_label_get_text(GTK_LABEL(extraVarLbl)));
-            gtk_label_set_markup(GTK_LABEL(extraVarLbl), strLbl);             
+            gtk_label_set_markup(GTK_LABEL(extraVarLbl), strLbl);
             //gtk_widget_modify_fg(extraVarLbl, GTK_STATE_NORMAL, &gtk_color);
             isValid = false;
         }
@@ -493,7 +493,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                "%s"
              "</span>",
              gtk_label_get_text(GTK_LABEL(diffEqLbl)));
-        gtk_label_set_markup(GTK_LABEL(diffEqLbl), strLbl);         
+        gtk_label_set_markup(GTK_LABEL(diffEqLbl), strLbl);
         //gtk_widget_modify_fg(diffEqLbl, GTK_STATE_NORMAL, &gtk_color);
         isValid = false;
     }
@@ -509,7 +509,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                    "%s"
                  "</span>",
                  gtk_label_get_text(GTK_LABEL(diffEqLbl)));
-            gtk_label_set_markup(GTK_LABEL(diffEqLbl), strLbl);             
+            gtk_label_set_markup(GTK_LABEL(diffEqLbl), strLbl);
             //gtk_widget_modify_fg(diffEqLbl, GTK_STATE_NORMAL, &gtk_color);
             isValid = false;
         }
@@ -531,7 +531,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                    "%s"
                  "</span>",
                  gtk_label_get_text(GTK_LABEL(NValueWidLbl)));
-            gtk_label_set_markup(GTK_LABEL(NValueWidLbl), strLbl);             
+            gtk_label_set_markup(GTK_LABEL(NValueWidLbl), strLbl);
             //gtk_widget_modify_fg(NValueWidLbl, GTK_STATE_NORMAL, &gtk_color);
             isValid = false;
         }
@@ -542,7 +542,7 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
                    "%s"
                  "</span>",
                  gtk_label_get_text(GTK_LABEL(NValueWidLbl)));
-            gtk_label_set_markup(GTK_LABEL(NValueWidLbl), strLbl);             
+            gtk_label_set_markup(GTK_LABEL(NValueWidLbl), strLbl);
             //gtk_widget_modify_fg(NValueWidLbl, GTK_STATE_NORMAL, &gtk_color);
             isValid = false;
           }
@@ -712,8 +712,10 @@ static int on_clicked_evaluatebtn(GtkWidget *_evaluatebtn, gpointer user_data)
 
     if(text_outputFormat == "maple")
         output = maple;
-    else
+    else if(text_outputFormat == "mathematica")
         output = mathematica;
+    else
+        output = ginac;
 
     twcPhase={lst{},lst{}};
     //getting current directory path
@@ -815,6 +817,7 @@ int main(int argc,char* argv[])
     /*inserting text in combo box text*/
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(outputFormat), (gchar*)"maple");
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(outputFormat), (gchar*)"mathematica");
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(outputFormat), (gchar*)"ginac");
     gtk_combo_box_set_active (GTK_COMBO_BOX(outputFormat), 0);
 
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(solvingMethod), (gchar*)"FIM");
@@ -847,7 +850,7 @@ int main(int argc,char* argv[])
     gtk_widget_set_tooltip_text(diffEq,"Examples of input diffs:\n1. Diff(u,t,1)-u*u*a*Diff(u,x,1)+Diff(u,x,3), \n"
                                                                  "2. Diff(u,t,1) + Diff(u,x,1) + u*Diff(u,x,1) - Diff(Diff(u,x,2),t,1), \n"
                                                                  "3. I*Diff(u,t,1) + p*Diff(u,x,2) + q*u*u*conjugate(u)");
-    gtk_widget_set_tooltip_text(outputFormat,"Output results are saved in maple or mathematica format.");
+    gtk_widget_set_tooltip_text(outputFormat,"Output results are saved in maple, mathematica or ginac format.");
     gtk_widget_set_tooltip_text(NValueWid,"For FIM, 'N' represents number of terms in sum(a_i(X)*Y^i,i=0..N) where X=u(x), Y=diff(u(x),x). For FIM, N = 1 and N = 2 are only allowed. "
                             "For F-expansion and modified F-expansion methods, the solutions of input NLPDE is expressed by a finite power series where presents 'N+1' terms.\n"
                             "By default, for FIM, N=1 and for F-expansion, modified F-expansion methods 'N' is evaluated automatically if N is not assigned to any value.");
@@ -870,7 +873,7 @@ int main(int argc,char* argv[])
 
     status_bar = gtk_statusbar_new ();
 
-    
+
     /*Grid creation and grid attach with label,entry,hbox widget*/
     table=gtk_grid_new();
     gtk_grid_set_row_spacing (GTK_GRID (table),15);
