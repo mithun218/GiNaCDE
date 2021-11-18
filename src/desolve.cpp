@@ -2075,8 +2075,19 @@ ex checkSolu(const string& diff_equ, const string& solutions, const string& alge
     if(solutions_conditions != "")
     {
         string solutions_conditionsR = replacestring(solutions_conditions, "==","=");
-        temSplit = split(solutions_conditionsR,'=');
-        solutions_conditionslst.append(reader(temSplit[0])==reader(temSplit[1]));
+
+        solutions_conditionsR.erase(std::remove(solutions_conditionsR.begin(),solutions_conditionsR.end(),'{'),solutions_conditionsR.end());
+        solutions_conditionsR.erase(std::remove(solutions_conditionsR.begin(),solutions_conditionsR.end(),'}'),solutions_conditionsR.end());
+
+        vector<string> solutions_conditionsSplit = split(solutions_conditionsR,',');
+        if(sizeof (solutions_conditionsSplit) != 0)
+        {
+            for(auto itr = solutions_conditionsSplit.begin(); itr != solutions_conditionsSplit.end(); itr++)
+            {
+                temSplit = split(*itr,'=');
+                solutions_conditionslst.append(reader(temSplit[0])==reader(temSplit[1]));
+            }
+        }
     }
 
 
