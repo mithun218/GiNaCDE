@@ -1,0 +1,179 @@
+                              =====First Integral Method======                         
+Equations are written in MAPLE language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: diff(u(x,t),x$3)+diff(u(x,t),t$1)-a*u(x,t)^2*diff(u(x,t),x$1) = 0;
+The Diff. Equ. is integrable;
+The assigned value(s) to the integrating constant(s)-> 
+ic_1: 0
+The Diff. Equ. becomes: -1/3*a*U(xi)^3*k_1+U(xi)*k_0+k_1^3*diff(U(xi),xi$2) = 0;
+u(x,t) = U(xi), 
+where xi = k_1*x+t*k_0;
+The value of N is: 2;
+
+****************************************************************************************************
+
+3*Diff(a_0,X_,1)*k_1^3*Y_+3*k_1^3*Y_^2*Diff(a_1,X_,1)+3*Diff(a_2,X_,1)*k_1^3*Y_^3-3*X_*a_1*k_0+a*X_^3*a_1*k_1 = 3*a_2*k_1^3*Y_^3*h_+3*a_1*k_1^3*Y_^2*h_-2*a_2*a*X_^3*k_1*Y_+3*k_1^3*a_0*Y_*h_+3*a_2*g_*k_1^3*Y_^2+3*g_*a_1*k_1^3*Y_+6*a_2*X_*Y_*k_0+3*g_*k_1^3*a_0
+Comparing the coefficients of Y_^i (i =3 .., 0) in both sides, we have
+
+3*Diff(a_2,X_,1)*k_1^3 = 3*a_2*k_1^3*h_,
+3*k_1^3*Diff(a_1,X_,1) = 3*a_1*k_1^3*h_+3*a_2*g_*k_1^3,
+3*Diff(a_0,X_,1)*k_1^3 = -2*a_2*a*X_^3*k_1+6*a_2*X_*k_0+3*k_1^3*a_0*h_+3*g_*a_1*k_1^3,
+-3*X_*a_1*k_0+a*X_^3*a_1*k_1 = 3*g_*k_1^3*a_0,
+assuming a_2 = 1, in first equation, we get h_ = 0;
+Balancing degrees of X_ we get, degrees of (a_0, a_1, g_) = (4, 2, 1), (4, 1, 0)
+
+                                //////////Degrees of (a_0, a_1, g_) = (4, 2, 1)//////////
+                 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+hence a_0 = a_03*X_^3+a_00+a_01*X_+a_04*X_^4+X_^2*a_02,
+      a_1 = X_*a_11+X_^2*a_12+a_10,
+      g_ = X_*g_1+g_0;
+Substituting a_2,.. a_0, g_ into all equation and setting all the coefficients of powers of  X_ to zero,
+Y_^0*X_^0: -3*a_00*k_1^3*g_0 = 0,
+Y_^0*X_^1: -3*a_10*k_0-3*a_00*g_1*k_1^3-3*a_01*k_1^3*g_0 = 0,
+Y_^0*X_^2: -3*k_1^3*a_02*g_0-3*a_11*k_0-3*a_01*g_1*k_1^3 = 0,
+Y_^0*X_^3: a*k_1*a_10-3*g_1*k_1^3*a_02-3*a_12*k_0-3*a_03*k_1^3*g_0 = 0,
+Y_^0*X_^4: -3*a_03*g_1*k_1^3+a*k_1*a_11-3*a_04*k_1^3*g_0 = 0,
+Y_^0*X_^5: -3*a_04*g_1*k_1^3+a*a_12*k_1 = 0,
+Y_^1*X_^0: -3*k_1^3*a_10*g_0+3*a_01*k_1^3 = 0,
+Y_^1*X_^1: -3*g_1*k_1^3*a_10+6*k_1^3*a_02-3*k_1^3*a_11*g_0-6*k_0 = 0,
+Y_^1*X_^2: -3*a_12*k_1^3*g_0-3*g_1*k_1^3*a_11+9*a_03*k_1^3 = 0,
+Y_^1*X_^3: 2*a*k_1+12*a_04*k_1^3-3*a_12*g_1*k_1^3 = 0,
+Y_^1*X_^4: 0 = 0,
+Y_^1*X_^5: 0 = 0,
+Y_^2*X_^0: -3*k_1^3*g_0+3*k_1^3*a_11 = 0,
+Y_^2*X_^1: 6*a_12*k_1^3-3*g_1*k_1^3 = 0,
+Y_^2*X_^2: 0 = 0,
+Y_^2*X_^3: 0 = 0,
+Y_^2*X_^4: 0 = 0,
+Y_^2*X_^5: 0 = 0,
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {k_0,k_1,a_00,a_01,a_02,a_03,a_04,a_10,a_11,a_12,g_0,g_1}->
+
+{g_0=0,a_02=k_1^(-3)*k_0,a_12=0,a_10=0,a_11=0,a_01=0,g_1=0,a_04=-1/6*a*k_1^(-2),a_03=0}
+diff(U(xi),xi$1)^2+a_00+U(xi)^2*k_1^(-3)*k_0-1/6*a*U(xi)^4*k_1^(-2) = 0,
+after factorization of above nonlinear ODE we get: 
+-(sqrt(-a_00-U(xi)^2*k_1^(-3)*k_0+1/6*a*U(xi)^4*k_1^(-2))-diff(U(xi),xi$1))*(sqrt(-a_00-U(xi)^2*k_1^(-3)*k_0+1/6*a*U(xi)^4*k_1^(-2))+diff(U(xi),xi$1)) = 0,
+solutions of each factor in above equation will be determined.
+solution(s) of input Diff. Equ. is (are)=>
+solution #1  u(x,t) = -1/6*a^(-1)*sqrt(a*k_1^(-5)*(3*k_1^(-6)*k_0^2-sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_0)*sqrt(2)*JacobiSN(-1/6*(k_1*x+t*k_0)*sqrt(3)*sqrt((3*k_1^(-6)*k_0^2+sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_1^(-3)*k_0)*sqrt(2)*k_1^3*k_0^(-1),-1/6*a_00^(-1)*a^(-1)*sqrt(-a_00*a*k_1^(-2)*(3*k_1^(-6)*k_0^2+a_00*a*k_1^(-2)-sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2)))*sqrt(2)*k_1^2*sqrt(18))*k_1^5*sqrt(18)*k_0^(-1);
+solution #2  u(x,t) = -1/6*a^(-1)*sqrt(a*k_1^(-5)*(3*k_1^(-6)*k_0^2-sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_0)*sqrt(2)*k_1^5*JacobiCN(-1/3*(k_1*x+t*k_0)*sqrt(sqrt(3)*k_1^(-3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2)*k_0)*sqrt(3)*k_1^3*k_0^(-1),1/2*(2*a_00*a*k_1^4+3*k_0^2)^(-1)*sqrt(2)*k_1^6*sqrt(-(2*a_00*a*k_1^4+3*k_0^2)*(sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2)-(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))*k_1^(-6)))*sqrt(18)*k_0^(-1);
+solution #3  u(x,t) = -1/6*JacobiDN(-1/6*(k_1*x+t*k_0)*sqrt(3)*sqrt(2)*sqrt(-(3*k_1^(-6)*k_0^2+sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_1^(-3)*k_0)*k_1^3*k_0^(-1),-1/6*a_00^(-1)*a^(-1)*sqrt(2)*k_1^2*sqrt(-a_00*a*(sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2)-(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))*k_1^(-2))*sqrt(18))*a^(-1)*sqrt(2)*k_1^5*sqrt(a*(3*k_1^(-6)*k_0^2+sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_1^(-5)*k_0)*sqrt(18)*k_0^(-1);
+solution #4  u(x,t) = 1/6*a^(-1)*sqrt(a*k_1^(-2)*(sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+3*k_1^(-3)*k_0))*JacobiNS(1/2*(k_1*x+t*k_0)*sqrt(2/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+2*k_1^(-3)*k_0),-1/6*a_00^(-1)*a^(-1)*sqrt(2)*sqrt(a_00*a*(sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-3*k_1^(-6)*k_0^2-a_00*a*k_1^(-2))*k_1^(-2))*k_1^2*sqrt(18))*sqrt(2)*k_1^2*sqrt(18);
+solution #5  u(x,t) = sqrt(3)*JacobiNC(1/3*(k_1*x+t*k_0)*sqrt(3)*sqrt(-sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))),1/3*sqrt(3)*sqrt(a_00*a*k_1^(-2))*(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))^(-1/2))*(a*k_1^(-2))^(-1/2)*sqrt(-1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-3)*k_0);
+solution #6  u(x,t) = sqrt(3)*(a*k_1^(-2))^(-1/2)*sqrt(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-3)*k_0)*JacobiND(1/3*(k_1*x+t*k_0)*sqrt(3)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-3)*k_0)^(-1/2)*sqrt(a_00*a*k_1^(-2)),sqrt(3)*(-a_00*a*k_1^(-2))^(-1/2)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6)));
+solution #7  u(x,t) = sqrt(-a_00)*sqrt(2)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*JacobiSC(-(k_1*x+t*k_0)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-6)*k_0^2+1/3*a_00*a*k_1^(-2))*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2),(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-6)*k_0^2+1/3*a_00*a*k_1^(-2))^(-1/2)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6)));
+solution #8  u(x,t) = (1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))^(-1/2)*sqrt(-a_00)*sqrt(1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-6)*k_0^2-1/3*a_00*a*k_1^(-2))*sqrt(2)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*JacobiSD((k_1*x+t*k_0)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6)),(1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))^(-1/2)*sqrt(1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-6)*k_0^2-1/3*a_00*a*k_1^(-2)));
+solution #9  u(x,t) = sqrt(-a_00)*sqrt(2)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*JacobiCS(1/3*(k_1*x+t*k_0)*sqrt(3)*sqrt(-a_00*a*k_1^(-2))*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2),sqrt(1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))*sqrt(3)*(-a_00*a*k_1^(-2))^(-1/2));
+solution #10  u(x,t) = JacobiDS((k_1*x+t*k_0)*(-1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6)),1/3*sqrt(3)*sqrt(-a_00*a*k_1^(-2))*(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))^(-1/2))*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))*(-1/18*a*sqrt(3)*k_1^(-2)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/6*a*k_1^(-5)*k_0)^(-1/2);
+
+{g_0=0,a_12=-1/3*sqrt(a)*sqrt(3)*sqrt(2)*k_1^(-1),a_00=3/2*a^(-1)*k_1^(-4)*k_0^2,a_04=1/6*a*k_1^(-2),a_11=0,g_1=-2/3*sqrt(a)*sqrt(3)*sqrt(2)*k_1^(-1),a_02=-k_1^(-3)*k_0,a_01=0,a_03=0,a_10=a^(-1/2)*sqrt(3)*sqrt(2)*k_1^(-2)*k_0}
+diff(U(xi),xi$1)^2-U(xi)^2*k_1^(-3)*k_0+3/2*a^(-1)*k_1^(-4)*k_0^2-1/3*(sqrt(a)*sqrt(3)*sqrt(2)*U(xi)^2*k_1^(-1)-3*a^(-1/2)*sqrt(3)*sqrt(2)*k_1^(-2)*k_0)*diff(U(xi),xi$1)+1/6*a*U(xi)^4*k_1^(-2) = 0,
+after factorization of above nonlinear ODE we get: 
+-1/6*sqrt(a)*sqrt(3)*sqrt(2)*U(xi)^2*k_1^(-1)+1/2*a^(-1/2)*sqrt(3)*sqrt(2)*k_1^(-2)*k_0+diff(U(xi),xi$1) = 0,
+solutions of each factor in above equation will be determined.
+solution(s) of input Diff. Equ. is (are)=>
+solution #11  u(x,t) = -a^(-1/2)*sqrt(3)*sqrt(k_1^(-3)*k_0)*k_1*tanh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_);
+solution #12  u(x,t) = -coth(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)*a^(-1/2)*sqrt(3)*sqrt(k_1^(-3)*k_0)*k_1;
+solution #13  u(x,t) = -a^(-1/2)*sqrt(3)*(k_1^(-3)*k_0)^(-1/2)*k_1^(-2)*tanh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)^(-1)*k_0;
+solution #14  u(x,t) = -coth(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)^(-1)*a^(-1/2)*sqrt(3)*(k_1^(-3)*k_0)^(-1/2)*k_1^(-2)*k_0;
+solution #15  u(x,t) = -3*(sinh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)*sqrt(a)*sqrt(3)*(k_1^(-3)*k_0)^(-1/2)*k_1^(-1)-3*cosh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)*C_)^(-1)*sech(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)-a^(-1/2)*sqrt(3)*sqrt(k_1^(-3)*k_0)*k_1*tanh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_);
+
+{g_0=0,a_12=1/3*sqrt(a)*sqrt(3)*sqrt(2)*k_1^(-1),k_0=0,a_10=0,a_04=1/6*a*k_1^(-2),g_1=2/3*sqrt(a)*sqrt(3)*sqrt(2)*k_1^(-1),a_02=0,a_11=0,a_01=0,a_00=0,a_03=0}
+diff(U(xi),xi$1)^2+1/3*sqrt(a)*sqrt(3)*sqrt(2)*U(xi)^2*k_1^(-1)*diff(U(xi),xi$1)+1/6*a*U(xi)^4*k_1^(-2) = 0,
+after factorization of above nonlinear ODE we get: 
+1/6*sqrt(a)*sqrt(3)*sqrt(2)*U(xi)^2*k_1^(-1)+diff(U(xi),xi$1) = 0,
+solutions of each factor in above equation will be determined.
+solution(s) of input Diff. Equ. is (are)=>
+solution #16  u(x,t) = 6*(sqrt(a)*sqrt(3)*sqrt(2)*x+6*C_)^(-1);
+
+{g_0=0,a_12=1/3*sqrt(a)*sqrt(3)*sqrt(2)*k_1^(-1),a_10=-a^(-1/2)*sqrt(3)*sqrt(2)*k_1^(-2)*k_0,a_00=3/2*a^(-1)*k_1^(-4)*k_0^2,a_04=1/6*a*k_1^(-2),g_1=2/3*sqrt(a)*sqrt(3)*sqrt(2)*k_1^(-1),a_11=0,a_02=-k_1^(-3)*k_0,a_01=0,a_03=0}
+diff(U(xi),xi$1)^2-U(xi)^2*k_1^(-3)*k_0+3/2*a^(-1)*k_1^(-4)*k_0^2+1/3*(sqrt(a)*sqrt(3)*sqrt(2)*U(xi)^2*k_1^(-1)-3*a^(-1/2)*sqrt(3)*sqrt(2)*k_1^(-2)*k_0)*diff(U(xi),xi$1)+1/6*a*U(xi)^4*k_1^(-2) = 0,
+after factorization of above nonlinear ODE we get: 
+1/6*sqrt(a)*sqrt(3)*sqrt(2)*U(xi)^2*k_1^(-1)-1/2*a^(-1/2)*sqrt(3)*sqrt(2)*k_1^(-2)*k_0+diff(U(xi),xi$1) = 0,
+solutions of each factor in above equation will be determined.
+solution(s) of input Diff. Equ. is (are)=>
+solution #17  u(x,t) = a^(-1/2)*sqrt(3)*sqrt(k_1^(-3)*k_0)*k_1*tanh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_);
+solution #18  u(x,t) = coth(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)*a^(-1/2)*sqrt(3)*sqrt(k_1^(-3)*k_0)*k_1;
+solution #19  u(x,t) = a^(-1/2)*sqrt(3)*(k_1^(-3)*k_0)^(-1/2)*k_1^(-2)*tanh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)^(-1)*k_0;
+solution #20  u(x,t) = coth(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)^(-1)*a^(-1/2)*sqrt(3)*(k_1^(-3)*k_0)^(-1/2)*k_1^(-2)*k_0;
+solution #21  u(x,t) = 3*(sinh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)*sqrt(a)*sqrt(3)*(k_1^(-3)*k_0)^(-1/2)*k_1^(-1)+3*cosh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)*C_)^(-1)*sech(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_)+a^(-1/2)*sqrt(3)*sqrt(k_1^(-3)*k_0)*k_1*tanh(1/2*(k_1*x+t*k_0)*sqrt(2)*sqrt(k_1^(-3)*k_0)+C_);
+
+{g_0=0,a_12=0,k_0=0,a_10=0,a_02=0,a_11=0,a_01=0,g_1=0,a_04=-1/6*a*k_1^(-2),a_03=0}
+diff(U(xi),xi$1)^2+a_00-1/6*a*U(xi)^4*k_1^(-2) = 0,
+after factorization of above nonlinear ODE we get: 
+-(sqrt(-a_00+1/6*a*U(xi)^4*k_1^(-2))-diff(U(xi),xi$1))*(sqrt(-a_00+1/6*a*U(xi)^4*k_1^(-2))+diff(U(xi),xi$1)) = 0,
+solutions of each factor in above equation will be determined.
+
+{g_0=0,k_0=0,a_12=-1/3*sqrt(a)*sqrt(3)*sqrt(2)*k_1^(-1),a_10=0,a_04=1/6*a*k_1^(-2),a_02=0,a_11=0,g_1=-2/3*sqrt(a)*sqrt(3)*sqrt(2)*k_1^(-1),a_01=0,a_00=0,a_03=0}
+diff(U(xi),xi$1)^2-1/3*sqrt(a)*sqrt(3)*sqrt(2)*U(xi)^2*k_1^(-1)*diff(U(xi),xi$1)+1/6*a*U(xi)^4*k_1^(-2) = 0,
+after factorization of above nonlinear ODE we get: 
+-1/6*sqrt(a)*sqrt(3)*sqrt(2)*U(xi)^2*k_1^(-1)+diff(U(xi),xi$1) = 0,
+solutions of each factor in above equation will be determined.
+solution(s) of input Diff. Equ. is (are)=>
+solution #22  u(x,t) = -6*(sqrt(a)*sqrt(3)*sqrt(2)*x-6*C_)^(-1);
+
+{k_0=0,k_1=0}
+a_01*U(xi)+diff(U(xi),xi$1)*(U(xi)*a_11+a_10+a_12*U(xi)^2)+diff(U(xi),xi$1)^2+a_03*U(xi)^3+a_00+a_04*U(xi)^4+U(xi)^2*a_02 = 0,
+after factorization of above nonlinear ODE we get: 
+1/4*(U(xi)*a_11+a_10+2*diff(U(xi),xi$1)-2*sqrt(-a_01*U(xi)+1/4*a_10^2-a_03*U(xi)^3-a_00+1/2*a_12*U(xi)^2*a_10+1/2*a_12*U(xi)^3*a_11+1/4*U(xi)^2*a_11^2-a_04*U(xi)^4-U(xi)^2*a_02+1/2*U(xi)*a_11*a_10+1/4*a_12^2*U(xi)^4)+a_12*U(xi)^2)*(U(xi)*a_11+a_10+2*diff(U(xi),xi$1)+2*sqrt(-a_01*U(xi)+1/4*a_10^2-a_03*U(xi)^3-a_00+1/2*a_12*U(xi)^2*a_10+1/2*a_12*U(xi)^3*a_11+1/4*U(xi)^2*a_11^2-a_04*U(xi)^4-U(xi)^2*a_02+1/2*U(xi)*a_11*a_10+1/4*a_12^2*U(xi)^4)+a_12*U(xi)^2) = 0,
+solutions of each factor in above equation will be determined.
+
+                                //////////Degrees of (a_0, a_1, g_) = (4, 1, 0)//////////
+                 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+hence a_0 = a_03*X_^3+a_00+a_01*X_+a_04*X_^4+X_^2*a_02,
+      a_1 = X_*a_11+a_10,
+      g_ = g_0;
+Substituting a_2,.. a_0, g_ into all equation and setting all the coefficients of powers of  X_ to zero,
+Y_^0*X_^0: -3*a_00*k_1^3*g_0 = 0,
+Y_^0*X_^1: -3*a_10*k_0-3*a_01*k_1^3*g_0 = 0,
+Y_^0*X_^2: -3*k_1^3*a_02*g_0-3*a_11*k_0 = 0,
+Y_^0*X_^3: a*k_1*a_10-3*a_03*k_1^3*g_0 = 0,
+Y_^0*X_^4: a*k_1*a_11-3*a_04*k_1^3*g_0 = 0,
+Y_^1*X_^0: -3*k_1^3*a_10*g_0+3*a_01*k_1^3 = 0,
+Y_^1*X_^1: 6*k_1^3*a_02-3*k_1^3*a_11*g_0-6*k_0 = 0,
+Y_^1*X_^2: 9*a_03*k_1^3 = 0,
+Y_^1*X_^3: 2*a*k_1+12*a_04*k_1^3 = 0,
+Y_^1*X_^4: 0 = 0,
+Y_^2*X_^0: -3*k_1^3*g_0+3*k_1^3*a_11 = 0,
+Y_^2*X_^1: 0 = 0,
+Y_^2*X_^2: 0 = 0,
+Y_^2*X_^3: 0 = 0,
+Y_^2*X_^4: 0 = 0,
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {k_0,k_1,a_00,a_01,a_02,a_03,a_04,a_10,a_11,g_0}->
+
+{g_0=0,a_02=k_1^(-3)*k_0,a_10=0,a_11=0,a_01=0,a_04=-1/6*a*k_1^(-2),a_03=0}
+diff(U(xi),xi$1)^2+a_00+U(xi)^2*k_1^(-3)*k_0-1/6*a*U(xi)^4*k_1^(-2) = 0,
+after factorization of above nonlinear ODE we get: 
+-(sqrt(-a_00-U(xi)^2*k_1^(-3)*k_0+1/6*a*U(xi)^4*k_1^(-2))-diff(U(xi),xi$1))*(sqrt(-a_00-U(xi)^2*k_1^(-3)*k_0+1/6*a*U(xi)^4*k_1^(-2))+diff(U(xi),xi$1)) = 0,
+solutions of each factor in above equation will be determined.
+solution(s) of input Diff. Equ. is (are)=>
+solution #23  u(x,t) = -1/6*a^(-1)*sqrt(a*k_1^(-5)*(3*k_1^(-6)*k_0^2-sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_0)*sqrt(2)*JacobiSN(-1/6*(k_1*x+t*k_0)*sqrt(3)*sqrt((3*k_1^(-6)*k_0^2+sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_1^(-3)*k_0)*sqrt(2)*k_1^3*k_0^(-1),-1/6*a_00^(-1)*a^(-1)*sqrt(-a_00*a*k_1^(-2)*(3*k_1^(-6)*k_0^2+a_00*a*k_1^(-2)-sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2)))*sqrt(2)*k_1^2*sqrt(18))*k_1^5*sqrt(18)*k_0^(-1);
+solution #24  u(x,t) = -1/6*a^(-1)*sqrt(a*k_1^(-5)*(3*k_1^(-6)*k_0^2-sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_0)*sqrt(2)*k_1^5*JacobiCN(-1/3*(k_1*x+t*k_0)*sqrt(sqrt(3)*k_1^(-3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2)*k_0)*sqrt(3)*k_1^3*k_0^(-1),1/2*(2*a_00*a*k_1^4+3*k_0^2)^(-1)*sqrt(2)*k_1^6*sqrt(-(2*a_00*a*k_1^4+3*k_0^2)*(sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2)-(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))*k_1^(-6)))*sqrt(18)*k_0^(-1);
+solution #25  u(x,t) = -1/6*JacobiDN(-1/6*(k_1*x+t*k_0)*sqrt(3)*sqrt(2)*sqrt(-(3*k_1^(-6)*k_0^2+sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_1^(-3)*k_0)*k_1^3*k_0^(-1),-1/6*a_00^(-1)*a^(-1)*sqrt(2)*k_1^2*sqrt(-a_00*a*(sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2)-(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))*k_1^(-2))*sqrt(18))*a^(-1)*sqrt(2)*k_1^5*sqrt(a*(3*k_1^(-6)*k_0^2+sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-12)*k_0^2))*k_1^(-5)*k_0)*sqrt(18)*k_0^(-1);
+solution #26  u(x,t) = 1/6*a^(-1)*sqrt(a*k_1^(-2)*(sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+3*k_1^(-3)*k_0))*JacobiNS(1/2*(k_1*x+t*k_0)*sqrt(2/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+2*k_1^(-3)*k_0),-1/6*a_00^(-1)*a^(-1)*sqrt(2)*sqrt(a_00*a*(sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-3*k_1^(-6)*k_0^2-a_00*a*k_1^(-2))*k_1^(-2))*k_1^2*sqrt(18))*sqrt(2)*k_1^2*sqrt(18);
+solution #27  u(x,t) = sqrt(3)*JacobiNC(1/3*(k_1*x+t*k_0)*sqrt(3)*sqrt(-sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))),1/3*sqrt(3)*sqrt(a_00*a*k_1^(-2))*(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))^(-1/2))*(a*k_1^(-2))^(-1/2)*sqrt(-1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-3)*k_0);
+solution #28  u(x,t) = sqrt(3)*(a*k_1^(-2))^(-1/2)*sqrt(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-3)*k_0)*JacobiND(1/3*(k_1*x+t*k_0)*sqrt(3)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-3)*k_0)^(-1/2)*sqrt(a_00*a*k_1^(-2)),sqrt(3)*(-a_00*a*k_1^(-2))^(-1/2)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6)));
+solution #29  u(x,t) = sqrt(-a_00)*sqrt(2)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*JacobiSC(-(k_1*x+t*k_0)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-6)*k_0^2+1/3*a_00*a*k_1^(-2))*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2),(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+k_1^(-6)*k_0^2+1/3*a_00*a*k_1^(-2))^(-1/2)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6)));
+solution #30  u(x,t) = (1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))^(-1/2)*sqrt(-a_00)*sqrt(1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-6)*k_0^2-1/3*a_00*a*k_1^(-2))*sqrt(2)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*JacobiSD((k_1*x+t*k_0)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))+1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6)),(1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))^(-1/2)*sqrt(1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-6)*k_0^2-1/3*a_00*a*k_1^(-2)));
+solution #31  u(x,t) = sqrt(-a_00)*sqrt(2)*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*JacobiCS(1/3*(k_1*x+t*k_0)*sqrt(3)*sqrt(-a_00*a*k_1^(-2))*(1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2),sqrt(1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))*sqrt(3)*(-a_00*a*k_1^(-2))^(-1/2));
+solution #32  u(x,t) = JacobiDS((k_1*x+t*k_0)*(-1/3*sqrt(3)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-k_1^(-3)*k_0)^(-1/2)*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6)),1/3*sqrt(3)*sqrt(-a_00*a*k_1^(-2))*(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))^(-1/2))*sqrt(-1/3*sqrt(3)*k_1^(-3)*k_0*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/3*(2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))*(-1/18*a*sqrt(3)*k_1^(-2)*sqrt((2*a_00*a*k_1^4+3*k_0^2)*k_1^(-6))-1/6*a*k_1^(-5)*k_0)^(-1/2);
+
+{k_0=0,k_1=0}
+a_01*U(xi)+diff(U(xi),xi$1)^2+a_03*U(xi)^3+a_00+a_04*U(xi)^4+U(xi)^2*a_02+(U(xi)*a_11+a_10)*diff(U(xi),xi$1) = 0,
+after factorization of above nonlinear ODE we get: 
+1/4*(U(xi)*a_11+a_10+2*diff(U(xi),xi$1)+2*sqrt(-a_01*U(xi)+1/4*a_10^2-a_03*U(xi)^3-a_00+1/4*U(xi)^2*a_11^2-a_04*U(xi)^4-U(xi)^2*a_02+1/2*U(xi)*a_11*a_10))*(U(xi)*a_11+a_10+2*diff(U(xi),xi$1)-2*sqrt(-a_01*U(xi)+1/4*a_10^2-a_03*U(xi)^3-a_00+1/4*U(xi)^2*a_11^2-a_04*U(xi)^4-U(xi)^2*a_02+1/2*U(xi)*a_11*a_10)) = 0,
+solutions of each factor in above equation will be determined.
+
+
+****************************************************************************************************
+****************************************************************************************************
+
+Time: 11.65 seconds
