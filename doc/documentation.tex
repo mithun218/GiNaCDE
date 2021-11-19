@@ -1,4 +1,4 @@
-\documentclass[prd,aps,floats,showkeys,nofootinbib,notitlepage]{revtex4}
+\documentclass[prd,aps,floats,showkeys,nofootinbib,notitlepage]{revtex4-2}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsbsy}
@@ -22,8 +22,8 @@
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
 
+
 \begin{document}
-	
 	\begin{titlepage}
 		%\vspace*{3cm}
 		\begin{center}
@@ -52,7 +52,7 @@
 	
 	%In this short tutorial, we have described the following:
 	
-	%In Sec. \ref{sec:compile}, the compiling and installing procedures of the GiNaCDE library have been explained. In Sec. \ref{sec:command}, we present some useful commands which need to solve NLPDEs by the GiNaCDE library. In Sec. \ref{sec:examples}, GiNaCDE library has been applied on some examples to derive their solutions, and we can know the techniques to use GiNaCDE with C++ code. In Sec. \ref{sec:furexam}  we have applied the library on different types of NLPDEs to provide the usage description of the library in detail. In Sec. \ref{sec:furexam} we have also shown some new exact solutions obtained in some NLPDEs. In Sec. \ref{gui}, we give a brief discussion about the GUI version of GiNaCDE.
+	% In Sec. \ref{sec:compile}, the compiling and installing procedures of the GiNaCDE library have been explained. In Sec. \ref{sec:command}, we present some useful commands which need to solve NLPDEs by the GiNaCDE library. In Sec. \ref{sec:examples}, GiNaCDE library has been applied on some examples to derive their solutions, and we can know the techniques to use GiNaCDE with C++ code. In Sec. \ref{sec:furexam}  we have applied the library on different types of NLPDEs to provide the usage description of the library in detail. In Sec. \ref{sec:furexam} we have also shown some new exact solutions obtained in some NLPDEs. In Sec. \ref{gui}, we give a brief discussion about the GUI version of GiNaCDE.
 	\section{Problem}
 	\par Let us consider an NLPDE with independent variables $t,x_1,x_2, \ldots x_m=\mathbf{X}$ and dependent variable $u$ in the following general form
 	\begin{equation}\label{geneq}
@@ -311,7 +311,7 @@
 	
 	
 	\section{Software Implementation}\label{sec:imple}
-	We have implemented the algorithms described in Secs. \ref{sec:Fexpn}, \ref{sec:mF} and \ref{sec:fim}, into GiNaCDE. GiNaCDE is a C++ library that is built on a pure C++ symbolic library GiNaC \cite{ginac}. Besides this library version, we have also developed a GUI version of GiNaCDE called GiNaCDE GUI. When we solve differential equations using GiNaCDE GUI, we do not have to write any C++ code, and compilation of any code is not required. This GUI version guides us in each step to obtain the output results. However, a complete guide of GiNaCDE GUI has been provided in the GiNaCDE \href{https://github.com/mithun218/GiNaCDE}{repository}. In both versions of GiNaCDE (library and GUI), the output results are saved in a text file with calculating steps. Output results can be saved in Maple or Mathematica programming language by assigning the C++ macros {\em Maple} or {\em Mathematica} to the programming variable {\em {output}}. 
+	We have implemented the algorithms described in Secs. \ref{sec:Fexpn}, \ref{sec:mF} and \ref{sec:fim}, into GiNaCDE. GiNaCDE is a C++ library that is built on a pure C++ symbolic library GiNaC \cite{ginac}. Besides this library version, we have also developed a GUI version of GiNaCDE called GiNaCDE GUI. When we solve differential equations using GiNaCDE GUI, we do not have to write any C++ code, and compilation of any code is not required. This GUI version guides us in each step to obtain the output results. However, a complete guide of GiNaCDE GUI has been provided in the \href{https://github.com/mithun218/GiNaCDE}{GiNaCDE repository}. In both versions of GiNaCDE (library and GUI), the output results are saved in a text file with calculating steps. Output results can be saved in Maple, Mathematica or GiNaC programming language by assigning the C++ macros {\em maple}, {\em mathematica} or {\em ginac} to the programming variable {\em {output}}. 
 	
 	F-expansion and mF-expansion methods can be applied to higher-order NLPDEs. But, FIM method is applicable to an NLPDE when its transformed NLODE \eqref{tweq2} is second-order only. Actually, there are no rules to know in advance the appropriate method among three to solve the given NLPDE. 
 	
@@ -371,6 +371,7 @@
 	\section{The parameters of the different methods used in library}
 	Many parameters are used in the three different methods. All parameters have been well described in Secs. \ref{sec:Fexpn}, \ref{sec:mF} and \ref{sec:fim}. In the software, we have used the same parameter's names as used in the above descriptions of the algorithms, only in the case of first integral method some parameter's $(g,h)$ and algebraic symbol's $(X,Y)$ name followed by an underscore in the software to avoid conflict with user-provided names. These parameters are $g\_,h\_$ and symbols are $X\_,Y\_$. During derivations, the software always generate some parameters, their names are $a_i(i=0,1,2,\ldots),b_i(i=0,1,2,\ldots),a_{ij}(i=0,1,2,\ldots,j=0,1,2,\ldots),g_i(i=0,1,2,\ldots),N,d_g,d_{a_i}(i=0,1,2,\ldots)$. When using GiNaCDE, we will always choose the name of the parameter such that its name does not conflict with these parameters generated by the software.
 	
+	Here one should note that since the underscore has a special meaning in Mathematica, it is not allowed in Mathematica identifiers. So underscore is not used in Mathematica output format of GiNaCDE. 
 	\section{Some useful commands in library}\label{sec:command}
 	In the following we have dealt with some useful commands of GiNaCDE library required to write C++ code. In particular, for more details about the commands {\em ex, lst}, we refer to the tutorial of GiNaC library \cite{ginac}.
 	\begin{itemize}
@@ -415,8 +416,13 @@
 		
 		\item[] {\em \textbf{desolve( ex differential\_equation, lst dependent\_variable, int method):}} The {\em differential\_equation} is solved for the {\em dependent\_variable}. To choose the solution method, one has to be assigned the 3rd argument by a {\em macro}. There are three {\em macros}- {\em F\_expansion, mF\_expansion, FIM} and the corresponding solution methods are respectively F-expansion, modified F-expansion and first integral methods. 
 		
-		\item[] {\em \textbf{output:}} Output results can be saved in Maple or Mathematica programming language by assigning {\em Maple} or {\em Mathematica}
-		{macros} to this variable. This option gives us an additional advantage to make further calculations using the output results in the commercially available softwares such as {Maple} or {Mathematica}.
+		\item[] {\em \textbf{ex checkSolu( string diff\_equ, string solutions, string algebraic\_solutions, string solutions\_conditions)
+		:}}  This function checks the solutions of differential equation reported by GiNaCDE. Here all the function arguments are std::string class in C++. This function checks the solutions \textit{solutions} of differential equation \textit{diff\_equ} for the solutions \textit{algebraic\_solutions} of nonlinear algebraic equations with the conditions \textit{solutions\_conditions} of solutions \textit{solutions}.
+	
+	   This function uses substitution method to check the solution returned by GiNaCDE. The substitution method involves substituting the solution back into the differential equation. If the solution is valid, this function returns $0$.
+		
+		\item[] {\em \textbf{output:}} Output results can be saved in Maple, Mathematica or GiNaC programming language by assigning {\em maple}, {\em mathematica}
+		 or {\em ginac} {macros} to this variable. This option gives us an additional advantage to make further calculations using the output results in the commercially available softwares such as {Maple} or {Mathematica}.
 		
 		\item[] {\em \textbf{filename:}} The file name in a {\em string} is assigned to this variable. Output results are saved in this file. 
 	\end{itemize}
@@ -437,7 +443,7 @@
 	
 	\par The software determines exact solutions with calculating steps, and the results are saved in an output file.
 	
-	Beside this, the solutions of the NLPDE is collected by a variable {\em solutionClt}. The variable {\em solutionClt} is a container of type {\em vector<lst>}.
+	Beside this, the solutions of the NLPDE are collected by a variable {\em solutionClt}. The variable {\em solutionClt} is a container of type {\em vector<lst>}.
 	{\em solutionClt} holds the list of solutions. Invariably, the first element in each list is the solutions of the nonlinear algebraic system, and the remaining elements are the exact solutions of the given NLPDE.
 	Now, we exemplify the usage of the variable {\em solutionClt}. Let us consider {\em solutionClt} has collected four set of solutions which can be obtained by calling {\em solutionClt[0]}, {\em solutionClt[1]}, {\em solutionClt[2]} and {\em solutionClt[3]}. Let us assume, {\em solutionClt[0]} has stored the following solutions
 	\begin{verbatim}
