@@ -67,6 +67,15 @@ The [`test`](test/) folder contains tests. These tests can be executed using the
     $ ctest
 ```
 These automated tests verify the functionalities of the software. 
+
+## Checking the solutions of Diff. Equ.
+We can easily verify the solutions returned by GiNaCDE by substituting the solutions back into the differential equation. Following this substitution method the solutions of Differential Equations in the text file derived by GiNaCDE, can be easily checked by the software: Maple, Mathematica, and GiNaCDE. To illustrate the procedures for checking the solutions, we have provided some output text files [`NLS_Fexp(maple).txt`](examples/NLS_Fexp(maple).txt), [`NLS_Fexp(ginac).txt`](examples/NLS_Fexp(ginac).txt), [`KDV_FIM2.txt`](test/KDV_FIM2.txt), [`gardner_Fex.txt`](test/gardner_Fex.txt), [`cahnAllen_mF.txt`](test/cahnAllen_mF.txt), [`Painlev_FIMextravar.txt`](test/Painlev_FIMextravar.txt), and the corresponding checking files [`checkSolu_NLS_Fexp(maple).mw`](examples/checkSolu_NLS_Fexp(maple).mw), [`checkSolu_NLS_Fexp(ginac).cpp`](examples/checkSolu_NLS_Fexp(ginac).cpp), [`checkSolu_KDV_FIM2.mw`](test/checkSolu_KDV_FIM2.mw), [`checkSolu_gardner_Fex.nb`](test/checkSolu_gardner_Fex.nb), [`checkSolu_cahnAllen_mF.cpp`](test/checkSolu_cahnAllen_mF.cpp), [`checkSolu_Painlev_FIMextravar.cpp`](test/checkSolu_Painlev_FIMextravar.cpp) which explain how to test the solutions using Maple (Maple 2019), Mathematica (Mathematica 9), and GiNaCDE software.
+
+**Caution:** Currently, GiNacDE is unable to check all the solutions reported by GiNaCDE due to some simplification problems. I hope this problem can be fixed in the future release of GiNaCDE.
+Now to verify the solutions, I recommend to use Maple or Mathematica software. 
+
+
+
 ## Execution
 GiNaCDE library can be executed in C++ code with GNU compiler collection, `GCC >= 4.9`. To run `GiNaCDE GUI`, 
 `gtools` just click on `GiNaCDE_gui.exe`, `gtools.exe` files respectively. Then GiNaCDE GUI is executed in a GUI framework, 
