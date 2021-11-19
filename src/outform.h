@@ -15,8 +15,10 @@ using namespace GiNaC;
 
 #define maple 8
 #define mathematica 9
+#define ginac 10
 
 extern int output;
+extern string dpndtWtIndpndt; // It is assinged to dependend variable with independen variable(s), such as u(t,x)
 
 string outstr(const char* _sym, int symno);
 
@@ -29,6 +31,6 @@ string gmathematica(string _instr);
 
 string diffformchange(const ex& diffeq, const lst& dpndt_var, const exset& indpndt_var);
 
-void writetofile(stringstream&);
+void writetofile(stringstream&, const ex& dpndt_var);
 
 #endif // OUTFORM_H_INCLUDED

@@ -1094,22 +1094,155 @@ REGISTER_FUNCTION(asech, eval_func(asech_eval).
                          conjugate_func(asech_conjugate).
                          set_name("arcsech"));
 
-//////////
-//  Dummy Jacobi Elliptic Functions
-//////////
-REGISTER_FUNCTION(JacobiSN, dummy())
-REGISTER_FUNCTION(JacobiCN, dummy())
-REGISTER_FUNCTION(JacobiDN, dummy())
-REGISTER_FUNCTION(JacobiNS, dummy())
-REGISTER_FUNCTION(JacobiNC, dummy())
-REGISTER_FUNCTION(JacobiND, dummy())
-REGISTER_FUNCTION(JacobiSC, dummy())
-REGISTER_FUNCTION(JacobiSD, dummy())
-REGISTER_FUNCTION(JacobiCS, dummy())
-REGISTER_FUNCTION(JacobiDS, dummy())
-REGISTER_FUNCTION(sn, dummy())
-REGISTER_FUNCTION(cn, dummy())
-REGISTER_FUNCTION(dn, dummy())
+
+///////////
+/// JacobiSN functions
+///////////
+
+static ex JacobiSN_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiSN(x,m) ->  JacobiCN(x, m)*JacobiDN(x, m);
+        return JacobiCN(x, m)*JacobiDN(x, m);
+}
+
+REGISTER_FUNCTION(JacobiSN, derivative_func(JacobiSN_deriv))
+
+
+///////////
+/// JacobiCN functions
+///////////
+
+static ex JacobiCN_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiCN(x,m) ->  -JacobiDN(x, m)*JacobiSN(x, m);
+        return -JacobiDN(x, m)*JacobiSN(x, m);
+}
+
+REGISTER_FUNCTION(JacobiCN, derivative_func(JacobiCN_deriv))
+
+
+///////////
+/// JacobiDN functions
+///////////
+
+static ex JacobiDN_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiDN(x,m) -> -m^2*JacobiCN(x, m)*JacobiSN(x, m);
+        return -m*m*JacobiCN(x, m)*JacobiSN(x, m);
+}
+
+REGISTER_FUNCTION(JacobiDN, derivative_func(JacobiDN_deriv))
+
+
+///////////
+/// JacobiNS functions
+///////////
+
+static ex JacobiNS_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiNS(x,m) -> -JacobiCN(x, m)*JacobiDN(x, m)/JacobiSN(x, m)^2;
+        return -JacobiCN(x, m)*JacobiDN(x, m)/pow(JacobiSN(x, m),2);
+}
+
+REGISTER_FUNCTION(JacobiNS, derivative_func(JacobiNS_deriv))
+
+
+///////////
+/// JacobiNC functions
+///////////
+
+static ex JacobiNC_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiNC(x,m) -> JacobiDN(x, m)*JacobiSN(x, m)/JacobiCN(x, m)^2;
+        return JacobiDN(x, m)*JacobiSN(x, m)/pow(JacobiCN(x, m),2);
+}
+
+REGISTER_FUNCTION(JacobiNC, derivative_func(JacobiNC_deriv))
+
+
+///////////
+/// JacobiND functions
+///////////
+
+static ex JacobiND_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiND(x,m) -> m^2*JacobiCN(x, m)*JacobiSN(x, m)/JacobiDN(x, m)^2;
+        return m*m*JacobiCN(x, m)*JacobiSN(x, m)/pow(JacobiDN(x, m),2);
+}
+
+REGISTER_FUNCTION(JacobiND, derivative_func(JacobiND_deriv))
+
+
+///////////
+/// JacobiSC functions
+///////////
+
+static ex JacobiSC_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiSC(x,m) -> JacobiDN(x, m)/JacobiCN(x, m)^2;
+        return JacobiDN(x, m)/pow(JacobiCN(x, m),2);
+}
+
+REGISTER_FUNCTION(JacobiSC, derivative_func(JacobiSC_deriv))
+
+
+///////////
+/// JacobiSD functions
+///////////
+
+static ex JacobiSD_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiSD(x,m) -> JacobiCN(x, m)/JacobiDN(x, m)^2;
+        return JacobiCN(x, m)/pow(JacobiDN(x, m),2);
+}
+
+REGISTER_FUNCTION(JacobiSD, derivative_func(JacobiSD_deriv))
+
+
+///////////
+/// JacobiNC functions
+///////////
+
+static ex JacobiCS_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiCS(x,m) -> -JacobiDN(x, m)/JacobiSN(x, m)^2;
+        return -JacobiDN(x, m)/pow(JacobiSN(x, m),2);
+}
+
+REGISTER_FUNCTION(JacobiCS, derivative_func(JacobiCS_deriv))
+
+
+///////////
+/// JacobiDS functions
+///////////
+
+static ex JacobiDS_deriv(const ex & x,const ex & m, unsigned deriv_param)
+{
+        GINAC_ASSERT(deriv_param==0);
+
+        // d/dx JacobiDS(x,m) -> -JacobiCS(x, m)/JacobiSN(x, m);
+        return -JacobiCS(x, m)/JacobiSN(x, m);
+}
+
+REGISTER_FUNCTION(JacobiDS, derivative_func(JacobiDS_deriv))
 
 
 

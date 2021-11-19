@@ -123,22 +123,14 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     solutions << dpndt_varChng << " = " << solu_form << ";" << endl;
     cout << dpndt_varChng << " = " << solu_form << ";" << endl;
 
-    if( method == mF_expansion )
-    {
-        solutions << "The first-order nonlinear ODE: ";
-        if(output == mathematica)
-            solutions <<  "D[F[" <<indpndt_var << "]," << indpndt_var << "] = "<<F_ode <<";" << endl;
-        else
-            solutions << "diff(F(" <<indpndt_var << ")," << indpndt_var << ") = "<<F_ode <<";" << endl;
-    }
+
+    solutions << "The first-order nonlinear ODE: ";
+    if(output == mathematica)
+        solutions <<  "D[F[" <<indpndt_var << "]," << indpndt_var << "] = "<<F_ode <<";" << endl;
+    else if(output == maple)
+        solutions << "diff(F(" <<indpndt_var << ")," << indpndt_var << ") = "<<F_ode <<";" << endl;
     else
-    {
-        solutions << "The first-order nonlinear ODE: ";
-        if(output == mathematica)
-            solutions <<  "D[F[" <<indpndt_var << "]," << indpndt_var << "] = "<<F_ode <<";" << endl;
-        else
-            solutions << "diff(F(" <<indpndt_var << ")," << indpndt_var << ") = "<<F_ode <<";" << endl;
-    }
+        solutions << "diff(F," << indpndt_var << ",1) = "<<F_ode <<";" << endl;
 
     solutions << "\n" << out << endl << endl;
 
@@ -174,9 +166,9 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                 coeffs.append((solu_form_subs.coeff(F, i)).coeff(Fd_, j));
 
                 if(denom(Nvalue) != _ex1)
-                    solutions <<Diff(F, indpndt_var, 1) << "^" << j << "F^(" << i<<"/"<<denom(Nvalue) << "): "  << (solu_form_subs.coeff(F, i)).coeff(Fd_, j)<< " = 0;" << endl;
+                    solutions <<Diff(F, indpndt_var, 1) << "^" << j <<"*"<< "F^(" << i<<"/"<<denom(Nvalue) << "): "  << (solu_form_subs.coeff(F, i)).coeff(Fd_, j)<< " = 0;" << endl;
                 else
-                    solutions <<Diff(F, indpndt_var, 1) << "^" << j << F << "^" << i << ": " << (solu_form_subs.coeff(F, i)).coeff(Fd_, j)<< " = 0;" << endl;
+                    solutions <<Diff(F, indpndt_var, 1) << "^" << j <<"*"<< F << "^" << i << ": " << (solu_form_subs.coeff(F, i)).coeff(Fd_, j)<< " = 0;" << endl;
             }
         }
 
@@ -248,7 +240,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     if(solu_set_clt.empty())
     {
         solutions << "No solution of the above equations exist;" << endl;
-        writetofile(solutions);
+        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "No solution exist;");
@@ -262,6 +254,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     int odetype;
     ex tra_wave_coordSubs,tw_coordiPhaseSubs = _ex0;
 
+    int solNum = 1; // counts solution numbers
 
     for(set<lst, ex_is_less>::const_iterator it = solu_set_clt.begin(); it != solu_set_clt.end(); it++)
     {
@@ -301,8 +294,10 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                     solutions << "where F is the solution of" << endl;
                     if(output == mathematica)
                         solutions <<  "D[F[" <<indpndt_var << "]," << indpndt_var << "] = "<<F_odesubs <<";" << endl;
-                    else
+                    else if(output == maple)
                         solutions << "diff(F(" <<indpndt_var << ")," << indpndt_var << ") = "<<F_odesubs <<";" << endl;
+                    else
+                        solutions << "diff(F," << indpndt_var << ",1) = "<<F_odesubs <<";" << endl;;
 
                     odetype = odeType_check(F_odesubs, F);
                     degAcoeff.remove_all();
@@ -398,14 +393,15 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                                 {
                                     if(!is_a<lst>(*it1))
                                     {
-                                        solutions << dpndt_var << " = "  << solu_form_F_subs <<";"<< endl;
+                                        solutions<<"solution #"<<solNum<<"  " << dpndt_var << " = "  << solu_form_F_subs <<";"<< endl;
+                                        solNum = solNum + 1;
 
                                         solutionClt[solutionClt.size()-1].append(dpndt_var  ==  solu_form_F_subs);
                                     }
                                     else // for handling solutions with conditions
                                     {
                                         lst temList = {};
-                                        solutions << dpndt_var << " = "  << solu_form_F_subs <<" (with condition(s) ";
+                                        solutions<<"solution #"<<solNum<<"  " << dpndt_var << " = "  << solu_form_F_subs <<" (with condition(s) ";
                                         temList.append(dpndt_var  ==  solu_form_F_subs);
 
                                         for(size_t i=1; i<nops(*it1); i++)
@@ -414,6 +410,8 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                                             temList.append((*it1).op(i));
                                         }
                                         solutions<<");"<<endl;
+
+                                        solNum = solNum + 1;
 
                                         solutionClt[solutionClt.size()-1].append(temList);
                                     }
@@ -424,13 +422,14 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                             {
                                 if(!is_a<lst>(*it1))
                                 {
-                                    solutions << dpndt_var << " = "  << solu_form_F_subs <<";"<< endl;
+                                    solutions<<"solution #"<<solNum<<"  " << dpndt_var << " = "  << solu_form_F_subs <<";"<< endl;
+                                    solNum = solNum + 1;
 
                                     solutionClt[solutionClt.size()-1].append(dpndt_var  ==  solu_form_F_subs);
                                 }
                                 else
                                 {
-                                    solutions << dpndt_var << " = "  << solu_form_F_subs <<" (with condition(s) ";
+                                    solutions<<"solution #"<<solNum<<"  " << dpndt_var << " = "  << solu_form_F_subs <<" (with condition(s) ";
 
                                     lst temList = {};
                                     temList.append(dpndt_var  ==  solu_form_F_subs);
@@ -441,6 +440,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                                         temList.append((*it1).op(i));
                                     }
                                     solutions<<");"<<endl;
+                                    solNum = solNum + 1;
 
                                     solutionClt[solutionClt.size()-1].append(temList);
 
@@ -477,7 +477,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                         }
                         if(!isUndefine)
                         {
-                            solutions << dpndt_var << " = "  << solu_form_subs*exp( I*tw_coordiPhaseSubs )<<";"<< endl;
+                            solutions <<"solution #"<<solNum<<"  "<< dpndt_var << " = "  << solu_form_subs*exp( I*tw_coordiPhaseSubs )<<";"<< endl;
 
                             solutionClt.push_back(lst{});
                             solutionClt[solutionClt.size()-1].append(*it);
@@ -487,8 +487,8 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                     }
                     else
                     {
-                        solutions << dpndt_var << " = "  << solu_form_subs*exp( I*tw_coordiPhaseSubs ) <<";"<< endl;
-
+                        solutions <<"solution #"<<solNum<<"  "<< dpndt_var << " = "  << solu_form_subs*exp( I*tw_coordiPhaseSubs ) <<";"<< endl;
+                        solNum = solNum + 1;
                         solutionClt.push_back(lst{});
                         solutionClt[solutionClt.size()-1].append(*it);
                         solutionClt[solutionClt.size()-1].append(dpndt_var  ==  solu_form_subs*exp( I*tw_coordiPhaseSubs));
@@ -522,7 +522,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     auto dur = endTime-beginTime;
     cout << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
     solutions << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
-    writetofile(solutions);
+    writetofile(solutions, dpndt_var);
 
     #ifdef GiNaCDE_gui
     stringstream temstr;

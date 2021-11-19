@@ -17,10 +17,11 @@
 using namespace std;
 using namespace GiNaC;
 
-size_t expandLevel = 3,addNumFrFactr = 20, largstNumsimp=100000000; /* expandLevel: To expand an expression upto a specified  degree (used in solvec::polySoluWtAutoDegSelct)
-                                                                 // addNumFrFactr: To get factor upto specific number of "add" present (used in Factor in utility.cpp)
-                                                                 // largstNumsimp: To get prime factors upto a specific number.(used in numSimplify::operator() )
-                                                                 */
+size_t expandLevel = 3,addNumFrFactr = 20;
+long long int largstNumsimp=1000000000000; /* expandLevel: To expand an expression upto a specified  degree (used in solvec::polySoluWtAutoDegSelct)
+                                              // addNumFrFactr: To get factor upto specific number of "add" present (used in Factor in utility.cpp)
+                                              // largstNumsimp: To get prime factors upto a specific number.(used in numSimplify::operator() )
+                                               */
 
 // A function to get all prime factors of a given number n
 map<numeric,numeric> primeFactors(numeric n)
@@ -135,23 +136,30 @@ int simplifyc::SetRules(int m)
         return 0;
     }
 
+    else if(m == AlgSimp2)
+    {
+        // (0)^a = 0
+        AlgSimpRules2[pow(0,wild(0))] = 0;
+        AlgSimpRules2[pow(wild(2),wild(0))*pow(wild(2),wild(1))] = pow(wild(2), wild(0)+wild(1));
+        AlgSimpRules2[wild(3)*pow(wild(2),wild(0))*pow(wild(2),wild(1))] = wild(3)*pow(wild(2), wild(0)+wild(1));
+        //AlgSimpRules2[pow(pow(wild(2),wild(0)),wild(1))] = pow(wild(2), wild(0)*wild(1));
+
+
+        return 0;
+    }
+
+
     else if (m == TrigSimp)
     {
         //rules = TrigSimp;
-        TrigSimpRules1[wild(1)*pow(sin(wild(0)),2) + wild(1)*pow(cos(wild(0)),2)] = wild(1);
-        TrigSimpRules1[wild(1)*pow(sec(wild(0)),2) - wild(1)*pow(tan(wild(0)),2)] = wild(1);
-        TrigSimpRules1[wild(1)*pow(csc(wild(0)),2) - wild(1)*pow(cot(wild(0)),2)] = wild(1);
-        TrigSimpRules1[pow(sin(wild(0)),2) + pow(cos(wild(0)),2)] = _ex1;
-        TrigSimpRules1[pow(sec(wild(0)),2) - pow(tan(wild(0)),2)] = _ex1;
-        TrigSimpRules1[pow(csc(wild(0)),2) - pow(cot(wild(0)),2)] = _ex1;
+        TrigSimpRules1[wild(1)*pow(sin(wild(0)),2)] = wild(1) - wild(1)*pow(cos(wild(0)),2);
+        TrigSimpRules1[pow(sin(wild(0)),2)] = _ex1 - pow(cos(wild(0)),2);
+        //TrigSimpRules1[pow(sec(wild(0)),2) - pow(tan(wild(0)),2)] = _ex1;
+        //TrigSimpRules1[pow(csc(wild(0)),2) - pow(cot(wild(0)),2)] = _ex1;
         TrigSimpRules2[tan(wild(0))] = sin(wild(0))/cos(wild(0));
         TrigSimpRules2[cot(wild(0))] = cos(wild(0))/sin(wild(0));
         TrigSimpRules2[csc(wild(0))] = 1/sin(wild(0));
         TrigSimpRules2[sec(wild(0))] = 1/cos(wild(0));
-        TrigSimpRules3[sin(wild(0))/cos(wild(0))] = tan(wild(0));
-        TrigSimpRules3[cos(wild(0))/sin(wild(0))] = cot(wild(0));
-        TrigSimpRules4[1/sin(wild(0))] = csc(wild(0));
-        TrigSimpRules4[1/cos(wild(0))] = sec(wild(0));
 
         return 0;
     }
@@ -167,6 +175,20 @@ int simplifyc::SetRules(int m)
         TrigCombineRules[cos(-wild(0)*wild(1))] = cos(wild(0)*wild(1));
 
         return 0;
+    }   
+    else if (m == HyperSimp)
+    {
+        //rules = HyperSimp;
+        HyperSimpRules1[wild(1)*pow(sinh(wild(0)),2)] = -wild(1) + wild(1)*pow(cosh(wild(0)),2);
+        HyperSimpRules1[pow(sin(wild(0)),2)] = _ex_1 + pow(cosh(wild(0)),2);
+        //HyperSimpRules1[pow(sec(wild(0)),2) - pow(tan(wild(0)),2)] = _ex1;
+        //HyperSimpRules1[pow(csc(wild(0)),2) - pow(cot(wild(0)),2)] = _ex1;
+        HyperSimpRules2[tanh(wild(0))] = sinh(wild(0))/cosh(wild(0));
+        HyperSimpRules2[coth(wild(0))] = cosh(wild(0))/sinh(wild(0));
+        HyperSimpRules2[csch(wild(0))] = 1/sinh(wild(0));
+        HyperSimpRules2[sech(wild(0))] = 1/cosh(wild(0));
+
+        return 0;
     }
     else if (m == logSimp)
     {
@@ -174,6 +196,21 @@ int simplifyc::SetRules(int m)
         logSimpRules[log(pow(wild(0), wild(1)))] = wild(1)*log(wild(0));
         logSimpRules[log(wild(0)*wild(1))] = log(wild(0)) + log(wild(1));
         logSimpRules[log(exp(_ex1))] = _ex1;
+    }
+    else if (m == JacobiSimp)
+    {
+        //rules = JacobiSimp;
+        JacobiSimpRules1[pow(JacobiCN(wild(0),wild(1)),_ex2)] = _ex1-pow(JacobiSN(wild(0),wild(1)),_ex2);
+        JacobiSimpRules1[pow(JacobiDN(wild(0),wild(1)),_ex2)] = _ex1-wild(1)*wild(1)*pow(JacobiSN(wild(0),wild(1)),_ex2);
+
+        JacobiSimpRules2[JacobiNS(wild(0),wild(1))] = 1/JacobiSN(wild(0),wild(1));
+        JacobiSimpRules2[JacobiNC(wild(0),wild(1))] = 1/JacobiCN(wild(0),wild(1));
+        JacobiSimpRules2[JacobiND(wild(0),wild(1))] = 1/JacobiDN(wild(0),wild(1));
+        JacobiSimpRules2[JacobiSC(wild(0),wild(1))] = JacobiSN(wild(0),wild(1))/JacobiCN(wild(0),wild(1));
+        JacobiSimpRules2[JacobiSD(wild(0),wild(1))] = JacobiSN(wild(0),wild(1))/JacobiDN(wild(0),wild(1));
+        JacobiSimpRules2[JacobiCS(wild(0),wild(1))] = JacobiCN(wild(0),wild(1))/JacobiSN(wild(0),wild(1));
+        JacobiSimpRules2[JacobiDS(wild(0),wild(1))] = JacobiDN(wild(0),wild(1))/JacobiSN(wild(0),wild(1));
+
     }
     return 0;
 }
@@ -217,22 +254,42 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
 
         return y;
     }
-    else if (rules == TrigSimp)
+    else if (rules == AlgSimp2)
     {
-        y = this->operator()(y,AlgSimp);
-
-        this->SetRules(TrigSimp);
+        this->SetRules(AlgSimp2);
+        TrigArgSign_Complx trigarg;
         ex xprev;
         do
         {
             xprev = y;
-            y = y.subs(TrigSimpRules4, subs_options::subs_algebraic).expand();
+            y = y.subs(AlgSimpRules2, subs_options::algebraic);
+            y = y.subs((lst){wild(2)*pow(wild(2),wild(1)) == pow(wild(2), _ex1+wild(1))},subs_options::subs_algebraic); //we apply this rule separately to increase speed.
+
+            y = trigarg(y);
+            numSimplifye.primefactrs.clear();
+            y=(numSimplifye(y));
         } while(xprev != y);
-        do
+
+        if(isFracNegPowBaseGensymb && !fracNumericPowBasSubsE.baseClt.empty())
         {
-            xprev = y;
-            y = y.subs(TrigSimpRules3, subs_options::subs_algebraic).expand();
-        } while(xprev != y);
+            y = (genSymbSubs(y,fracNumericPowBasSubsE.baseClt));
+            do
+            {
+                xprev = y;
+                y = y.subs(AlgSimpRules2, subs_options::algebraic);
+                y = y.subs((lst){wild(2)*pow(wild(2),wild(1)) == pow(wild(2), _ex1+wild(1))},subs_options::subs_algebraic); //we apply this rule separately to increase speed.
+            } while(xprev != y);
+        }
+
+        return y;
+    }
+    else if (rules == TrigSimp)
+    {
+        y = this->operator()(y,AlgSimp2);
+
+        this->SetRules(TrigSimp);
+        ex xprev;
+
         do
         {
             xprev = y;
@@ -244,7 +301,7 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
             y = y.subs(TrigSimpRules1, subs_options::subs_algebraic).expand(expand_options::expand_function_args);
         } while(xprev != y);
 
-        y = this->operator()(y,AlgSimp);
+        y = this->operator()(y,AlgSimp2);
         return y;
     }
     else if (rules == TrigCombine)
@@ -263,6 +320,27 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         y = this->operator()(y,AlgSimp);
         return y;
     }
+    else if (rules == HyperSimp)
+    {
+        y = this->operator()(y,AlgSimp2);
+
+        this->SetRules(HyperSimp);
+        ex xprev;
+
+        do
+        {
+            xprev = y;
+            y = y.subs(HyperSimpRules2, subs_options::subs_algebraic).expand();
+        } while(xprev != y);
+        do
+        {
+            xprev = y;
+            y = y.subs(HyperSimpRules1, subs_options::subs_algebraic).expand(expand_options::expand_function_args);
+        } while(xprev != y);
+
+        y = this->operator()(y,AlgSimp2);
+        return y;
+    }
     else if (rules == logSimp)
     {
         y = this->operator()(y,AlgSimp);
@@ -278,7 +356,26 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         y = this->operator()(y,AlgSimp);
         return y;
     }
+    else if (rules == JacobiSimp)
+    {
+        y = this->operator()(y,AlgSimp2);
 
+        this->SetRules(JacobiSimp);
+        ex xprev;
+        do
+        {
+            xprev = y;
+            y = y.subs(JacobiSimpRules2, subs_options::subs_algebraic).expand();
+        } while(xprev != y);
+        do
+        {
+            xprev = y;
+            y = y.subs(JacobiSimpRules1, subs_options::subs_algebraic).expand();
+        } while(xprev != y);
+
+        y = this->operator()(y,AlgSimp2);
+        return y;
+    }
     return e;
 }
 
@@ -706,6 +803,7 @@ ex simplify(const ex& expr_, int rules)
 
     return (expr_);
 }
+
 ex simplifyRecur(const ex& expr_, int rules)
 {
     ex prev = expr_, curr = expr_;

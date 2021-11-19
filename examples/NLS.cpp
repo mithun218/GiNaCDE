@@ -27,7 +27,10 @@ int main()
     positivePart=true;
     negativePart=true;
     paraInDiffSolve=lst{};
-    filename="NLS_Fexp.txt";
+    filename="NLS_Fexp(maple).txt";
+    desolve(pde,{u},F_expansion);
+    output=ginac;
+    filename="NLS_Fexp(ginac).txt";
     desolve(pde,{u},F_expansion);
 
     output=mathematica;

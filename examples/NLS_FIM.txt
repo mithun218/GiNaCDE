@@ -2,95 +2,81 @@
 Equations are written in MATHEMATICA language.
 ----------------------------------------------------------------------------------------------------
 
-Input equation is: Conjugate[u[t,x]]*u[t,x]^2*q-p*D[u[t,x],{x,2}]+I*D[u[t,x],{t,1}] = 0;
-Real part of Diff. Equ.: -U[xi]*p_0+q*U[xi]^3-p*D[U[xi],{xi,2}]*k_1^2+p*p_1^2*U[xi] = 0;
-Imaginary part of Diff. Equ.: D[U[xi],{xi,1}]*k_0-2*D[U[xi],{xi,1}]*p*p_1*k_1 = 0;
+Input equation is: I*D[u[x,t],{t,1}]-D[u[x,t],{x,2}]*p+u[x,t]^2*q*Conjugate[u[x,t]] = 0;
+Real part of Diff. Equ.: q*U[xi]^3-p*k1^2*D[U[xi],{xi,2}]+p1^2*p*U[xi]-p0*U[xi] = 0;
+Imaginary part of Diff. Equ.: -2*p1*p*k1*D[U[xi],{xi,1}]+k0*D[U[xi],{xi,1}] = 0;
 Imaginary part of Diff. Equ. is integrable.
-After integration, Imaginary part: k_0*U[xi]-2*p*p_1*U[xi]*k_1 = 0;
+After integration, Imaginary part: U[xi]*k0-2*p1*p*U[xi]*k1 = 0;
 We derive solutions of real part of Diff. Equ. with the condition:
- p = 1/2*p_1^(-1)*k_0*k_1^(-1);
-u = U[xi]*Exp[I*(t*p_0+p_1*x)],
-where xi = k_1*x+k_0*t;
+ p1 = 1/2*p^(-1)*k1^(-1)*k0;
+u[x,t] = U[xi]*Exp[I*(1/2*p^(-1)*k1^(-1)*k0*x+p0*t)],
+where U is the function of xi and xi = k1*x+k0*t;
 The value of N is: 1;
 
 ****************************************************************************************************
 
--2*p_1*X_*k_1*a_1*p_0+p_1^2*k_0*X_*a_1+Y_*k_0*k_1^2*Diff[a_0,X_,1]+Y_^2*k_0*k_1^2*Diff[a_1,X_,1]+2*p_1*q*X_^3*k_1*a_1 = h_*Y_*k_0*a_0*k_1^2+k_0*a_0*k_1^2*g_+h_*Y_^2*k_0*k_1^2*a_1+Y_*k_0*k_1^2*g_*a_1
-Comparing the coefficients of Y_^i (i =2 .., 0) in both sides, we have
+4*Diff[a1,Xun,1]*p^2*k1^4*Yun^2+4*q*p*Xun^3*k1^2*a1+Xun*k0^2*a1+4*p^2*k1^4*Yun*Diff[a0,Xun,1]-4*p0*p*Xun*k1^2*a1 = 4*gun*p^2*k1^4*a0+4*hun*p^2*k1^4*Yun*a0+4*hun*p^2*k1^4*Yun^2*a1+4*gun*p^2*k1^4*Yun*a1
+Comparing the coefficients of Yun^i (i =2 .., 0) in both sides, we have
 
-k_0*k_1^2*Diff[a_1,X_,1] = h_*k_0*k_1^2*a_1,
-k_0*k_1^2*Diff[a_0,X_,1] = h_*k_0*a_0*k_1^2+k_0*k_1^2*g_*a_1,
--2*p_1*X_*k_1*a_1*p_0+p_1^2*k_0*X_*a_1+2*p_1*q*X_^3*k_1*a_1 = k_0*a_0*k_1^2*g_,
-assuming a_1 = 1, in first equation, we get h_ = 0;
-Balancing degrees of X_ we get, degrees of (a_0, g_) = (2, 1)
+4*Diff[a1,Xun,1]*p^2*k1^4 = 4*hun*p^2*k1^4*a1,
+4*p^2*k1^4*Diff[a0,Xun,1] = 4*hun*p^2*k1^4*a0+4*gun*p^2*k1^4*a1,
+4*q*p*Xun^3*k1^2*a1+Xun*k0^2*a1-4*p0*p*Xun*k1^2*a1 = 4*gun*p^2*k1^4*a0,
+assuming a1 = 1, in first equation, we get hun = 0;
+Balancing degrees of Xun we get, degrees of (a0, gun) = (2, 1)
 
-                                //////////Degrees of (a_0, g_) = (2, 1)//////////
+                                //////////Degrees of (a0, gun) = (2, 1)//////////
                  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-hence a_0 = a_00+X_*a_01+X_^2*a_02,
-      g_ = g_0+X_*g_1;
-Substituting a_1,.. a_0, g_ into all equation and setting all the coefficients of powers of  X_ to zero,
-Y_^0X_^0: -k_0*g_0*a_00*k_1^2 = 0,
-Y_^0X_^1: -k_0*g_0*k_1^2*a_01-2*p_1*k_1*p_0-k_0*a_00*k_1^2*g_1+p_1^2*k_0 = 0,
-Y_^0X_^2: -k_0*k_1^2*g_1*a_01-k_0*g_0*k_1^2*a_02 = 0,
-Y_^0X_^3: 2*p_1*q*k_1-k_0*k_1^2*g_1*a_02 = 0,
-Y_^1X_^0: -k_0*g_0*k_1^2+k_0*k_1^2*a_01 = 0,
-Y_^1X_^1: 2*k_0*k_1^2*a_02-k_0*k_1^2*g_1 = 0,
-Y_^1X_^2: 0 = 0,
-Y_^1X_^3: 0 = 0,
- In the following results C_ is an arbitrary constant.
+hence a0 = a00+a01*Xun+Xun^2*a02,
+      gun = gun1*Xun+gun0;
+Substituting a1,.. a0, gun into all equation and setting all the coefficients of powers of  Xun to zero,
+Yun^0*Xun^0: -4*a00*p^2*k1^4*gun0 = 0,
+Yun^0*Xun^1: -4*a01*p^2*k1^4*gun0+k0^2-4*a00*gun1*p^2*k1^4-4*p0*p*k1^2 = 0,
+Yun^0*Xun^2: -4*a01*gun1*p^2*k1^4-4*p^2*k1^4*gun0*a02 = 0,
+Yun^0*Xun^3: -4*gun1*p^2*k1^4*a02+4*q*p*k1^2 = 0,
+Yun^1*Xun^0: -4*p^2*k1^4*gun0+4*a01*p^2*k1^4 = 0,
+Yun^1*Xun^1: 8*p^2*k1^4*a02-4*gun1*p^2*k1^4 = 0,
+Yun^1*Xun^2: 0 = 0,
+Yun^1*Xun^3: 0 = 0,
+ In the following results Const is an arbitrary constant.
 
 ****************************************************************************************************
 
-solving above system of equations for variables {k_0,k_1,p_0,p_1,a_00,a_01,a_02,g_0,g_1}->
+solving above system of equations for variables {k0,k1,p0,a00,a01,a02,gun0,gun1}->
 
-{p_1=0,k_1=0}
-D[U[xi],{xi,1}]+a_00+U[xi]*a_01+U[xi]^2*a_02 = 0,
+{gun1=2*a02,a00=-1/2*q^(-2)*(2*p0*q-k0^2*a02^2)*a02,gun0=0,k1=1/2*Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1),a01=0}
+-p0*q^(-1)*a02+U[xi]^2*a02+D[U[xi],{xi,1}]+1/2*q^(-2)*k0^2*a02^3 = 0,
 Solution[s] of input Diff. Equ. is (are)=>
-u = 1/2*(Sqrt[-4*a_00*a_02+a_01^2]*Tanh[1/2*k_0*Sqrt[-4*a_00*a_02+a_01^2]*t+C_]*a_02^(-1)-a_01*a_02^(-1))*Exp[I*t*p_0];
-u = 1/2*Exp[I*t*p_0]*(Sqrt[-4*a_00*a_02+a_01^2]*Coth[1/2*k_0*Sqrt[-4*a_00*a_02+a_01^2]*t+C_]*a_02^(-1)-a_01*a_02^(-1));
-u = -2*Exp[I*t*p_0]*(a_00^(-1)*a_01+a_00^(-1)*Sqrt[-4*a_00*a_02+a_01^2]*Tanh[1/2*k_0*Sqrt[-4*a_00*a_02+a_01^2]*t+C_])^(-1);
-u = -2*Exp[I*t*p_0]*(a_00^(-1)*a_01+a_00^(-1)*Sqrt[-4*a_00*a_02+a_01^2]*Coth[1/2*k_0*Sqrt[-4*a_00*a_02+a_01^2]*t+C_])^(-1);
-u = 1/2*Exp[I*t*p_0]*(Sqrt[-4*a_00*a_02+a_01^2]*Tanh[1/2*k_0*Sqrt[-4*a_00*a_02+a_01^2]*t+C_]*a_02^(-1)+2*Sech[1/2*k_0*Sqrt[-4*a_00*a_02+a_01^2]*t+C_]*(2*Sinh[1/2*k_0*Sqrt[-4*a_00*a_02+a_01^2]*t+C_]*(-4*a_00*a_02+a_01^2)^(-1/2)*a_02+Cosh[1/2*k_0*Sqrt[-4*a_00*a_02+a_01^2]*t+C_]*C_)^(-1)-a_01*a_02^(-1));
+solution #1  u[x,t] = 1/2*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*Exp[(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t]*Tanh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]*a02^(-1);
+solution #2  u[x,t] = 1/2*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Coth[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]*Sqrt[2]*Exp[(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t]*a02^(-1);
+solution #3  u[x,t] = 1/2*(q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2)^(-1/2)*Sqrt[2]*(2*p0*q^(-1)*a02-q^(-2)*k0^2*a02^3)*Exp[(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t]*Tanh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]^(-1);
+solution #4  u[x,t] = 1/2*(q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2)^(-1/2)*Coth[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]^(-1)*Sqrt[2]*(2*p0*q^(-1)*a02-q^(-2)*k0^2*a02^3)*Exp[(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t];
+solution #5  u[x,t] = 1/2*(2*((q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2)^(-1/2)*Sqrt[2]*Sinh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]*a02+Const*Cosh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)])^(-1)*Sech[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]+Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*Tanh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]*a02^(-1))*Exp[(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t];
 
-{g_1=2*a_02,a_01=0,p_0=1/2*k_0^2*q^(-1)*a_02^2,g_0=0,p_1=k_0*q^(-1)*k_1*a_02^2,a_00=0}
-D[U[xi],{xi,1}]+U[xi]^2*a_02 = 0,
-Solution[s] of input Diff. Equ. is (are)=>
-u = Exp[I*k_0*q^(-1)*k_1*x*a_02^2+(1/2*I)*k_0^2*q^(-1)*t*a_02^2]*((k_1*x+k_0*t)*a_02+C_)^(-1);
+{k1=0,k0=0}
+a00+a01*U[xi]+U[xi]^2*a02+D[U[xi],{xi,1}] = 0,
+GiNaC::poleerror
 
-{p_1=0,k_0=0}
-D[U[xi],{xi,1}]+a_00+U[xi]*a_01+U[xi]^2*a_02 = 0,
+{gun1=2*a02,k1=-1/2*Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1),a00=-1/2*q^(-2)*(2*p0*q-k0^2*a02^2)*a02,gun0=0,a01=0}
+-p0*q^(-1)*a02+U[xi]^2*a02+D[U[xi],{xi,1}]+1/2*q^(-2)*k0^2*a02^3 = 0,
 Solution[s] of input Diff. Equ. is (are)=>
-u = 1/2*Exp[I*t*p_0]*(Tanh[C_+1/2*Sqrt[-4*a_00*a_02+a_01^2]*k_1*x]*Sqrt[-4*a_00*a_02+a_01^2]*a_02^(-1)-a_01*a_02^(-1));
-u = 1/2*Exp[I*t*p_0]*(Coth[C_+1/2*Sqrt[-4*a_00*a_02+a_01^2]*k_1*x]*Sqrt[-4*a_00*a_02+a_01^2]*a_02^(-1)-a_01*a_02^(-1));
-u = -2*Exp[I*t*p_0]*(Tanh[C_+1/2*Sqrt[-4*a_00*a_02+a_01^2]*k_1*x]*a_00^(-1)*Sqrt[-4*a_00*a_02+a_01^2]+a_00^(-1)*a_01)^(-1);
-u = -2*Exp[I*t*p_0]*(a_00^(-1)*a_01+Coth[C_+1/2*Sqrt[-4*a_00*a_02+a_01^2]*k_1*x]*a_00^(-1)*Sqrt[-4*a_00*a_02+a_01^2])^(-1);
-u = 1/2*Exp[I*t*p_0]*(Tanh[C_+1/2*Sqrt[-4*a_00*a_02+a_01^2]*k_1*x]*Sqrt[-4*a_00*a_02+a_01^2]*a_02^(-1)+2*(2*(-4*a_00*a_02+a_01^2)^(-1/2)*Sinh[C_+1/2*Sqrt[-4*a_00*a_02+a_01^2]*k_1*x]*a_02+C_*Cosh[C_+1/2*Sqrt[-4*a_00*a_02+a_01^2]*k_1*x])^(-1)*Sech[C_+1/2*Sqrt[-4*a_00*a_02+a_01^2]*k_1*x]-a_01*a_02^(-1));
+solution #6  u[x,t] = 1/2*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*Exp[-(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t]*Tanh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]*a02^(-1);
+solution #7  u[x,t] = 1/2*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Coth[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]*Sqrt[2]*Exp[-(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t]*a02^(-1);
+solution #8  u[x,t] = 1/2*(q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2)^(-1/2)*Sqrt[2]*Exp[-(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t]*(2*p0*q^(-1)*a02-q^(-2)*k0^2*a02^3)*Tanh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]^(-1);
+solution #9  u[x,t] = 1/2*(q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2)^(-1/2)*Coth[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]^(-1)*Sqrt[2]*Exp[-(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t]*(2*p0*q^(-1)*a02-q^(-2)*k0^2*a02^3);
+solution #10  u[x,t] = 1/2*(2*((q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2)^(-1/2)*Sqrt[2]*Sinh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]*a02+Const*Cosh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)])^(-1)*Sech[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]+Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*Tanh[Const+1/4*Sqrt[q^(-2)*(2*p0*q-k0^2*a02^2)*a02^2]*Sqrt[2]*(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)]*a02^(-1))*Exp[-(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+I*p0*t];
 
-{g_1=2*a_02,a_01=0,g_0=0,p_1=k_0*q^(-1)*k_1*a_02^2,a_00=-1/2*q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02}
-D[U[xi],{xi,1}]+1/2*k_0^2*q^(-2)*a_02^3-q^(-1)*p_0*a_02+U[xi]^2*a_02 = 0,
+{gun1=2*a02,p0=1/2*q^(-1)*k0^2*a02^2,k1=-1/2*Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1),a00=0,gun0=0,a01=0}
+U[xi]^2*a02+D[U[xi],{xi,1}] = 0,
 Solution[s] of input Diff. Equ. is (are)=>
-u = 1/2*Exp[I*k_0*q^(-1)*k_1*x*a_02^2+I*t*p_0]*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]*Tanh[C_+1/2*(k_1*x+k_0*t)*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]]*a_02^(-1);
-u = 1/2*Exp[I*k_0*q^(-1)*k_1*x*a_02^2+I*t*p_0]*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]*Coth[C_+1/2*(k_1*x+k_0*t)*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]]*a_02^(-1);
-u = -1/2*Exp[I*k_0*q^(-1)*k_1*x*a_02^2+I*t*p_0]*(q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2)^(-1/2)*Sqrt[2]*(k_0^2*q^(-2)*a_02^3-2*q^(-1)*p_0*a_02)*Tanh[C_+1/2*(k_1*x+k_0*t)*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]]^(-1);
-u = -1/2*Exp[I*k_0*q^(-1)*k_1*x*a_02^2+I*t*p_0]*(q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2)^(-1/2)*Sqrt[2]*(k_0^2*q^(-2)*a_02^3-2*q^(-1)*p_0*a_02)*Coth[C_+1/2*(k_1*x+k_0*t)*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]]^(-1);
-u = 1/2*Exp[I*k_0*q^(-1)*k_1*x*a_02^2+I*t*p_0]*(Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]*Tanh[C_+1/2*(k_1*x+k_0*t)*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]]*a_02^(-1)+2*Sech[C_+1/2*(k_1*x+k_0*t)*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]]*(Cosh[C_+1/2*(k_1*x+k_0*t)*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]]*C_+(q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2)^(-1/2)*Sqrt[2]*Sinh[C_+1/2*(k_1*x+k_0*t)*Sqrt[q^(-2)*(2*q*p_0-k_0^2*a_02^2)*a_02^2]*Sqrt[2]]*a_02)^(-1));
+solution #11  u[x,t] = 2*Exp[-(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+(1/2*I)*q^(-1)*k0^2*a02^2*t]*(2*Const+(2*k0*t-Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)*a02)^(-1);
 
-{k_0=0,k_1=0}
-D[U[xi],{xi,1}]+a_00+U[xi]*a_01+U[xi]^2*a_02 = 0,
+{gun1=2*a02,p0=1/2*q^(-1)*k0^2*a02^2,a00=0,gun0=0,k1=1/2*Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1),a01=0}
+U[xi]^2*a02+D[U[xi],{xi,1}] = 0,
 Solution[s] of input Diff. Equ. is (are)=>
-u = 1/2*(Sqrt[-4*a_00*a_02+a_01^2]*Tanh[C_]*a_02^(-1)-a_01*a_02^(-1))*Exp[I*t*p_0+I*p_1*x];
-u = 1/2*(Sqrt[-4*a_00*a_02+a_01^2]*Coth[C_]*a_02^(-1)-a_01*a_02^(-1))*Exp[I*t*p_0+I*p_1*x];
-u = -2*(a_00^(-1)*a_01+a_00^(-1)*Sqrt[-4*a_00*a_02+a_01^2]*Tanh[C_])^(-1)*Exp[I*t*p_0+I*p_1*x];
-u = -2*(a_00^(-1)*a_01+a_00^(-1)*Sqrt[-4*a_00*a_02+a_01^2]*Coth[C_])^(-1)*Exp[I*t*p_0+I*p_1*x];
-u = 1/2*Exp[I*t*p_0+I*p_1*x]*(2*Sech[C_]*(Cosh[C_]*C_+2*Sinh[C_]*(-4*a_00*a_02+a_01^2)^(-1/2)*a_02)^(-1)+Sqrt[-4*a_00*a_02+a_01^2]*Tanh[C_]*a_02^(-1)-a_01*a_02^(-1));
-
-{p_1=0,g_1=0,a_01=0,g_0=0,a_02=0}
-D[U[xi],{xi,1}]+a_00 = 0,
-Solution[s] of input Diff. Equ. is (are)=>
-u = -Exp[I*t*p_0]*((k_1*x+k_0*t)*a_00-C_);
+solution #12  u[x,t] = 2*Exp[(1/2*I)*q^(-1/2)*Sqrt[2]*p^(-1/2)*k0*a02*x+(1/2*I)*q^(-1)*k0^2*a02^2*t]*(2*Const+(2*k0*t+Sqrt[q]*Sqrt[2]*p^(-1/2)*a02^(-1)*x)*a02)^(-1);
 
 
 ****************************************************************************************************
 ****************************************************************************************************
 
-Time: 0.449 seconds
+Time: 0.69 seconds
