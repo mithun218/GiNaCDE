@@ -1,0 +1,73 @@
+                              ==========F-Expansion Method===========                         
+Equations are written in GiNaC language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: I*Diff(u,t,1)-Diff(u,x,2)*p+u^2*q*conjugate(u) = 0;
+Real part of Diff. Equ.: q*U^3-p*k_1^2*Diff(U,xi,2)+p_1^2*p*U-p_0*U = 0;
+Imaginary part of Diff. Equ.: -2*p_1*p*k_1*Diff(U,xi,1)+k_0*Diff(U,xi,1) = 0;
+Imaginary part of Diff. Equ. is integrable.
+After integration, Imaginary part: U*k_0-2*p_1*p*U*k_1 = 0;
+We derive solutions of real part of Diff. Equ. with the condition:
+ p_1 = 1/2*p^(-1)*k_1^(-1)*k_0;
+u = U*exp(I*(1/2*p^(-1)*k_1^(-1)*k_0*x+p_0*t)),
+where U is the function of xi and xi = k_1*x+k_0*t;
+The value of N is: 1;
+U = F^(-1)*b_1+a_0+F*a_1;
+The first-order nonlinear ODE: diff(F,xi,1) = sqrt(A_0+F^2*A_2);
+
+****************************************************************************************************
+
+The system of algebraic equations are: 
+Diff(F,xi,1)^0*F^0: 4*q*b_1^3*p*k_1^2-8*b_1*p^2*k_1^4*A_0 = 0;
+Diff(F,xi,1)^0*F^1: 12*q*b_1^2*p*k_1^2*a_0 = 0;
+Diff(F,xi,1)^0*F^2: b_1*k_0^2+12*q*b_1*p*k_1^2*a_0^2-4*p_0*b_1*p*k_1^2+12*q*b_1^2*p*k_1^2*a_1-4*b_1*p^2*k_1^4*A_2 = 0;
+Diff(F,xi,1)^0*F^3: -4*p_0*p*k_1^2*a_0+4*q*p*k_1^2*a_0^3+24*q*b_1*p*k_1^2*a_1*a_0+k_0^2*a_0 = 0;
+Diff(F,xi,1)^0*F^4: k_0^2*a_1-4*p_0*p*k_1^2*a_1-4*p^2*k_1^4*a_1*A_2+12*q*b_1*p*k_1^2*a_1^2+12*q*p*k_1^2*a_1*a_0^2 = 0;
+Diff(F,xi,1)^0*F^5: 12*q*p*k_1^2*a_1^2*a_0 = 0;
+Diff(F,xi,1)^0*F^6: 4*q*p*k_1^2*a_1^3 = 0;
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {k_0,k_1,p_0,a_0,a_1,b_1}->
+
+{b_1==0,a_0==0,a_1==0}
+solution(s) of input Diff. Equ. is (are)=>
+solution #1  u = 0;
+
+{a_0==0,p_0==-1/4*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2),b_1==-q^(-1/2)*sqrt(2)*sqrt(p)*k_1*sqrt(A_0),a_1==0}
+U = -F^(-1)*q^(-1/2)*sqrt(2)*sqrt(p)*k_1*sqrt(A_0),
+where F is the solution of
+diff(F,xi,1) = sqrt(A_0+F^2*A_2);
+solution(s) of input Diff. Equ. is (are)=>
+solution #2  u = 2*(exp(2*C_*sqrt(A_2))*A_0-exp(2*(k_1*x+k_0*t)*sqrt(A_2)))^(-1)*q^(-1/2)*sqrt(2)*sqrt(p)*k_1*sqrt(A_2)*exp(-(C_+k_1*x+k_0*t)*sqrt(A_2))^(-1)*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #3  u = -2*q^(-1/2)*sqrt(2)*sqrt(p)*k_1*sqrt(A_2)*exp(-(C_+k_1*x+k_0*t)*sqrt(A_2))^(-1)*sqrt(A_0)*(exp(2*C_*sqrt(A_2))-exp(2*(k_1*x+k_0*t)*sqrt(A_2))*A_0)^(-1)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #4  u = -q^(-1/2)*cosh(C_+(k_1*x+k_0*t)*sqrt(A_2))^(-1)*sqrt(2)*sqrt(p)*k_1*(-A_2*A_0)^(-1/2)*A_2*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #5  u = q^(-1/2)*cosh(C_+(k_1*x+k_0*t)*sqrt(A_2))^(-1)*sqrt(2)*sqrt(p)*k_1*(-A_2*A_0)^(-1/2)*A_2*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #6  u = -sinh(C_+(k_1*x+k_0*t)*sqrt(A_2))^(-1)*q^(-1/2)*(A_2*A_0)^(-1/2)*sqrt(2)*sqrt(p)*k_1*A_2*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #7  u = sinh(C_+(k_1*x+k_0*t)*sqrt(A_2))^(-1)*q^(-1/2)*(A_2*A_0)^(-1/2)*sqrt(2)*sqrt(p)*k_1*A_2*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+
+{k_1==0,k_0==0}
+GiNaC::pole_error
+
+{a_0==0,b_1==q^(-1/2)*sqrt(2)*sqrt(p)*k_1*sqrt(A_0),p_0==-1/4*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2),a_1==0}
+U = F^(-1)*q^(-1/2)*sqrt(2)*sqrt(p)*k_1*sqrt(A_0),
+where F is the solution of
+diff(F,xi,1) = sqrt(A_0+F^2*A_2);
+solution(s) of input Diff. Equ. is (are)=>
+solution #8  u = -2*(exp(2*C_*sqrt(A_2))*A_0-exp(2*(k_1*x+k_0*t)*sqrt(A_2)))^(-1)*q^(-1/2)*sqrt(2)*sqrt(p)*k_1*sqrt(A_2)*exp(-(C_+k_1*x+k_0*t)*sqrt(A_2))^(-1)*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #9  u = 2*q^(-1/2)*sqrt(2)*sqrt(p)*k_1*sqrt(A_2)*exp(-(C_+k_1*x+k_0*t)*sqrt(A_2))^(-1)*sqrt(A_0)*(exp(2*C_*sqrt(A_2))-exp(2*(k_1*x+k_0*t)*sqrt(A_2))*A_0)^(-1)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #10  u = q^(-1/2)*cosh(C_+(k_1*x+k_0*t)*sqrt(A_2))^(-1)*sqrt(2)*sqrt(p)*k_1*(-A_2*A_0)^(-1/2)*A_2*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #11  u = -q^(-1/2)*cosh(C_+(k_1*x+k_0*t)*sqrt(A_2))^(-1)*sqrt(2)*sqrt(p)*k_1*(-A_2*A_0)^(-1/2)*A_2*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #12  u = sinh(C_+(k_1*x+k_0*t)*sqrt(A_2))^(-1)*q^(-1/2)*(A_2*A_0)^(-1/2)*sqrt(2)*sqrt(p)*k_1*A_2*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+solution #13  u = -sinh(C_+(k_1*x+k_0*t)*sqrt(A_2))^(-1)*q^(-1/2)*(A_2*A_0)^(-1/2)*sqrt(2)*sqrt(p)*k_1*A_2*sqrt(A_0)*exp(-(1/4*I)*(4*p^2*k_1^4*A_2-k_0^2)*p^(-1)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x);
+
+{b_1==0,a_1==0,p_0==1/4*p^(-1)*(4*q*p*k_1^2*a_0^2+k_0^2)*k_1^(-2)}
+solution(s) of input Diff. Equ. is (are)=>
+solution #14  u = exp((1/4*I)*p^(-1)*(4*q*p*k_1^2*a_0^2+k_0^2)*k_1^(-2)*t+(1/2*I)*p^(-1)*k_1^(-1)*k_0*x)*a_0;
+
+
+****************************************************************************************************
+****************************************************************************************************
+
+Time: 0.569 seconds

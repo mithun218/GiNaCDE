@@ -71,14 +71,17 @@ int main()
         if(inputstr == "h")
         {
             cout << endl << "Type m for output format in maple. \n"
-                            "Type M for output format in mathematica.";
+                            "Type M for output format in mathematica. \n"
+                            "Type g for output format in ginac.";
         }
         cout << endl;
     }while(inputstr != "m" && inputstr != "maple" && inputstr != "M" && inputstr != "mathematica");
     if(inputstr == "m" || inputstr == "maple")
         output = maple;
-    else
+    else if(inputstr == "M" || inputstr == "mathematica")
         output = mathematica;
+    else
+        output = ginac;
 
     do
     {

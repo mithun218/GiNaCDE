@@ -21,6 +21,7 @@
 using namespace std;
 
 int output = maple;
+string dpndtWtIndpndt = "u";
 
 /// output structure ///
 string outstr(const char* _sym, int symno)
@@ -165,6 +166,9 @@ string diffformchange(const ex& diffeq, const lst& dpndt_vars, const exset& indp
     solutionsdiffst << diffeq;
     solutionsdiff = solutionsdiffst.str();
 
+    if(output==ginac)
+        return solutionsdiffst.str();
+
     if(output == maple)
     {
         tem2 << dpndt_varsStr2 << "(";
@@ -188,6 +192,9 @@ string diffformchange(const ex& diffeq, const lst& dpndt_vars, const exset& indp
         }
         tem2 << "]";
     }
+
+    if(dpndtWtIndpndt == "u")
+        dpndtWtIndpndt = tem2.str();
 
     vector< string > tem1Clt,tem2Clt;
 
@@ -259,6 +266,8 @@ string diffformchange(const ex& diffeq, const lst& dpndt_vars, const exset& indp
 
     tem1Clt.push_back( "+" + dpndt_varsStr2 + "^" );
     tem2Clt.push_back( "+"+tem2.str()+"^" );
+    tem1Clt.push_back( "-" + dpndt_varsStr2 + "^" );
+    tem2Clt.push_back( "-"+tem2.str()+"^" );
     tem1Clt.push_back( "^" + dpndt_varsStr2 + "^" );
     tem2Clt.push_back( "^"+tem2.str()+"^" );
     tem1Clt.push_back( "*" + dpndt_varsStr2 + "^" );
@@ -398,21 +407,35 @@ string diffformchange(const ex& diffeq, const lst& dpndt_vars, const exset& indp
 /////////////////////////////////////////////////////////////
 
 
-void writetofile(stringstream& stringbuf)
-{
+void writetofile(stringstream& stringbuf, const ex& dpndt_var)
+{    
     ofstream outfile;
-    if(output == maple)
+    stringstream dpndt_varStr;
+
+    dpndt_varStr << dpndt_var<< " =";
+
+    if(output == mathematica)
     {
         outfile.open(filename);
-        outfile << replacestring(stringbuf.str(), "==", "=");
+        outfile << replacestring(gmathematica(replacestring(replacestring(replacestring(replacestring(replacestring(replacestring(replacestring(stringbuf.str(),
+                   "g_", "gun"), "h_", "hun"), "Y_", "Yun"), "X_", "Xun"), "C_", "Const"),"==", "="),"_","")),dpndt_varStr.str(),dpndtWtIndpndt+" =");
+        outfile.close();
+    }
+    else if(output == maple)
+    {
+        outfile.open(filename);
+        outfile << replacestring(replacestring(stringbuf.str(), "==", "="), dpndt_varStr.str(), dpndtWtIndpndt+" =");
         outfile.close();
     }
     else
     {
         outfile.open(filename);
-        outfile << gmathematica(replacestring(stringbuf.str(), "==", "="));
+        outfile << stringbuf.str();
         outfile.close();
     }
+
+    dpndtWtIndpndt = "u";
+
 }
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////

@@ -1,0 +1,56 @@
+                              ==========First Integral Method===========                         
+Equations are written in GiNaC language.
+----------------------------------------------------------------------------------------------------
+
+Input equation is: Diff(u,x,2)+u^3*b+u*Diff(u,x,1)*a = 0;
+The value of N is: 1;
+
+****************************************************************************************************
+
+Diff(a_1,X_,1)*Y_^2+Diff(a_0,X_,1)*Y_-a_1*b*X_^3 = a_0*g_+a_1*h_*Y_^2+a_1*X_*Y_*a+a_1*g_*Y_+a_0*h_*Y_
+Comparing the coefficients of Y_^i (i =2 .., 0) in both sides, we have
+
+Diff(a_1,X_,1) = a_1*h_,
+Diff(a_0,X_,1) = a_0*h_+a_1*g_+a_1*X_*a,
+-a_1*b*X_^3 = a_0*g_,
+assuming a_1 = 1, in first equation, we get h_ = 0;
+Balancing degrees of X_ we get, degrees of (a_0, g_) = (2, 1)
+
+                                //////////Degrees of (a_0, g_) = (2, 1)//////////
+                 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+hence a_0 = a_01*X_+a_02*X_^2+a_00,
+      g_ = g_0+X_*g_1;
+Substituting a_1,.. a_0, g_ into all equation and setting all the coefficients of powers of  X_ to zero,
+Y_^0*X_^0: -g_0*a_00 = 0,
+Y_^0*X_^1: -g_0*a_01-a_00*g_1 = 0,
+Y_^0*X_^2: -a_02*g_0-a_01*g_1 = 0,
+Y_^0*X_^3: -a_02*g_1-b = 0,
+Y_^1*X_^0: -g_0+a_01 = 0,
+Y_^1*X_^1: 2*a_02-a-g_1 = 0,
+Y_^1*X_^2: 0 = 0,
+Y_^1*X_^3: 0 = 0,
+ In the following results C_ is an arbitrary constant.
+
+****************************************************************************************************
+
+solving above system of equations for variables {a,b,a_00,a_01,a_02,g_0,g_1}->
+
+{g_0==0,a_01==0,a_00==0,b==-1/2*(a+g_1)*g_1,a_02==1/2*a+1/2*g_1}
+1/2*u^2*g_1+1/2*u^2*a+Diff(u,x,1) = 0,
+solution(s) of input Diff. Equ. is (are)=>
+solution #1  u = 2*(2*C_+(a+g_1)*x)^(-1);
+
+{g_1==0,g_0==0,a_01==0,a_02==1/2*a,b==0}
+1/2*u^2*a+Diff(u,x,1)+a_00 = 0,
+solution(s) of input Diff. Equ. is (are)=>
+solution #2  u = tanh(C_+1/2*sqrt(-a_00*a)*sqrt(2)*x)*sqrt(-a_00*a)*sqrt(2)*a^(-1);
+solution #3  u = sqrt(-a_00*a)*sqrt(2)*coth(C_+1/2*sqrt(-a_00*a)*sqrt(2)*x)*a^(-1);
+solution #4  u = -tanh(C_+1/2*sqrt(-a_00*a)*sqrt(2)*x)^(-1)*(-a_00*a)^(-1/2)*sqrt(2)*a_00;
+solution #5  u = -(-a_00*a)^(-1/2)*sqrt(2)*coth(C_+1/2*sqrt(-a_00*a)*sqrt(2)*x)^(-1)*a_00;
+solution #6  u = tanh(C_+1/2*sqrt(-a_00*a)*sqrt(2)*x)*sqrt(-a_00*a)*sqrt(2)*a^(-1)+2*sech(C_+1/2*sqrt(-a_00*a)*sqrt(2)*x)*((-a_00*a)^(-1/2)*sqrt(2)*sinh(C_+1/2*sqrt(-a_00*a)*sqrt(2)*x)*a+2*C_*cosh(C_+1/2*sqrt(-a_00*a)*sqrt(2)*x))^(-1);
+
+
+****************************************************************************************************
+****************************************************************************************************
+
+Time: 0.32 seconds

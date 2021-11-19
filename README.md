@@ -67,6 +67,15 @@ The [`test`](test/) folder contains tests. These tests can be executed using the
     $ ctest
 ```
 These automated tests verify the functionalities of the software. 
+
+## Checking the solutions of Diff. Equ.
+We can easily verify the solutions returned by GiNaCDE by substituting the solutions back into the differential equation. Following this substitution method the solutions of Differential Equations in the text file derived by GiNaCDE, can be easily checked by the software: Maple, Mathematica, and GiNaCDE. To illustrate the procedures for checking the solutions, we have provided some output text files [`NLS_Fexp(maple).txt`](examples/NLS_Fexp(maple).txt), [`NLS_Fexp(ginac).txt`](examples/NLS_Fexp(ginac).txt), [`KDV_FIM2.txt`](test/KDV_FIM2.txt), [`gardner_Fex.txt`](test/gardner_Fex.txt), [`cahnAllen_mF.txt`](test/cahnAllen_mF.txt), [`Painlev_FIMextravar.txt`](test/Painlev_FIMextravar.txt), and the corresponding checking files [`checkSolu_NLS_Fexp(maple).mw`](examples/checkSolu_NLS_Fexp(maple).mw), [`checkSolu_NLS_Fexp(ginac).cpp`](examples/checkSolu_NLS_Fexp(ginac).cpp), [`checkSolu_KDV_FIM2.mw`](test/checkSolu_KDV_FIM2.mw), [`checkSolu_gardner_Fex.nb`](test/checkSolu_gardner_Fex.nb), [`checkSolu_cahnAllen_mF.cpp`](test/checkSolu_cahnAllen_mF.cpp), [`checkSolu_Painlev_FIMextravar.cpp`](test/checkSolu_Painlev_FIMextravar.cpp) which explain how to test the solutions using Maple (Maple 2019), Mathematica (Mathematica 9), and GiNaCDE software.
+
+**Caution:** Currently, GiNacDE is unable to check all the solutions reported by GiNaCDE due to some simplification problems. I hope this problem can be fixed in the future release of GiNaCDE.
+Now to verify the solutions, I recommend to use Maple or Mathematica software. 
+
+
+
 ## Execution
 GiNaCDE library can be executed in C++ code with GNU compiler collection, `GCC >= 4.9`. To run `GiNaCDE GUI`, 
 `gtools` just click on `GiNaCDE_gui.exe`, `gtools.exe` files respectively. Then GiNaCDE GUI is executed in a GUI framework, 
@@ -81,8 +90,7 @@ Besides this, the solutions of the NLPDE are collected by a programming variable
 
 ## Examples
 The [`examples`](examples/) folder contains all the examples which solve some NLPDEs, such as, Eckhaus equation, Seventh-order SawadaKotara equations, Fifth-order Generalized KdV equation, Perturbed NLS Equation with Kerr Law Nonlinearity, KudryashovSinelshchikov Equation, etc.
-We have provided output text files after executing each example. 
-
+ 
 To compile the examples, move to the `build-dir` created earlier for building GiNaCDE, and execute
 ```
 $ make examples
@@ -131,7 +139,10 @@ int main()
     positivePart=true;
     negativePart=true;
     paraInDiffSolve=lst{};
-    filename="NLS_Fexp.txt";
+    filename="NLS_Fexp(maple).txt";
+    desolve(pde,{u},F_expansion);
+    output=ginac;
+    filename="NLS_Fexp(ginac).txt";
     desolve(pde,{u},F_expansion);
 
     output=mathematica;
@@ -142,7 +153,7 @@ int main()
 
 }
 ```
-After compiling and running the above program, exact solutions with calculating steps are saved in the text files [NLS_Fexp.txt](examples/NLS_Fexp.txt) and [NLS_FIM.txt](examples/NLS_FIM.txt). 
+After compiling and running the above program, exact solutions with calculating steps are saved in the text files [NLS_Fexp(maple).txt](examples/NLS_Fexp(maple).txt), [NLS_Fexp(ginac).txt](examples/NLS_Fexp(ginac).txt) and [NLS_FIM.txt](examples/NLS_FIM.txt). 
 
 ## GUI build
 We have provided a pe-compiled GiNaCDE GUI, which can be downloaded from [here](GUI/GiNaCDE_GUI.rar). The GiNaCDE GUI has been compiled on Windows 10 OS using [`MSYS2`](https://www.msys2.org), GCC 10.3.0, GTK+ 3.24.30, CLN 1.3.6 and GiNaC 1.8.1. The precompiled software is compatible with 32-bit and 64-bit Windows 10 OS.
