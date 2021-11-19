@@ -419,7 +419,7 @@
 		\item[] {\em \textbf{ex checkSolu( string diff\_equ, string solutions, string algebraic\_solutions, string solutions\_conditions)
 		:}}  This function checks the solutions of differential equation reported by GiNaCDE. Here all the function arguments are std::string class in C++. This function checks the solutions \textit{solutions} of differential equation \textit{diff\_equ} for the solutions \textit{algebraic\_solutions} of nonlinear algebraic equations with the conditions \textit{solutions\_conditions} of solutions \textit{solutions}.
 	
-	   This function uses substitution method to check the solution returned by GiNaCDE. The substitution method involves substituting the solution back into the differential equation. If the solution is valid, this function returns $0$.
+	   This function uses substitution method to check the solution returned by GiNaCDE. The substitution method involves substituting the solution back into the differential equation. If the solution is valid, this function returns $0$. However, currently, GiNacDE is unable to check all the solutions reported by GiNaCDE due to some simplification problems. I hope this problem can be fixed in the future release of GiNaCDE. Now to verify the solutions, I recommend to use Maple or Mathematica software.
 		
 		\item[] {\em \textbf{output:}} Output results can be saved in Maple, Mathematica or GiNaC programming language by assigning {\em maple}, {\em mathematica}
 		 or {\em ginac} {macros} to this variable. This option gives us an additional advantage to make further calculations using the output results in the commercially available softwares such as {Maple} or {Mathematica}.
