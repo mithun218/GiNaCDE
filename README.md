@@ -25,24 +25,28 @@ Some interesting features of GiNaCDE are
 
  
 ## External dependency
-GiNaCDE V1.0.0 requires the following packages (install the packages in the following order):
+GiNaCDE V1.0.0 requires the packages [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) and [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) (this library is optional and is used to build the GUI version of the GiNaCDE library). 
 
-   * [CLN >= 1.3.4](http://www.ginac.de/CLN/). This library is mandatory. We have provided the source codes for this library in [extlib/](extlib/) folder. At first, we should install this library, and to install this library use the following commands:  
+#### For Linux/MacOS machines:
+All the dependencies are available via the most common package managers `APT` on Ubuntu or Debian. Additionally, all dependencies can also be retrieved on `macOS` via the most common package managers [Homebrew](https://brew.sh/) and [MacPorts](https://ports.macports.org/). For example, CLN, GiNaC and GTK3 are installed via APT through
+
+```apt install libcln-dev libginac-dev libgtk-3-dev```
+
+and on Homebrew via
+
+```brew install cln ginac gtk+3```
+
+#### For Windows machines:
+
+ We have to install the libraries  [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) using the following commands:  
 ```        
         $ ./configure
         $ make
         $ make install
 ```
-  * [GiNaC >= 1.7.6](https://www.ginac.de/archives/). This library is mandatory.
-       We have provided the source codes for this library in [extlib/](extlib/) folder. To install this library use the following commands:
-```        
-        $ ./configure
-        $ make
-        $ make install
+ The library  [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) can be easily installed using [MSYS2](https://msys2.github.io/), which provides a UNIX-like environment for Windows. It provides packages for many software applications and libraries, including the GTK stack. To install GTK3 and its dependencies, open a MSYS2 shell, and run:
 ```
-  *  [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/). This library is optional and is used to build the GUI version of the GiNaCDE library. This GUI library can be installed on UBUNTU OS easily by the command:
-```
-        $ sudo apt install libgtk-3-dev
+        $ pacman -S mingw-w64-x86_64-gtk3
 ```   
 
 ## Compiling and installing
@@ -68,12 +72,12 @@ The [`test`](test/) folder contains tests. These tests can be executed using the
 ```
 These automated tests verify the functionalities of the software. 
 
-
 ## Checking the solutions of Diff. Equ.
 We can easily verify the solutions returned by GiNaCDE by substituting the solutions back into the differential equation. Following this substitution method the solutions of Differential Equations in the text file derived by GiNaCDE, can be easily checked by the software: Maple, Mathematica, and GiNaCDE. To illustrate the procedures for checking the solutions, we have provided some output text files [`NLS_Fexp(maple).txt`](examples/NLS_Fexp(maple).txt), [`NLS_Fexp(ginac).txt`](examples/NLS_Fexp(ginac).txt), [`KDV_FIM2.txt`](test/KDV_FIM2.txt), [`gardner_Fex.txt`](test/gardner_Fex.txt), [`cahnAllen_mF.txt`](test/cahnAllen_mF.txt), [`Painlev_FIMextravar.txt`](test/Painlev_FIMextravar.txt), and the corresponding checking files [`checkSolu_NLS_Fexp(maple).mw`](examples/checkSolu_NLS_Fexp(maple).mw), [`checkSolu_NLS_Fexp(ginac).cpp`](examples/checkSolu_NLS_Fexp(ginac).cpp), [`checkSolu_KDV_FIM2.mw`](test/checkSolu_KDV_FIM2.mw), [`checkSolu_gardner_Fex.nb`](test/checkSolu_gardner_Fex.nb), [`checkSolu_cahnAllen_mF.cpp`](test/checkSolu_cahnAllen_mF.cpp), [`checkSolu_Painlev_FIMextravar.cpp`](test/checkSolu_Painlev_FIMextravar.cpp) which explain how to test the solutions using Maple (Maple 2019), Mathematica (Mathematica 9), and GiNaCDE software.
 
 **Caution:** Currently, GiNacDE is unable to check all the solutions reported by GiNaCDE due to some simplification problems. I hope this problem can be fixed in the future release of GiNaCDE.
 Now to verify the solutions, I recommend to use Maple or Mathematica software. 
+
 
 
 ## Execution
@@ -153,7 +157,6 @@ int main()
 
 }
 ```
-
 After compiling and running the above program, exact solutions with calculating steps are saved in the text files [NLS_Fexp(maple).txt](examples/NLS_Fexp(maple).txt), [NLS_Fexp(ginac).txt](examples/NLS_Fexp(ginac).txt) and [NLS_FIM.txt](examples/NLS_FIM.txt). 
 
 ## GUI build
@@ -167,3 +170,4 @@ If you wish to contribute a new feature, you can do this by forking the GiNaCDE 
 If you encounter a bug, please open a new [issue](https://github.com/mithun218/GiNaCDE/issues/new) on the GitHub repository to report the bug, and tag it "bug".
 
 Please provide sufficient information to reproduce the bug and include as much information as possible that can be helpful for fixing it.
+
