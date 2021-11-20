@@ -25,24 +25,28 @@ Some interesting features of GiNaCDE are
 
  
 ## External dependency
-GiNaCDE V1.0.0 requires the following packages (install the packages in the following order):
+GiNaCDE V1.0.0 requires the packages [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) and [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) (this library is optional and is used to build the GUI version of the GiNaCDE library). 
 
-   * [CLN >= 1.3.4](http://www.ginac.de/CLN/). This library is mandatory. We have provided the source codes for this library in [extlib/](extlib/) folder. At first, we should install this library, and to install this library use the following commands:  
+#### For Linux/MacOS machines:
+All the dependencies are available via the most common package managers `APT` on Ubuntu or Debian. Additionally, all dependencies can also be retrieved on `macOS` via the most common package managers [Homebrew](https://brew.sh/) and [MacPorts](https://ports.macports.org/). For example, CLN, GiNaC and GTK3 are installed via APT through
+
+```apt install libcln-dev libginac-dev libgtk-3-dev```
+
+and on Homebrew via
+
+```brew install cln ginac gtk+3```
+
+#### For Windows machines:
+
+ We have to install the libraries  [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) using the following commands:  
 ```        
         $ ./configure
         $ make
         $ make install
 ```
-  * [GiNaC >= 1.7.6](https://www.ginac.de/archives/). This library is mandatory.
-       We have provided the source codes for this library in [extlib/](extlib/) folder. To install this library use the following commands:
-```        
-        $ ./configure
-        $ make
-        $ make install
+ The library  [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) can be easily installed using [MSYS2](https://msys2.github.io/), which provides a UNIX-like environment for Windows. It provides packages for many software applications and libraries, including the GTK stack. To install GTK3 and its dependencies, open a MSYS2 shell, and run:
 ```
-  *  [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/). This library is optional and is used to build the GUI version of the GiNaCDE library. This GUI library can be installed on UBUNTU OS easily by the command:
-```
-        $ sudo apt install libgtk-3-dev
+        $ pacman -S mingw-w64-x86_64-gtk3
 ```   
 
 ## Compiling and installing
