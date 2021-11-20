@@ -170,3 +170,4 @@ If you wish to contribute a new feature, you can do this by forking the GiNaCDE 
 If you encounter a bug, please open a new [issue](https://github.com/mithun218/GiNaCDE/issues/new) on the GitHub repository to report the bug, and tag it "bug".
 
 Please provide sufficient information to reproduce the bug and include as much information as possible that can be helpful for fixing it.
+
