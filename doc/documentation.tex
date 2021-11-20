@@ -311,7 +311,7 @@
 	
 	
 	\section{Software Implementation}\label{sec:imple}
-	We have implemented the algorithms described in Secs. \ref{sec:Fexpn}, \ref{sec:mF} and \ref{sec:fim}, into GiNaCDE. GiNaCDE is a C++ library that is built on a pure C++ symbolic library GiNaC \cite{ginac}. Besides this library version, we have also developed a GUI version of GiNaCDE called GiNaCDE GUI. When we solve differential equations using GiNaCDE GUI, we do not have to write any C++ code, and compilation of any code is not required. This GUI version guides us in each step to obtain the output results. However, a complete guide of GiNaCDE GUI has been provided in the \href{https://github.com/mithun218/GiNaCDE}{GiNaCDE repository}. In both versions of GiNaCDE (library and GUI), the output results are saved in a text file with calculating steps. Output results can be saved in Maple, Mathematica or GiNaC programming language by assigning the C++ macros {\em maple}, {\em mathematica} or {\em ginac} to the programming variable {\em {output}}. 
+	We have implemented the algorithms described in Secs. \ref{sec:Fexpn}, \ref{sec:mF} and \ref{sec:fim}, into GiNaCDE. GiNaCDE is a C++ library that is built on a pure C++ symbolic library GiNaC \cite{ginac}. Besides this library version, we have also developed a GUI version of GiNaCDE called GiNaCDE GUI. When we solve differential equations using GiNaCDE GUI, we do not have to write any C++ code, and compilation of any code is not required. This GUI version guides us in each step to obtain the output results. However, a complete guide of GiNaCDE GUI has been provided \href{https://sourceforge.net/projects/ginacde}{here}. In both versions of GiNaCDE (library and GUI), the output results are saved in a text file with calculating steps. Output results can be saved in Maple, Mathematica or GiNaC programming language by assigning the C++ macros {\em maple}, {\em mathematica} or {\em ginac} to the programming variable {\em {output}}. 
 	
 	F-expansion and mF-expansion methods can be applied to higher-order NLPDEs. But, FIM method is applicable to an NLPDE when its transformed NLODE \eqref{tweq2} is second-order only. Actually, there are no rules to know in advance the appropriate method among three to solve the given NLPDE. 
 	
@@ -626,7 +626,7 @@
 		\frac{{{k_0} + 2{p_1}{k_1} - 3{G_1}{k_1}p_1^2}}{{ - p_1^2 - {p_0} + {G_1}p_1^3}} = \frac{{{G_1}k_1^3}}{{ - 3{G_1}{p_1}k_1^2 + k_1^2}} = \frac{{2{k_1}{G_3} + {k_1}{G_2}}}{{3A - 3{p_1}{G_2}}}.
 	\end{equation}
 	Same conditions were obtained in \cite{complexTwt1}. Therefore GiNaCDE evaluates the exact analytical solutions of imaginary part only. 
-	We get exact solutions of the NLPDE \eqref{nlseWtKerr} with the F-expansion and mF-expansion methods. FIM is unable to solve the NLPDE \eqref{nlseWtKerr}, because the NLPDE \eqref{nlseWtKerr} in terms of traveling-wave coordinate $\xi$ is not a second-order NLODE. The output results obtained from running the above program have been provided under the examples/ folder of GiNaCDE \href{https://github.com/mithun218/GiNaCDE}{repository} with file names \textit{kerrNLS\_Fexp.txt}, \textit{kerrNLS\_mF.txt} and \textit{kerrNLS\_FIM.txt}.  
+	We get exact solutions of the NLPDE \eqref{nlseWtKerr} with the F-expansion and mF-expansion methods. FIM is unable to solve the NLPDE \eqref{nlseWtKerr}, because the NLPDE \eqref{nlseWtKerr} in terms of traveling-wave coordinate $\xi$ is not a second-order NLODE. The output results obtained from running the above program have been provided under the examples/ folder of \href{https://github.com/mithun218/GiNaCDE}{GiNaCDE repository} with file names \textit{kerrNLS\_Fexp.txt}, \textit{kerrNLS\_mF.txt} and \textit{kerrNLS\_FIM.txt}.  
 	
 	
 	\section{Non-Polynomial case in FIM}
@@ -672,12 +672,12 @@
 	\end{verbatim}
 	After that transformation, assuming $a_1=1$, the software evaluates $h=-\frac{k}{2}$. Then the degrees of $a_0,g$ are auto-evaluated following the strategy in step FIM5 and it finds two sets of balanced degrees which are $deg(a_0,g)=(2,0),(1,1)$. Second set of balanced degrees was obtained in \cite{mirza}.  
 	%For first balanced degrees set $(2,0)$, the software finds the exact solutions of Eq. \eqref{Ks} only for $k_0=0,k_1=0$. Interestingly all our results derived by GiNaCDE using FIM match with \cite{mirza} if we replace $k_0,k_1$ with $-c,1$ respectively.
-	The output results obtained from running the above program have been provided under the examples/ folder of GiNaCDE \href{https://github.com/mithun218/GiNaCDE}{repository} with file name \textit{KS\_FIM.txt}.
+	The output results obtained from running the above program have been provided under the examples/ folder of \href{https://github.com/mithun218/GiNaCDE}{GiNaCDE repository} with file name \textit{KS\_FIM.txt}.
 		
 	
 	
 	\section{GUI of the library}\label{gui}
-	In sec. \ref{sec:compile} we have mentioned that the source code can be compiled using the option {\em -DGINACDE\_GUI\_BUILD=on} to build GiNaCDE GUI. The GTK+3 library is required to build a GUI version of the GiNaCDE library. GiNaCDE GUI can interact graphically with us more easily without any programming knowledge, and there does not need for compilation each time which saves time. When we solve differential equations using GiNaCDE GUI, this GUI version guides us in each step to obtain the output results. For more details about the GiNaCDE GUI, we refer to the tutorial \textit{GiNaCDE\_guiTutorial.pdf}, which is available with the source code.
+	In sec. \ref{sec:compile} we have mentioned that the source code can be compiled using the option {\em -DGINACDE\_GUI\_BUILD=on} to build GiNaCDE GUI. The GTK+3 library is required to build a GUI version of the GiNaCDE library. GiNaCDE GUI can interact graphically with us more easily without any programming knowledge, and there does not need for compilation each time which saves time. When we solve differential equations using GiNaCDE GUI, this GUI version guides us in each step to obtain the output results. For more details about the GiNaCDE GUI, we refer to the tutorial \textit{GiNaCDE\_guiTutorial.pdf}, which is available with pre-compiled windows binary \href{https://sourceforge.net/projects/ginacde}{here}.
 	
 	
 	\appendix
