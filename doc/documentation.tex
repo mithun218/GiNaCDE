@@ -340,7 +340,8 @@
 		
 	
 	\section{Compiling and installing}\label{sec:compile}
-	We need to make sure that we already have a few tools installed, including pkg-config (>= 0.29.2), CMake(>=3.1), CLN (>= 1.3.4), GiNaC (>= 1.7.6). We need a decent ISO C++11 compiler. We suggest to use the C++ compiler from the GNU compiler collection, GCC >= 4.9. The GTK+ 3.xx libraries (optional) are required to build the graphical user interface (GUI) of GiNaCDE library.
+	We need to make sure that we already have a few tools installed, including pkg-config (>= 0.29.2), CMake(>=3.1), CLN (>= 1.3.4), GiNaC (>= 1.7.6). We need a decent ISO C++11 compiler. We suggest to use the C++ compiler from the GNU compiler collection, GCC >= 4.9. The GTK+ 3.xx libraries (optional) are required to build the graphical user interface (GUI) of GiNaCDE library. To install all these dependencies please see the \href{https://github.com/mithun218/GiNaCDE/tree/master#readme}{README file.} 
+	
 	The source files are compiled using CMake build system by executing the following commands with Make and the GCC compiler on the command-line:
 	\begin{verbatim}
 		1. mkdir build-dir # generate a separate directory
@@ -349,7 +350,7 @@
 		4. make
 		5. make install
 	\end{verbatim}
-	On line 3, the option {\em -DGINACDE\_GUI\_BUILD=on} is used to build GUI of GiNaCDE library, which requires GTK+ 3.xx libraries. If GTK+ 3.xx libraries are absent in the system, one can omit this option. The name of source directories is used in place of {\em <path-to-source>}. We have checked that the source files are successfully compiled on the Windows platform using MSYS2 (https://www.msys2.org) when the commands on line 3 are simply replaced by
+	On line 3, the option {\em -DGINACDE\_GUI\_BUILD=on} is used to build GUI of GiNaCDE library, which requires GTK+ 3.xx libraries. If GTK+ 3.xx libraries are absent in the system, one can omit this option. The name of source directories is used in place of {\em <path-to-source>}. We have checked that the source files are successfully compiled on the Windows platform using \href{https://www.msys2.org}{MSYS2} when the commands on line 3 are simply replaced by
 	\begin{verbatim}
 		3. cmake -G "MSYS Makefiles" -DGINACDE_GUI_BUILD=on <path-to-source>
 	\end{verbatim}
