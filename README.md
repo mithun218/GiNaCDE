@@ -100,7 +100,6 @@ add_executable(my_example my_example.cpp)
 target_link_libraries(my_example PRIVATE GiNaCDE)
 ```
 
-
 ## Output
 GiNaCDE prints all the output results in a separate text ('.txt') file.
 Besides this, the solutions of the NLPDE are collected by a programming variable *solutionClt*.
@@ -173,7 +172,7 @@ int main()
 After compiling and running the above program, exact solutions with calculating steps are saved in the text files [NLS_Fexp(maple).txt](examples/NLS_Fexp(maple).txt), [NLS_Fexp(ginac).txt](examples/NLS_Fexp(ginac).txt) and [NLS_FIM.txt](examples/NLS_FIM.txt). 
 
 ## GUI build
-We have provided a pe-compiled GiNaCDE GUI, which can be downloaded from [here](GUI/GiNaCDE_GUI.rar). The GiNaCDE GUI has been compiled on Windows 10 OS using [`MSYS2`](https://www.msys2.org), GCC 10.3.0, GTK+ 3.24.30, CLN 1.3.6 and GiNaC 1.8.1. The precompiled software is compatible with 32-bit and 64-bit Windows 10 OS.
+We have provided a pe-compiled GiNaCDE GUI, which can be downloaded from [here](https://sourceforge.net/projects/ginacde). The GiNaCDE GUI has been compiled on Windows 10 OS using [`MSYS2`](https://www.msys2.org), GCC 10.3.0, GTK+ 3.24.30, CLN 1.3.6 and GiNaC 1.8.1. The precompiled software is compatible with 32-bit and 64-bit Windows 10 OS.
 
     
 ## Contributions and bug reports
