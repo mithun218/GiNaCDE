@@ -88,6 +88,18 @@ To run the GiNaCDE library from the GCC compiler, use the following command:
 ```  
     $ g++ -std=c++11 -Wall -g example.cpp -o example -lcln -lginac -lGiNaCDE
 ```   
+
+Here one should note that if GiNaCDE is installed into the default installation directory and we compile a GiNaCDE program manually using the above command (i.e., without pkg-config configuration), we must set the include directory `#include <GiNaCDE/GiNaCDE.h>`. But the include directory set in [`GiNaCDE.pc.in`](GiNaCDE.pc.in) is `@CMAKE_INSTALL_PREFIX@/include/GiNaCDE`. This means that when using the pkg-config configuration, one needs to include `#include <GiNaCDE.h>` instead of `#include <GiNaCDE/GiNaCDE.h>`. 
+
+If we create a new CMake project that uses GiNaCDE, we need to link the GiNaCDE library against the project executables. GiNaCDE provides a pkg-config configuration. So we currently need to do the following:
+
+```
+find_package(PkgConfig)
+pkg_search_module(GiNaCDE REQUIRED IMPORTED_TARGET GiNaCDE>=1.0)
+add_executable(my_example my_example.cpp)
+target_link_libraries(my_example PRIVATE GiNaCDE)
+```
+
 ## Output
 GiNaCDE prints all the output results in a separate text ('.txt') file.
 Besides this, the solutions of the NLPDE are collected by a programming variable *solutionClt*.
