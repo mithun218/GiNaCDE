@@ -36,13 +36,13 @@
     desolve(ode,{u},FIM,true);
 
 
-    ode = c*Diff(u,x,1)-a*(1-u)*Diff(u,x,1)-Diff(u,x,3)+Diff((1-u)*Diff(u,x,2),x,1)-b*Diff(u,x,1)*Diff(u,x,2);  // Kudryashov-Sinelshchikov equation
+    /*ode = c*Diff(u,x,1)-a*(1-u)*Diff(u,x,1)-Diff(u,x,3)+Diff((1-u)*Diff(u,x,2),x,1)-b*Diff(u,x,1)*Diff(u,x,2);  // Kudryashov-Sinelshchikov equation
     output = maple;
     NValue = 1;
     degAcoeff = lst{2,1,1,A_2};
     filename = "kudryashov_mF.txt";
     paraInDiffSolve = lst{a,b,c};
-    desolve(ode, {u}, mF_expansion,true);
+    desolve(ode, {u}, mF_expansion,true);*/
 
 
 
