@@ -20,7 +20,7 @@ Some interesting features of GiNaCDE are
   * It can tackle the non-polynomial form of *h (X)* in the case of FIM.
   * It can integrate an integrable NLPDE or NLODE when possible, and the generated integrating constants can be assigned with the values in the user choice.
   * For differential equations with parameters, e.g. ![](img/Eqn3.png), it can determine the conditions on the parameters to obtain exact solutions.
-  * The exact analytical solutions of NLPDEs or NLODES with calculating steps are saved in a text file written in `MAPLE` or `MATHEMATICA` language.
+  * The exact analytical solutions of NLPDEs or NLODES with calculating steps are saved in a text file written in `MAPLE`, `MATHEMATICA` or `GiNaC` language.
   * It has a friendly Graphical User Interface (GUI).
 
  
@@ -89,7 +89,6 @@ To run the GiNaCDE library from the GCC compiler, use the following command:
     $ g++ -std=c++11 -Wall -g example.cpp -o example -lcln -lginac -lGiNaCDE
 ```   
 
-Here one should note that if GiNaCDE is installed into the default installation directory and we compile a GiNaCDE program manually using the above command (i.e., without pkg-config configuration), we must set the include directory `#include <GiNaCDE/GiNaCDE.h>`. But the include directory set in [`GiNaCDE.pc.in`](GiNaCDE.pc.in) is `@CMAKE_INSTALL_PREFIX@/include/GiNaCDE`. This means that when using the pkg-config configuration, one needs to include `#include <GiNaCDE.h>` instead of `#include <GiNaCDE/GiNaCDE.h>`. 
 
 If we create a new CMake project that uses GiNaCDE, we need to link the GiNaCDE library against the project executables. GiNaCDE provides a pkg-config configuration. So we currently need to do the following:
 
