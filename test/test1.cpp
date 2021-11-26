@@ -24,18 +24,18 @@
     twcPhase = lst{lst{},lst{}};
 
     ode = Diff(u,x,2) + Diff(u,x,1) + w*w*u; // the damped harmonic oscillator
-    output = maple;// Outputs are saved in maple format;
+    output = ginac;// Outputs are saved in ginac format;
     filename = "damped_FIM.txt";
     desolve(ode,{u},FIM,true);
     /* Checking all solutions*/
     diffStr.str("");
     diffStr<<ode;
-    solu_num1 = sizeof(solutionClt);
-    for(size_t i=1;i<solu_num1;i++)
+    solu_num1 = (solutionClt).size();
+    for(size_t i=0;i<solu_num1;i++)
     {
         algSoluStr.str("");
         algSoluStr<<solutionClt[i][0];
-        solu_num2 = sizeof(solutionClt[i]);
+        solu_num2 = nops(solutionClt[i]);
         for(size_t j=1;j<solu_num2;j++)
         {
             diffSoluStr.str("");
@@ -50,8 +50,6 @@
 
 
     ode = Diff(u,x,2) + a*u*Diff(u,x,1) + b*u*u*u; // modified Painlev-Ince equation
-    filename = "Painlev_FIM.txt";
-    desolve(ode,{u},FIM,true);
     output = ginac;
     filename = "Painlev_FIMextravar.txt";
     paraInDiffSolve = lst{a,b};
@@ -60,7 +58,7 @@
     diffStr.str("");
     diffStr<<ode;
     solu_num1 = sizeof(solutionClt);
-    for(size_t i=1;i<solu_num1;i++)
+    for(size_t i=0;i<solu_num1;i++)
     {
         algSoluStr.str("");
         algSoluStr<<solutionClt[i][0];
