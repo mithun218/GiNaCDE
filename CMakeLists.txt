@@ -143,8 +143,16 @@ target_link_libraries(test1 ${testlibs})
 add_executable(test2 test/test2.cpp)
 target_link_libraries(test2 ${testlibs})
 
+add_executable(checkSolutest1 test/checkSolu_cahnAllen_mF.cpp)
+target_link_libraries(checkSolutest1 ${testlibs})
+
+add_executable(checkSolutest2 test/checkSolu_Painlev_FIMextravar.cpp)
+target_link_libraries(checkSolutest2 ${testlibs})
+
 add_test(test1Run ${GINACDE_BINARY_DIR}/bin/test1)
 add_test(test2Run ${GINACDE_BINARY_DIR}/bin/test2)
+add_test(checkSolutest1Run ${GINACDE_BINARY_DIR}/bin/checkSolutest1)
+add_test(checkSolutest2Run ${GINACDE_BINARY_DIR}/bin/checkSolutest2)
 
 # Building gui program
 add_executable(gtools tools/gtools.cpp)

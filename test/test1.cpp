@@ -57,12 +57,12 @@
     /* Checking all solutions*/
     diffStr.str("");
     diffStr<<ode;
-    solu_num1 = sizeof(solutionClt);
+    solu_num1 = (solutionClt).size();
     for(size_t i=0;i<solu_num1;i++)
     {
         algSoluStr.str("");
         algSoluStr<<solutionClt[i][0];
-        solu_num2 = sizeof(solutionClt[i]);
+        solu_num2 = nops(solutionClt[i]);
         for(size_t j=1;j<solu_num2;j++)
         {
             diffSoluStr.str("");
