@@ -666,6 +666,18 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     // collecting variables from twc, phase, paraInDiffSolve for which system of equations to be solved.
     lst variables;
 
+    if(method != FIM && nops(degAcoeff) == 0)
+    {
+        cout <<"Evaluation stop: Please initialize 'degAcoeff';"<<endl;
+        solutions << "Evaluation stop: Please initialize 'degAcoeff';"<<endl;
+        writetofile(solutions, dpndt_vars.op(0));
+        #ifdef GiNaCDE_gui
+        gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Please initialize 'degAcoeff';");
+        //gtk_show_uri(gdk_screen_get_default(),&CurrentPath[0],GDK_CURRENT_TIME,NULL);
+        #endif // GiNaCDE_gui
+        return -1;
+    }
+
     if(method != FIM && nops(degAcoeff) != 0 && !is_a<numeric>(degAcoeff[0]))
     {
         cout <<"Evaluation stop: Please provide highest positive integer delta of 1st order NLODE in 'degAcoeff';"<<endl;
@@ -677,6 +689,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
         #endif // GiNaCDE_gui
         return -1;
     }
+
 
     if(method != FIM && !degAcoeff[0].info(info_flags::positive))
     {
