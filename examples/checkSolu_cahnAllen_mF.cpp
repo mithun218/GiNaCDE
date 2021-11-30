@@ -34,9 +34,15 @@ int main()
     //Following function, verify solution #1. If the following function returns 0, the solution is correct.
     //Otherwise, the solution is not valid.
     ex ret = checkSolu(DE,solutions,algebraic_solutions);
-    if(ret!=_ex0)
+    if(ret==_ex0)
     {
-        return -1;
+        cout<<"solution #1 is correct:)"<<endl;
+        cout<<ret<<endl;
+    }
+    else
+    {
+        cout<<"solution #1 is not correct."<<ret<<endl;
+        cout<<ret<<endl;
     }
 
                         /************Check the solution #20***********/
@@ -51,9 +57,15 @@ int main()
     //Following function, verify solution #20. If the following function returns 0, the solution is correct.
     //Otherwise, the solution is not valid.
     ret = checkSolu(DE,solutions,algebraic_solutions);
-    if(ret!=_ex0)
+    if(ret==_ex0)
     {
-        return -1;
+        cout<<"solution #20 is correct:)"<<endl;
+        cout<<ret<<endl;
+    }
+    else
+    {
+        cout<<"solution #20 is not correct."<<endl;
+        cout<<ret<<endl;
     }
 
 
