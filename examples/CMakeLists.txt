@@ -9,6 +9,9 @@ set(SRC_FILES
     kerrNLS
     KS
     NLS
+    checkSolu_cahnAllen_mF
+    checkSolu_NLS_Fexp(ginac)
+    checkSolu_Painlev_FIMextravar
 )
 
 # Add executables and link to library
