@@ -104,7 +104,7 @@ GiNaCDE prints all the output results in a separate text ('.txt') file.
 Besides this, the solutions of the NLPDE are collected by a programming variable *solutionClt*.
 
 ## Examples
-The [`examples`](examples/) folder contains all the examples which solve some NLPDEs, such as, Eckhaus equation, Seventh-order SawadaKotara equations, Fifth-order Generalized KdV equation, Perturbed NLS Equation with Kerr Law Nonlinearity, KudryashovSinelshchikov Equation, etc.
+The [`examples`](examples/) folder contains all the examples which solve some NLPDEs, such as, Eckhaus equation, Seventh-order Sawada-Kotara equations, Fifth-order Generalized Korteweg–De Vries (KdV) equation, Perturbed nonlinear Schrödinger (NLS) Equation with Kerr Law Nonlinearity, Kudryashov-Sinelshchikov Equation, etc.
  
 To compile the examples, move to the `build-dir` created earlier for building GiNaCDE, and execute
 ```
@@ -113,7 +113,7 @@ $ make examples
 The executables will be placed into the `build-dir/bin` directory.
 
 ### Additional notes
-Please note that one can obtain different results in output files compared to those provided by us in the [`examples`](examples/) folder for each example. 
+We should note that we can obtain different results in output files after each running session of a GiNaCDE program. 
 This happens because of the GiNaC library.
 Because GiNaC assigns a unique (hidden) serial number for each newly created symbol object and GiNaC uses this unique serial number instead of its name for algebraic manipulations. The serial number for the same name of the symbol may be changed in each running session of the GiNaC program. As a result, the symbols in the same algebraic expressions may be ordered differently during each running session of the GiNaC program. This happens because to order the symbols of an algebraic expression GiNaC internally uses a comparison predicate, called *ex_is_less*, which uses an internal symbol id counter. 
 
@@ -157,7 +157,7 @@ int main()
     filename="NLS_Fexp(maple).txt";
     desolve(pde,{u},F_expansion);
     output=ginac;
-    filename="NLS_Fexp(ginac).txt";
+    filename="NLS_Fexp_ginac.txt";
     desolve(pde,{u},F_expansion);
 
     output=mathematica;
@@ -168,7 +168,7 @@ int main()
 
 }
 ```
-After compiling and running the above program, exact solutions with calculating steps are saved in the text files [NLS_Fexp(maple).txt](examples/NLS_Fexp(maple).txt), [NLS_Fexp(ginac).txt](examples/NLS_Fexp(ginac).txt) and [NLS_FIM.txt](examples/NLS_FIM.txt). 
+After compiling and running the above program, exact solutions with calculating steps are saved in the text files [NLS_Fexp(maple).txt](examples/NLS_Fexp(maple).txt), [NLS_Fexp_ginac.txt](examples/NLS_Fexp_ginac.txt) and [NLS_FIM.txt](examples/NLS_FIM.txt). 
 
 ## GUI build
 We have provided a pe-compiled GiNaCDE GUI, which can be downloaded from [here](https://sourceforge.net/projects/ginacde). The GiNaCDE GUI has been compiled on Windows 10 OS using [`MSYS2`](https://www.msys2.org), GCC 10.3.0, GTK+ 3.24.30, CLN 1.3.6 and GiNaC 1.8.1. The precompiled software is compatible with 32-bit and 64-bit Windows 10 OS.
