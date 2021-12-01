@@ -113,7 +113,7 @@ $ make examples
 The executables will be placed into the `build-dir/bin` directory.
 
 ### Additional notes
-We can obtain different results in output files after each running session of a GiNaCDE program. 
+We should note that we can obtain different results in output files after each running session of a GiNaCDE program. 
 This happens because of the GiNaC library.
 Because GiNaC assigns a unique (hidden) serial number for each newly created symbol object and GiNaC uses this unique serial number instead of its name for algebraic manipulations. The serial number for the same name of the symbol may be changed in each running session of the GiNaC program. As a result, the symbols in the same algebraic expressions may be ordered differently during each running session of the GiNaC program. This happens because to order the symbols of an algebraic expression GiNaC internally uses a comparison predicate, called *ex_is_less*, which uses an internal symbol id counter. 
 
