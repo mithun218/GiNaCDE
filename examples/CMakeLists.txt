@@ -10,7 +10,7 @@ set(SRC_FILES
     KS
     NLS
     checkSolu_cahnAllen_mF
-    checkSolu_NLS_Fexp(ginac)
+    checkSolu_NLS_Fexp_ginac
     checkSolu_Painlev_FIMextravar
 )
 
