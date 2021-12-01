@@ -111,7 +111,7 @@ int main()
     desolve(pde, {u}, FIM);
 
     pde = Diff(u,t,1) - Diff(u,x,2) + u*u*u - u;  // Cahn-Allen equation
-    output = mathematica;
+    output = ginac;
     twcPhase=lst{lst{k_0,k_1},lst{}};
     filename = "cahnAllen_mF.txt";
     degAcoeff = lst{2,0,A_1,A_2};

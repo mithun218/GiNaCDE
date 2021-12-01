@@ -30,7 +30,7 @@ int main()
     filename="NLS_Fexp(maple).txt";
     desolve(pde,{u},F_expansion);
     output=ginac;
-    filename="NLS_Fexp(ginac).txt";
+    filename="NLS_Fexp_ginac.txt";
     desolve(pde,{u},F_expansion);
 
     output=mathematica;

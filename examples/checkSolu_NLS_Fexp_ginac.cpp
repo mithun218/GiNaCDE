@@ -1,7 +1,7 @@
 
-/** @file checkSolu_NLS_Fexp(ginac).cpp
+/** @file checkSolu_NLS_Fexp_ginac.cpp
  *
- *   This program checks the solutions reported in NLS_Fexp(ginac).txt file
+ *   This program checks the solutions reported in NLS_Fexp_ginac.txt file
     */
 
 
