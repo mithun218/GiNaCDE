@@ -2049,7 +2049,7 @@ ex checkSolu(const string& diff_equ, const string& solutions, const string& alge
     string solutionsR = replacestring(solutions, "==","=");
 
 
-    ex diff_equex;
+    ex diff_equex = reader(diff_equ);
     lst solutionslst={}, algebraic_solutionslst={},solutions_conditionslst={};
     vector<string> temSplit;
 
