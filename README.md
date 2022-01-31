@@ -71,10 +71,15 @@ A successful compilation will lead to the creation of libraries, executables of 
 `gtools` is a console application.
     
 ## Tests
-The [`test`](test/) folder contains tests. These tests can be executed using the commands:
+The [`test`](test/) folder contains tests. To run the tests, execute one of the following commands:
+```
+    $ make test
+```
+or 
 ```
     $ ctest
 ```
+under `build-dir` created earlier for building GiNaCDE.
 These automated tests verify the functionalities of the software. 
 
 ## Checking the solutions of Diff. Equ.
