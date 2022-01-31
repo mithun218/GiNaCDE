@@ -1669,7 +1669,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                 if(test)
                 {
                     tem2 = 0;
-                    solutions << "The assigned value(s) to the integrating constant(s)-> " << endl;
+                    solutions << "The assigned value(s) to the integration constant(s)-> " << endl;
                     solutions << "ic_1: " << 0 << endl;
 
                 }
@@ -1677,7 +1677,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                 {
                     do
                     {
-                        cout << "Do you assign a value to integrating constant (ic_" <<symnum+1<< ")"<<"? ";
+                        cout << "Do you assign a value to integration constant (ic_" <<symnum+1<< ")"<<"? ";
                         cin >> tem1;
                         if(tem1 == "h")
                         {
@@ -1694,7 +1694,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                        tem2 = reader(tem1);
 
                        if(symnum == 0)
-                            solutions << "The assigned value(s) to the integrating constant(s)-> " << endl;
+                            solutions << "The assigned value(s) to the integration constant(s)-> " << endl;
                        solutions << "ic_" <<symnum+1<<": " << tem1 << endl;
                     }
 
@@ -1721,7 +1721,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
             string tem;
 
             string nlodeEq ;
-            nlodeEq = "The Diff. Equ. is integrable;\nThe integrating constant(s) are: ";
+            nlodeEq = "The Diff. Equ. is integrable;\nThe integration constant(s) are: ";
 
             GtkWidget *Eqlbl = gtk_label_new(&nlodeEq[0]);
 
@@ -1744,7 +1744,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
             GtkWidget *dialog2=gtk_dialog_new();
             gtk_window_set_decorated(GTK_WINDOW(dialog2),FALSE);
-            gtk_window_set_title(GTK_WINDOW(dialog2),"The integrating constant(s) are:");
+            gtk_window_set_title(GTK_WINDOW(dialog2),"The integration constant(s) are:");
             gtk_window_set_modal( GTK_WINDOW(dialog2), TRUE );
             gtk_window_set_transient_for( GTK_WINDOW(dialog2), GTK_WINDOW(window));
 
@@ -1787,7 +1787,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
                ex tem1;
                tem1 = entryText[i];
                if(onetime == 0)
-                    {solutions << "The assigned value(s) to the integrating constant(s)-> " << endl;onetime = 1;}
+                    {solutions << "The assigned value(s) to the integration constant(s)-> " << endl;onetime = 1;}
                solutions << "ic_"<<i+1<<": " << tem1 << endl;;
                tem = "ic_"+to_string(i+1);
                ex icname = reader(tem);

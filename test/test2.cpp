@@ -2,11 +2,9 @@
 /** @file test2.cpp
  *
  *   Program to test GiNaCDE library. This program solve following pdes
-        i.   Benjamin-Bona-Mahony equation
-        ii.  Cahn-Allen equation
-        iii. Duffing equation
-        iv.  Kudryashov-Sinelshchikov  equation
-        v.   Nonlinear Telegraph Equation      */
+        i.  Cahn-Allen equation
+        ii. Duffing equation
+        iii.Nonlinear Telegraph Equation      */
 
 
 
