@@ -59,6 +59,11 @@ We suggest to use the C++ compiler from the GNU compiler collection, `GCC >= 4.9
      $ make
      $ make install
 ```
+To install the software locally (e.g. into `~/.local` or similar), one needs to add `-DCMAKE_INSTALL_PREFIX:PATH=~/.local` to the `cmake` call, i.e.
+```
+cmake -DGINACDE_GUI_BUILD=on -DCMAKE_INSTALL_PREFIX:PATH=~/.local <path-to-source> # generate Makefiles
+```
+
 A successful compilation will lead to the creation of libraries, executables of gtools, and GiNaCDE-GUI. If you do not want to build GiNaCDE-GUI, use the following option:
 ```
     -DGINACDE_GUI_BUILD=off
