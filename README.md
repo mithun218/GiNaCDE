@@ -11,16 +11,16 @@ GiNaCDE always transforms the NLPDE into an NLODE with respect to the traveling-
 F-expansion and modified F-expansion methods can be applied to higher-order NLPDEs. But, FIM is applicable to an NLPDE when its transformed NLODE with respect to the traveling-wave coordinate ![](img/Eqn5.png) is second-order only.
 However, there is no guarantee that the library always gives the complete solutions of all NLPDEs of the above form. Sometimes, the library may fail to give solutions due to the complexity of the problems.
 
-
+**N.B.: Currently, GiNaCDE determines the solutions of differential equations assuming all the constant parameters are strictly real and positive.**
 ## Features
 Some interesting features of GiNaCDE are
 
   * Available solution methods: F-expansion method, modified F-expansion method, and first integral method.
   * It can solve  NLPDEs or NLODEs that contain complex functions.
   * It can tackle the non-polynomial form of *h (X)* in the case of FIM.
-  * It can integrate an integrable NLPDE or NLODE when possible, and the generated integrating constants can be assigned with the values in the user choice.
-  * For differential equations with parameters, e.g. ![](img/Eqn3.png), it can determine the conditions on the parameters to obtain exact solutions.
-  * The exact analytical solutions of NLPDEs or NLODES with calculating steps are saved in a text file written in `MAPLE`, `MATHEMATICA` or `GiNaC` language.
+  * It can integrate an integrable NLPDE or NLODE when possible, and the generated integration constants can be assigned with the values in the user choice.
+  * For differential equations with parameters (![](img/Eqn3.png)), it can determine the conditions on the parameters to obtain exact solutions.
+  * The exact analytical solutions of NLPDEs or NLODES with calculating steps are saved in a text file written in `MAPLE`, `MATHEMATICA`, or `GiNaC` language.
   * It has a friendly Graphical User Interface (GUI).
 
  
@@ -59,7 +59,7 @@ We suggest to use the C++ compiler from the GNU compiler collection, `GCC >= 4.9
      $ make
      $ make install
 ```
-A successful compilation will lead to the creation of libraries, executables of gtools, and GiNaCDE GUI. If you do not want to build GiNaCDE GUI, use the following option:
+A successful compilation will lead to the creation of libraries, executables of gtools, and GiNaCDE-GUI. If you do not want to build GiNaCDE-GUI, use the following option:
 ```
     -DGINACDE_GUI_BUILD=off
 ```
@@ -73,7 +73,7 @@ The [`test`](test/) folder contains tests. These tests can be executed using the
 These automated tests verify the functionalities of the software. 
 
 ## Checking the solutions of Diff. Equ.
-We can easily verify the solutions returned by GiNaCDE by substituting the solutions back into the differential equation. Following this substitution method the solutions of Differential Equations in the text file derived by GiNaCDE, can be easily checked by the software: Maple, Mathematica, and GiNaCDE. To illustrate the procedures for checking the solutions, we have provided some output text files [`NLS_Fexp(maple).txt`](examples/NLS_Fexp(maple).txt), [`NLS_Fexp(ginac).txt`](examples/NLS_Fexp(ginac).txt), [`KDV_FIM2.txt`](examples/KDV_FIM2.txt), [`gardner_Fex.txt`](examples/gardner_Fex.txt), [`cahnAllen_mF.txt`](examples/cahnAllen_mF.txt), [`Painlev_FIMextravar.txt`](examples/Painlev_FIMextravar.txt), and the corresponding checking files [`checkSolu_NLS_Fexp(maple).mw`](examples/checkSolu_NLS_Fexp(maple).mw), [`checkSolu_NLS_Fexp(ginac).cpp`](examples/checkSolu_NLS_Fexp(ginac).cpp), [`checkSolu_KDV_FIM2.mw`](examples/checkSolu_KDV_FIM2.mw), [`checkSolu_gardner_Fex.nb`](examples/checkSolu_gardner_Fex.nb), [`checkSolu_cahnAllen_mF.cpp`](examples/checkSolu_cahnAllen_mF.cpp), [`checkSolu_Painlev_FIMextravar.cpp`](examples/checkSolu_Painlev_FIMextravar.cpp) which explain how to test the solutions using Maple (Maple 2019), Mathematica (Mathematica 9), and GiNaCDE software.
+We can easily verify the solutions returned by GiNaCDE by substituting the solutions back into the differential equation. Following this substitution method, the solutions of Differential Equations given in the text file derived by GiNaCDE, can be easily checked by the software: Maple, Mathematica, and GiNaCDE. To illustrate the procedures for checking the solutions, we have provided some output text files [`NLS_Fexp(maple).txt`](examples/NLS_Fexp(maple).txt), [`NLS_Fexp(ginac).txt`](examples/NLS_Fexp(ginac).txt), [`KDV_FIM2.txt`](examples/KDV_FIM2.txt), [`gardner_Fex.txt`](examples/gardner_Fex.txt), [`cahnAllen_mF.txt`](examples/cahnAllen_mF.txt), [`Painlev_FIMextravar.txt`](examples/Painlev_FIMextravar.txt), and the corresponding checking files [`checkSolu_NLS_Fexp(maple).mw`](examples/checkSolu_NLS_Fexp(maple).mw), [`checkSolu_NLS_Fexp(ginac).cpp`](examples/checkSolu_NLS_Fexp(ginac).cpp), [`checkSolu_KDV_FIM2.mw`](examples/checkSolu_KDV_FIM2.mw), [`checkSolu_gardner_Fex.nb`](examples/checkSolu_gardner_Fex.nb), [`checkSolu_cahnAllen_mF.cpp`](examples/checkSolu_cahnAllen_mF.cpp), [`checkSolu_Painlev_FIMextravar.cpp`](examples/checkSolu_Painlev_FIMextravar.cpp) which explain how to test the solutions using Maple (Maple 2019), Mathematica (Mathematica 9), and GiNaCDE software.
 
 **Caution:** Currently, GiNacDE is unable to check all the solutions reported by GiNaCDE due to some simplification problems. I hope this problem can be fixed in the future release of GiNaCDE.
 Now to verify the solutions, I recommend to use Maple or Mathematica software. 
@@ -81,16 +81,15 @@ Now to verify the solutions, I recommend to use Maple or Mathematica software.
 
 
 ## Execution
-GiNaCDE library can be executed in C++ code with GNU compiler collection, `GCC >= 4.9`. To run `GiNaCDE GUI`, 
-`gtools` just click on `GiNaCDE_gui.exe`, `gtools.exe` files respectively. Then GiNaCDE GUI is executed in a GUI framework, 
-but `gtools` is executed in a console.  
+GiNaCDE library can be executed in C++ code with GNU compiler collection, `GCC >= 4.9`. 
 To run the GiNaCDE library from the GCC compiler, use the following command:
 ```  
     $ g++ -std=c++11 -Wall -g example.cpp -o example -lcln -lginac -lGiNaCDE
 ```   
+To run `GiNaCDE-GUI`, `gtools` just click on `GiNaCDE_gui.exe`, `gtools.exe` files respectively. Then GiNaCDE-GUI is executed in a GUI framework, 
+but `gtools` is executed in a console.  
 
-
-If we create a new CMake project that uses GiNaCDE, we need to link the GiNaCDE library against the project executables. GiNaCDE provides a pkg-config configuration. So we currently need to do the following:
+If we want to create a new CMake project that uses GiNaCDE, we need to link the GiNaCDE library against the project executables. GiNaCDE provides a `pkg-config` configuration. So we currently need to do the following:
 
 ```
 find_package(PkgConfig)
@@ -101,7 +100,7 @@ target_link_libraries(my_example PRIVATE GiNaCDE)
 
 ## Output
 GiNaCDE prints all the output results in a separate text ('.txt') file.
-Besides this, the solutions of the NLPDE are collected by a programming variable *solutionClt*.
+Besides this, the solutions of the NLPDE are collected by the programming variables *solutionClt* and *constraints*.
 
 ## Examples
 The [`examples`](examples/) folder contains all the examples which solve some NLPDEs, such as, Eckhaus equation, Seventh-order Sawada-Kotara equations, Fifth-order Generalized Korteweg–De Vries (KdV) equation, Perturbed nonlinear Schrödinger (NLS) Equation with Kerr Law Nonlinearity, Kudryashov-Sinelshchikov Equation, etc.
@@ -119,7 +118,7 @@ Because GiNaC assigns a unique (hidden) serial number for each newly created sym
 
 ## Documentation: 
 The documentation for GiNaCDE is available [`here`](doc/documentation.pdf).
-The short tutorials on `GiNaCDE GUI` and `gtools` are also available [`here`](doc/GiNaCDE_guiTutorial.pdf) and [`here`](doc/gtoolsTutorial.pdf), respectively.
+The short tutorials on `GiNaCDE-GUI` and `gtools` are also available [`here`](doc/GiNaCDE_guiTutorial.pdf) and [`here`](doc/gtoolsTutorial.pdf), respectively.
     
 ## Example usage  
 This is a brief example that computes exact solutions of the following one-dimensional cubic nonlinear Schrödinger (NLS) equation:
@@ -171,7 +170,7 @@ int main()
 After compiling and running the above program, exact solutions with calculating steps are saved in the text files [NLS_Fexp(maple).txt](examples/NLS_Fexp(maple).txt), [NLS_Fexp_ginac.txt](examples/NLS_Fexp_ginac.txt) and [NLS_FIM.txt](examples/NLS_FIM.txt). 
 
 ## GUI build
-We have provided a pe-compiled GiNaCDE GUI, which can be downloaded from [here](https://sourceforge.net/projects/ginacde). The GiNaCDE GUI has been compiled on Windows 10 OS using [`MSYS2`](https://www.msys2.org), GCC 10.3.0, GTK+ 3.24.30, CLN 1.3.6 and GiNaC 1.8.1. The precompiled software is compatible with 32-bit and 64-bit Windows 10 OS.
+We have provided a pe-compiled GiNaCDE-GUI, which can be downloaded from [here](https://sourceforge.net/projects/ginacde). The GiNaCDE-GUI has been compiled on Windows 10 OS using [`MSYS2`](https://www.msys2.org), GCC 10.3.0, GTK+ 3.24.30, CLN 1.3.6 and GiNaC 1.8.1. The precompiled software is compatible with 32-bit and 64-bit Windows 10 OS.
 
     
 ## Contributions and bug reports
@@ -179,6 +178,5 @@ Contributions to this project are very welcome.
 If you wish to contribute a new feature, you can do this by forking the GiNaCDE repo and creating a branch. Apply your code changes to the branch on your fork. When you're done, submit a [pull request](https://github.com/mithun218/GiNaCDE/pulls) to merge your fork into master branch with a tag "enhancement", and the proposed changes can be discussed there. 
 
 If you encounter a bug, please open a new [issue](https://github.com/mithun218/GiNaCDE/issues/new) on the GitHub repository to report the bug, and tag it "bug".
-
 Please provide sufficient information to reproduce the bug and include as much information as possible that can be helpful for fixing it.
 

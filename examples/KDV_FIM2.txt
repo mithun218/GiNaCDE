@@ -4,7 +4,7 @@ Equations are written in MAPLE language.
 
 Input equation is: diff(u(x,t),x$3)+diff(u(x,t),t$1)-a*u(x,t)^2*diff(u(x,t),x$1) = 0;
 The Diff. Equ. is integrable;
-The assigned value(s) to the integrating constant(s)-> 
+The assigned value(s) to the integration constant(s)-> 
 ic_1: 0
 The Diff. Equ. becomes: -1/3*a*U(xi)^3*k_1+U(xi)*k_0+k_1^3*diff(U(xi),xi$2) = 0;
 u(x,t) = U(xi), 
