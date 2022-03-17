@@ -30,7 +30,7 @@
 		\end{center}
 		\vspace{3cm}
 		\begin{center}
-			\Large{GiNaCDE (V1.0.0)}
+			\Large{GiNaCDE (V1.5.0)}
 		\end{center}
 		\vspace{2cm} 
 		\begin{center} 
@@ -354,10 +354,15 @@
 		1. ldconfig
 	\end{verbatim}
 	which creates the necessary links and cache to the most recent shared libraries installed in the system.
-	To test GiNaCDE library after building it, simply type the following
+	To test GiNaCDE library after building it, execute one of the following commands:
+	\begin{verbatim}
+		1. make test
+	\end{verbatim}
+	or
 	\begin{verbatim}
 		1. ctest
 	\end{verbatim}
+	under `build-dir` created earlier for building GiNaCDE.
 	
 	\section{Arithmetic operators and some supported functions in library}
 	In writing an algebraic expressions GiNaCDE follows GiNaC rules. Like GiNaC, GiNaCDE supports all the arithmetic operators $*$ (multiplication), $+$ (addition), $-$ (subtraction), $/$ (division). GiNaCDE's C++ library version does not support the operator $ ^{\wedge}$. For this purpose, an object of class {\em power} (in short {\em pow}) play the role of $ ^{\wedge}$ operator and this {\em power} object has two slots, one for the basis, one for the exponent, such as $x^5$ is written as $pow(x,5)$. Here one should note that GiNaCDE's GUI version supports the operator $ ^{\wedge}$ also.
