@@ -2,12 +2,12 @@
 #                                                             #
 # File: CMakeLists.txt                                        #
 #                                                             #
-# - CMake configuration file to compile GiNaCDE V1.0          #
+# - CMake configuration file to compile GiNaCDE V1.5.0          #
 #                                                             #
 # Project name: GiNaCDE - GiNaC Differential Equation Solver  #
 # Contact: Mithun Bairagi <bairagirasulpur@gmail.com>         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Version: 1.0.0                                                #
+# Version: 1.5.0                                                #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 

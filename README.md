@@ -1,5 +1,11 @@
 # GiNaCDE- an NLPDE solver
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.03885/status.svg)](https://doi.org/10.21105/joss.03885)
+
+
+reStructuredText:
+.. image:: https://joss.theoj.org/papers/10.21105/joss.03885/status.svg
+   :target: https://doi.org/10.21105/joss.03885
 
 GiNaCDE is an NLPDE (Nonlinear Partial Differential Equation) and NLODE (Nonlinear Ordinary Differential Equation) solver written in C++. It has three different methods: F-expansion, modified F-expansion (mF-expansion), and first integral method (FIM) for solving NLPDEs and NLODEs. It can be used to get exact analytical traveling-wave solutions of a wide variety of NLPDEs arising in different scientific community fields.
 The library has been designed to solve the NLPDEs, which have the following general form
@@ -77,7 +83,7 @@ After compiling and running the above program, exact solutions with calculating 
 
  
 ### External dependencies
-GiNaCDE V1.0.0 requires the packages [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) and [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) (this library is optional and is used to build the GUI version of the GiNaCDE library). 
+GiNaCDE V1.5.0 requires the packages [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) and [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) (this library is optional and is used to build the GUI version of the GiNaCDE library). 
 
 ##### For Linux/MacOS machines:
 All the dependencies are available via the most common package managers `APT` on Ubuntu or Debian. Additionally, all dependencies can also be retrieved on `macOS` via the most common package managers [Homebrew](https://brew.sh/) and [MacPorts](https://ports.macports.org/). For example, CLN, GiNaC and GTK3 are installed via APT through
@@ -197,3 +203,7 @@ If you wish to contribute a new feature, you can do this by forking the GiNaCDE 
 If you encounter a bug, please open a new [issue](https://github.com/mithun218/GiNaCDE/issues/new) on the GitHub repository to report the bug, and tag it "bug".
 Please provide sufficient information to reproduce the bug and include as much information as possible that can be helpful for fixing it.
 
+## Citation
+If you use this software in your project, please cite the following article:
+
+Bairagi, M., (2022). GiNaCDE: the high-performance F-expansion and First Integral Methods with C++ library for solving Nonlinear Differential Equations. Journal of Open Source Software, 7(72), 3885, https://doi.org/10.21105/joss.03885
