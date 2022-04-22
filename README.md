@@ -3,10 +3,6 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.03885/status.svg)](https://doi.org/10.21105/joss.03885)
 
 
-reStructuredText:
-.. image:: https://joss.theoj.org/papers/10.21105/joss.03885/status.svg
-   :target: https://doi.org/10.21105/joss.03885
-
 GiNaCDE is an NLPDE (Nonlinear Partial Differential Equation) and NLODE (Nonlinear Ordinary Differential Equation) solver written in C++. It has three different methods: F-expansion, modified F-expansion (mF-expansion), and first integral method (FIM) for solving NLPDEs and NLODEs. It can be used to get exact analytical traveling-wave solutions of a wide variety of NLPDEs arising in different scientific community fields.
 The library has been designed to solve the NLPDEs, which have the following general form
 
