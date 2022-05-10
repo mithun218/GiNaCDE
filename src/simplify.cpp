@@ -221,7 +221,8 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
 
     if(isFracNegPowBaseGensymb)
     {
-        fracNumericPowBasSubsE.set();
+        if(fracNumericPowBasSubsE.baseClt.empty())
+            fracNumericPowBasSubsE.set();
         y = fracNumericPowBasSubsE(y);
     }
 
@@ -728,7 +729,6 @@ ex simplify(const ex& expr_, int rules)
 
         fracNumericPowBasSubsE.set();
         temexpr_=fracNumericPowBasSubsE(temexpr_);
-
         if(!fracNumericPowBasSubsE.baseClt.empty())
         {
             temBaseClt = fracNumericPowBasSubsE.baseClt;

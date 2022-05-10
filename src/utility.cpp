@@ -205,7 +205,7 @@ ex Factor(const ex& expr)
             temex = temex.subs({symb_ == I});
 
         //if(dorat.israt)
-            return temex;
+        return temex;
        // else
        //   return evalf(temex);
 

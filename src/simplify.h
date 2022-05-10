@@ -180,7 +180,7 @@ class fracNumericPowBasSubs:public map_function
     string str;
 public:
     exmap baseClt;
-    fracNumericPowBasSubs(){}
+    fracNumericPowBasSubs(){j=0;baseClt.clear();}
     void set(void)
     {
         j = 0;
