@@ -180,7 +180,7 @@ int simplifyc::SetRules(int m)
     {
         //rules = HyperSimp;
         HyperSimpRules1[wild(1)*pow(sinh(wild(0)),2)] = -wild(1) + wild(1)*pow(cosh(wild(0)),2);
-        HyperSimpRules1[pow(sin(wild(0)),2)] = _ex_1 + pow(cosh(wild(0)),2);
+        HyperSimpRules1[pow(sinh(wild(0)),2)] = _ex_1 + pow(cosh(wild(0)),2);
         //HyperSimpRules1[pow(sec(wild(0)),2) - pow(tan(wild(0)),2)] = _ex1;
         //HyperSimpRules1[pow(csc(wild(0)),2) - pow(cot(wild(0)),2)] = _ex1;
         HyperSimpRules2[tanh(wild(0))] = sinh(wild(0))/cosh(wild(0));
@@ -274,6 +274,7 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         if(isFracNegPowBaseGensymb && !fracNumericPowBasSubsE.baseClt.empty())
         {
             y = (genSymbSubs(y,fracNumericPowBasSubsE.baseClt));
+            fracNumericPowBasSubsE.set();
             do
             {
                 xprev = y;
@@ -377,6 +378,13 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         y = this->operator()(y,AlgSimp2);
         return y;
     }
+
+    if(isFracNegPowBaseGensymb && !fracNumericPowBasSubsE.baseClt.empty())
+    {
+        y = (genSymbSubs(y,fracNumericPowBasSubsE.baseClt));
+        fracNumericPowBasSubsE.set();
+    }
+
     return e;
 }
 
@@ -517,7 +525,7 @@ ex fracPowBasSubsLvl_1::operator()(const ex& e)
 }
 
 /////////////////////////////////////////////////////////////
-/** replacing the "pow" terms with created symbols, which have less degree than expandLevel all type bases are included,
+/** replacing the fractional power terms with created symbols. All type bases are included,
  * such as numeric, symbols, add container. This class has been used in Factor function before factoring.    **/
 ex fracPowBasSubsFactor::operator()(const ex& e)
 {
@@ -735,8 +743,9 @@ ex simplify(const ex& expr_, int rules)
 
             numer_denomClt = temexpr_.numer_denom();
             temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false)))))/
-                                    (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false))))),rules,false);
+                                    (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false))))),rules);
             temexpr_ = Simplify(genSymbSubs(temexpr_,temBaseClt),rules,false);
+            fracNumericPowBasSubsE.set();
         }
 
 
@@ -745,7 +754,7 @@ ex simplify(const ex& expr_, int rules)
             xprev =temexpr_;
             temexpr_ = Collect_common_factors(temexpr_);
             temexpr_ = temexpr_.subs(factSymb_==_ex1);
-            temexpr_ = Simplify(temexpr_,rules,false);
+            temexpr_ = Simplify(temexpr_,rules);
 
         } while(xprev != temexpr_);
         temexpr_ = temexpr_.subs(factSymb_==_ex1);
@@ -788,6 +797,7 @@ ex simplify(const ex& expr_, int rules)
 
 
         temexpr_ = Simplify(genSymbSubs(temexpr_,temexprToSymMap),rules,false);
+        fracPowBasSubsE.set();
 
         if(expr_.info(info_flags::relation))
            return expr_.lhs()==(temexpr_);
