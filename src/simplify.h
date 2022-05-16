@@ -14,6 +14,7 @@
 #define JacobiSimp 4
 #define AlgSimp2 5
 #define HyperSimp 6
+#define FuncSimp 7
 
 
 #include <iostream>
@@ -48,8 +49,8 @@ public:
     ~Collect_common_factorsc(){}
 };
 
-ex simplify(const ex& expr_, int rules = AlgSimp);
-ex simplifyRecur(const ex& expr_, int rules = AlgSimp);
+ex simplify(const ex& expr_, int rules = FuncSimp);
+ex fullsimplify(const ex& expr_, int rules = AlgSimp);
 
 class TrigArgSign_Complx:public map_function
 {
@@ -211,6 +212,24 @@ public:
     ~fracPowBasSubs(){}
 };
 
+/** replacing some functions with generated symbols  **/
+class funcSubs:public map_function
+{
+    unsigned j;
+    ex expr,expr2,expr3;
+    string str;
+public:
+    exmap baseClt;
+    funcSubs(){j=0;baseClt.clear();}
+    void set(void)
+    {
+        j = 0;
+        baseClt.clear();
+    }
+    ex operator()(const ex& e);
+    ~funcSubs(){}
+};
+
 
 extern simplifyc Simplify;
 extern  Collect_common_factorsc Collect_common_factors; // This collect all common factors including numerical numbers
@@ -219,5 +238,6 @@ extern arguSimplify arguSimplifye;
 extern    expandinv expandinve;
 extern fracNumericPowBasSubs fracNumericPowBasSubsE;
 extern fracPowBasSubs fracPowBasSubsE;
+extern funcSubs funcSubsE;
 
 #endif // SIMPLIFY_H_INCLUDED

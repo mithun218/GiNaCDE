@@ -645,8 +645,8 @@ static ex coth_deriv(const ex & x, unsigned deriv_param)
 {
         GINAC_ASSERT(deriv_param==0);
 
-        // d/dx tanh(x) -> 1-tanh(x)^2
-        return -power(sinh(x),_ex_2);
+        // d/dx coth(x) -> 1-coth(x)^2
+        return 1-power(coth(x),_ex2);
 }
 
 static ex coth_series(const ex &x,
@@ -856,7 +856,7 @@ static ex csch_deriv(const ex & x, unsigned deriv_param)
 {
         GINAC_ASSERT(deriv_param==0);
 
-        // d/dx sech(x) -> -sech(x)*tanh(x)
+        // d/dx csch(x) -> -csch(x)*coth(x)
         return -mul(csch(x), coth(x));
 }
 
@@ -1096,7 +1096,7 @@ REGISTER_FUNCTION(asech, eval_func(asech_eval).
 
 
 ///////////
-/// JacobiSN functions
+/// JacobiSN function
 ///////////
 
 static ex JacobiSN_deriv(const ex & x,const ex & m, unsigned deriv_param)

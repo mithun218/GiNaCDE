@@ -939,7 +939,7 @@ ex solvec::sysequ_red(const exset& sysequ_, const exset& var_)
                     lst one_eq_solu_test = {};
                     for(auto itr1 = one_eq_solu.begin(); itr1 != one_eq_solu.end(); itr1++)
                     {
-                        if(simplifyRecur((numer(eqDivider[eqDividerSz])).subs(*itr1))==_ex0)
+                        if(fullsimplify((numer(eqDivider[eqDividerSz])).subs(*itr1))==_ex0)
                             one_eq_solu_test.append(*itr1);
                     }
 
@@ -1222,7 +1222,7 @@ exsetlst solvec::operator()(const lst & equ_, const lst& var_)
             notSolu = false;
             for (auto itr1 = equ_set.begin();itr1 != equ_set.end();)
             {
-                if(simplifyRecur((*itr1).subs(*itr))!=_ex0)
+                if(fullsimplify((*itr1).subs(*itr))!=_ex0)
                 {
                     notSolu =true;
                     itr1 = equ_set.end();

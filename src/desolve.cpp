@@ -329,9 +329,9 @@ lst firstOrderDiff_solu(const ex& _indpndt_var, const int& _odetype)
                         / (A1byA0
                            + theta * coth((_ex1_2) *theta * _indpndt_var + C_) / (2 * degAcoeff[1])),
                     A1byA2 - theta * tanh((_ex1_2) *theta * _indpndt_var + C_) / (2 * degAcoeff[3])
-                        + sech(_ex1_2 * theta * _indpndt_var + C_)
-                              / (C_ * cosh((_ex1_2) *theta * _indpndt_var + C_)
-                                 - 2 * degAcoeff[3] * sinh((_ex1_2) *theta * _indpndt_var + C_)
+                        + pow(sech(_ex1_2 * theta * _indpndt_var + C_),_ex2)
+                              / (C_
+                                 - 2 * degAcoeff[3] * tanh((_ex1_2) *theta * _indpndt_var + C_)
                                        / theta)};
         }
         else if(degAcoeff[0]==1 && !(degAcoeff[2] == _ex0))
@@ -2057,15 +2057,18 @@ ex checkSolu(const string& diff_equ, const string& solutions, const string& alge
     solutionslst.append(reader(temSplit[0])==reader(temSplit[1]));
 
     // it handles complex NLPDE
-    if(solutions_conditions != "")
-    {
+    //if(solutions_conditions != "")
+    //{
         string diff_equStr = diff_equ;
-        temSplit[0].erase(std::remove(temSplit[0].begin(), temSplit[0].end(), ' '), temSplit[0].end());
-        diff_equex = reader(replacestring(diff_equ, "conjugate("+temSplit[0]+")",temSplit[0]+"c_"));
-        replaceI replaceI;
-        ex replaceIex = subs(replaceI(reader(temSplit[1])),symb_==-I);
-        solutionslst.append(reader(temSplit[0]+"c_")==replaceIex);
-    }
+        if(diff_equStr.find("conjugate"))
+        {
+            temSplit[0].erase(std::remove(temSplit[0].begin(), temSplit[0].end(), ' '), temSplit[0].end());
+            diff_equex = reader(replacestring(diff_equ, "conjugate("+temSplit[0]+")",temSplit[0]+"c_"));
+            replaceI replaceI;
+            ex replaceIex = subs(replaceI(reader(temSplit[1])),symb_==-I);
+            solutionslst.append(reader(temSplit[0]+"c_")==replaceIex);
+        }
+    //}
 
     if(algebraic_solutions != "")
     {
@@ -2109,7 +2112,8 @@ ex checkSolu(const string& diff_equ, const string& solutions, const string& alge
     if(nops(solutions_conditionslst) != 0)
         diff_equex = subs(diff_equex,solutions_conditionslst);
 
-    diff_equex = simplify(simplify(simplify(evaluate(subs(diff_equex,solutionslst)),JacobiSimp),HyperSimp),AlgSimp);
+    //cout<<evaluate(subs(diff_equex,solutionslst))<<endl;
+    diff_equex = (fullsimplify(evaluate(subs(diff_equex,solutionslst)),FuncSimp));
 
     return diff_equex;
 

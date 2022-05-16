@@ -187,7 +187,12 @@ ex Factor(const ex& expr)
         try
         {
             if(powSubs.addNum<=addNumFrFactr)
+            {
+                //cout<<"temexpr_6 "<< temex<<endl;
                 temex = factor((temex));
+                //temex = collect_common_factors((temex));
+                //cout<<"temexpr_7"<< temex<<endl;
+            }
             else
                 temex = collect_common_factors((temex));
         }
