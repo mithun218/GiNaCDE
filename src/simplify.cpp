@@ -162,10 +162,11 @@ int simplifyc::SetRules(int m)
         TrigSimpRules1[pow(sec(wild(0)),2)] =_ex1 + pow(tan(wild(0)),2);
         TrigSimpRules1[wild(1)*pow(csc(wild(0)),2)] = wild(1) + wild(1)*pow(cot(wild(0)),2);
         TrigSimpRules1[pow(csc(wild(0)),2)] = _ex1 + pow(cot(wild(0)),2);
-        //TrigSimpRules2[tan(wild(0))] = sin(wild(0))/cos(wild(0));
-        //TrigSimpRules2[cot(wild(0))] = cos(wild(0))/sin(wild(0));
-        //TrigSimpRules2[csc(wild(0))] = 1/sin(wild(0));
-        //TrigSimpRules2[sec(wild(0))] = 1/cos(wild(0));
+
+        TrigSimpRules2[tan(wild(0))] = sin(wild(0))/cos(wild(0));
+        TrigSimpRules2[cot(wild(0))] = cos(wild(0))/sin(wild(0));
+        TrigSimpRules2[csc(wild(0))] = 1/sin(wild(0));
+        TrigSimpRules2[sec(wild(0))] = 1/cos(wild(0));
 
         return 0;
     }
@@ -191,12 +192,11 @@ int simplifyc::SetRules(int m)
         HyperSimpRules1[pow(csch(wild(0)),2)] = _ex_1 + pow(coth(wild(0)),2);
         HyperSimpRules1[wild(1)*pow(sech(wild(0)),2)] = wild(1) - wild(1)*pow(tanh(wild(0)),2);
         HyperSimpRules1[pow(sech(wild(0)),2)] = _ex1 - pow(tanh(wild(0)),2);
-        //HyperSimpRules1[pow(sec(wild(0)),2) - pow(tan(wild(0)),2)] = _ex1;
-        //HyperSimpRules1[pow(csc(wild(0)),2) - pow(cot(wild(0)),2)] = _ex1;
-        //HyperSimpRules2[tanh(wild(0))] = sinh(wild(0))/cosh(wild(0));
-        //HyperSimpRules2[coth(wild(0))] = cosh(wild(0))/sinh(wild(0));
-        //HyperSimpRules2[csch(wild(0))] = 1/sinh(wild(0));
-        //HyperSimpRules2[sech(wild(0))] = 1/cosh(wild(0));
+
+        HyperSimpRules2[tanh(wild(0))] = sinh(wild(0))/cosh(wild(0));
+        HyperSimpRules2[coth(wild(0))] = cosh(wild(0))/sinh(wild(0));
+        HyperSimpRules2[csch(wild(0))] = 1/sinh(wild(0));
+        HyperSimpRules2[sech(wild(0))] = 1/cosh(wild(0));
 
         return 0;
     }
@@ -310,6 +310,29 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         return y;
     }
 
+
+    else if (rules == TrigSimp)
+    {
+       y = this->operator()(y,AlgSimp2);
+
+       this->SetRules(TrigSimp);
+       ex xprev;
+
+       do
+       {
+           xprev = y;
+           y = y.subs(TrigSimpRules1, subs_options::subs_algebraic);
+       } while(xprev != y);
+       do
+       {
+           xprev = y;
+           y = y.subs(TrigSimpRules2, subs_options::subs_algebraic);
+       } while(xprev != y);
+
+       y = this->operator()(y,AlgSimp2);
+       return y;
+     }
+
     else if (rules == TrigCombine)
     {
         y = this->operator()(y,AlgSimp);
@@ -325,6 +348,29 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
 
         y = this->operator()(y,AlgSimp);
         return y;
+    }
+
+
+    else if (rules == HyperSimp)
+    {
+         y = this->operator()(y,AlgSimp2);
+
+         this->SetRules(HyperSimp);
+         ex xprev;
+
+         do
+         {
+             xprev = y;
+             y = y.subs(HyperSimpRules1, subs_options::subs_algebraic);
+         } while(xprev != y);
+         do
+         {
+             xprev = y;
+             y = y.subs(HyperSimpRules2, subs_options::subs_algebraic);
+         } while(xprev != y);
+
+         y = this->operator()(y,AlgSimp2);
+         return y;
     }
 
     else if (rules == logSimp)
