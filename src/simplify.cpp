@@ -148,8 +148,6 @@ int simplifyc::SetRules(int m)
         AlgSimpRules2[pow(0,wild(0))] = 0;
         AlgSimpRules2[pow(wild(2),wild(0))*pow(wild(2),wild(1))] = pow(wild(2), wild(0)+wild(1));
         AlgSimpRules2[wild(3)*pow(wild(2),wild(0))*pow(wild(2),wild(1))] = wild(3)*pow(wild(2), wild(0)+wild(1));
-        //AlgSimpRules2[pow(pow(wild(2),wild(0)),wild(1))] = pow(wild(2), wild(0)*wild(1));
-
 
         return 0;
     }
@@ -231,13 +229,6 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
 {
     ex y=e;
 
-   /* if(isFracNegPowBaseGensymb)
-    {
-        if(fracNumericPowBasSubsE.baseClt.empty())
-            fracNumericPowBasSubsE.set();
-        y = fracNumericPowBasSubsE(y);
-    }*/
-
     if (rules == AlgSimp)
     {
         this->SetRules(AlgSimp);
@@ -253,17 +244,6 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
             numSimplifye.primefactrs.clear();
             y=(numSimplifye(y));
         } while(xprev != y);
-
-        /*if(isFracNegPowBaseGensymb && !fracNumericPowBasSubsE.baseClt.empty())
-        {
-            y = (genSymbSubs(y,fracNumericPowBasSubsE.baseClt));
-            do
-            {
-                xprev = y;
-                y = y.subs(AlgSimpRules, subs_options::algebraic);
-                y = y.subs((lst){wild(2)*pow(wild(2),wild(1)) == pow(wild(2), _ex1+wild(1))},subs_options::subs_algebraic); //we apply this rule separately to increase speed.
-            } while(xprev != y);
-        }*/
 
         return y;
     }
@@ -282,18 +262,6 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
             numSimplifye.primefactrs.clear();
             y=(numSimplifye(y));
         } while(xprev != y);
-
-      /*  if(isFracNegPowBaseGensymb && !fracNumericPowBasSubsE.baseClt.empty())
-        {
-            y = (genSymbSubs(y,fracNumericPowBasSubsE.baseClt));
-            fracNumericPowBasSubsE.set();
-            do
-            {
-                xprev = y;
-                y = y.subs(AlgSimpRules2, subs_options::algebraic);
-                y = y.subs((lst){wild(2)*pow(wild(2),wild(1)) == pow(wild(2), _ex1+wild(1))},subs_options::subs_algebraic); //we apply this rule separately to increase speed.
-            } while(xprev != y);
-        }*/
 
         return y;
     }
@@ -815,19 +783,10 @@ ex simplify(const ex& expr_, int rules)
 
         temexprToSymMap = baseSubs.exprToSymMap;
 
-        //fracNumericPowBasSubsE.set();
-        //temexpr_=fracNumericPowBasSubsE(temexpr_);
-        //if(!fracNumericPowBasSubsE.baseClt.empty())
-        //{
-            //temBaseClt = fracNumericPowBasSubsE.baseClt;
-            //cout<<temexpr_<<endl;
-            numer_denomClt = temexpr_.numer_denom();
-            //cout<<numer_denomClt.op(1)<<endl;
-            temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0),expand_options::expand_function_args),rules,false)))))/
-                                    (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1),expand_options::expand_function_args),rules,false))))),rules);
-            //temexpr_ = Simplify(genSymbSubs(temexpr_,temBaseClt),rules,false);
-            //fracNumericPowBasSubsE.set();
-        //}
+        numer_denomClt = temexpr_.numer_denom();
+        //cout<<numer_denomClt.op(1)<<endl;
+        temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0),expand_options::expand_function_args),rules,false)))))/
+                                (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1),expand_options::expand_function_args),rules,false))))),rules);
 
         do // This collect all common factors including numerical numbers
         {
@@ -903,7 +862,7 @@ ex simplify(const ex& expr_, int rules)
 
 ex fullsimplify(const ex& expr_, int rules)
 {
-    ex prev = expr_, curr = expr_;
+    ex prev, curr = expr_;
 
     do
     {
