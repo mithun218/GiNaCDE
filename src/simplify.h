@@ -50,7 +50,7 @@ public:
 };
 
 ex simplify(const ex& expr_, int rules = FuncSimp);
-ex fullsimplify(const ex& expr_, int rules = AlgSimp);
+ex fullsimplify(const ex& expr_, int rules = FuncSimp);
 
 class TrigArgSign_Complx:public map_function
 {
