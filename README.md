@@ -13,7 +13,7 @@ GiNaCDE always transforms the NLPDE into an NLODE with respect to the traveling-
 F-expansion and modified F-expansion methods can be applied to higher-order NLPDEs. But, FIM is applicable to an NLPDE when its transformed NLODE with respect to the traveling-wave coordinate ![](img/Eqn5.png) is second-order only.
 However, there is no guarantee that the library always gives the complete solutions of all NLPDEs of the above form. Sometimes, the library may fail to give solutions due to the complexity of the problems.
 
-**N.B.: Currently, GiNaCDE determines the solutions of differential equations assuming all the constant parameters are strictly real and positive.**
+
 
 ## Features
 Some interesting features of GiNaCDE are
