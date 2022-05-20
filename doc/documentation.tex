@@ -30,7 +30,7 @@
 		\end{center}
 		\vspace{3cm}
 		\begin{center}
-			\Large{GiNaCDE (V1.5.0)}
+			\Large{GiNaCDE (V1.6.0)}
 		\end{center}
 		\vspace{2cm} 
 		\begin{center} 
@@ -314,7 +314,7 @@
 	
 	F-expansion and mF-expansion methods can be applied to higher-order NLPDEs. But, FIM method is applicable to an NLPDE when its transformed NLODE \eqref{tweq2} is second-order only. Actually, there are no rules to know in advance the appropriate method among three to solve the given NLPDE. 
 	
-	In GiNaCDE, to derive the solutions of NLPDEs we assume all the constant parameters ($g_i,a_{ij},\boldsymbol{K},\boldsymbol{P}$ etc.) are strictly real, positive, and the rules like $\sqrt{a^2}\rightarrow a,\sqrt{-a^2}\rightarrow Ia, \sqrt{-a}\rightarrow I\sqrt{a}$ are successively applied. Such simplification rules are used in {Maple} CAS with {\em simplify} routine along with {\em assume=positive} or {\em symbolic} option. One demerit of such rules is that the solutions which exist for negative values of the parameters may be missed. 
+	%In GiNaCDE, to derive the solutions of NLPDEs we assume all the constant parameters ($g_i,a_{ij},\boldsymbol{K},\boldsymbol{P}$ etc.) are strictly real, positive, and the rules like $\sqrt{a^2}\rightarrow a,\sqrt{-a^2}\rightarrow Ia, \sqrt{-a}\rightarrow I\sqrt{a}$ are successively applied. Such simplification rules are used in {Maple} CAS with {\em simplify} routine along with {\em assume=positive} or {\em symbolic} option. One demerit of such rules is that the solutions which exist for negative values of the parameters may be missed. 
 	
 	In order to start a solution process for a given NLPDE or NLODE in GiNaCDE, we require some initial data (the options and parameters specified by the user). Some programming variables such as \textit{twcPhase, positivePart, negativePart, NValue,  degAcoeff, ASolve, paraInDiffSolve} (detailed descriptions of these variables are given in the Sec. \ref{sec:command}) are available, which can be initially set up by the users in their own choices for getting better results for a given NLPDE before starting the solution process in the GiNaCDE software. There is no rule to know in advance a specific type of initialization to get better results.
 	If the input NLPDE or NLODE is complex , then the software tries to separate the real and imaginary parts following the step F1 in all three methods.
@@ -397,7 +397,9 @@
 		This variable is only available in F-expansion and mF-expansion methods.
 		
 		\item[] {\em \textbf{ex reader(string ``algbExpr''):}} We can create algebraic expressions from the {\em string} {\em ``algbExpr''} using the command {\em reader}. The generated expressions are {\em ex } objects.
-		\item[] {\em \textbf{ex simplify(string ``algbExpr''):}} The {\em simplify} command is used to apply simplification rules (such as power rule ($(x^m)^n\rightarrow x^{mn}$), combine rule ($x^mx^n\rightarrow x^{m+n}$), factor, normalization etc.) to an algebraic expression. Generally, when an algebraic symbol (let $a$) is real, the algebraic rule $\sqrt{a^2}\rightarrow |a|$ can be applied. But in our case to derive the solutions of NLPDEs we assume all the constant parameters ($g_i,a_{ij},\boldsymbol{K},\boldsymbol{P}$ etc.) are strictly real, positive, and the rules like $\sqrt{a^2}\rightarrow a,\sqrt{-a^2}\rightarrow Ia, \sqrt{-a}\rightarrow I\sqrt{a}$ are successively applied. In {Maple} CAS, {\em simplify} routine along with {\em assume=positive} or {\em symbolic} option apply similar rules. One demerit of such rules is that the solutions which exist for negative values of parameters may be missed. 
+		\item[] {\em \textbf{ex simplify(string ``algbExpr'', int rules):}} The {\em simplify} command is used to apply simplification rules (such as power rule ($(x^m)^n\rightarrow x^{mn}$), combine rule ($x^mx^n\rightarrow x^{m+n}$), factor, normalization etc.) to an algebraic expression. To get simplifications for different types of functions, there are many \textit{rules}, such as: \textit{TrigSimp} (simplifications for trigonometric functions), \textit{TrigCombine} (combine the angle of trigonometric functions), \textit{logSimp} (simplifications for logarithm functions), \textit{JacobiSimp} (simplifications for Jacobi elliptic functions), \textit{HyperSimp} (simplifications for hyperbolic functions).
+		One can also use {\em \textbf{ex fullsimplify(string ``algbExpr'', int rules)}} to get more simplifications.
+		%Generally, when an algebraic symbol (let $a$) is real, the algebraic rule $\sqrt{a^2}\rightarrow |a|$ can be applied. But in our case to derive the solutions of NLPDEs we assume all the constant parameters ($g_i,a_{ij},\boldsymbol{K},\boldsymbol{P}$ etc.) are strictly real, positive, and the rules like $\sqrt{a^2}\rightarrow a,\sqrt{-a^2}\rightarrow Ia, \sqrt{-a}\rightarrow I\sqrt{a}$ are successively applied. In {Maple} CAS, {\em simplify} routine along with {\em assume=positive} or {\em symbolic} option apply similar rules. One demerit of such rules is that the solutions which exist for negative values of parameters may be missed. 
 		
 		\item[] {\em \textbf{depend(ex f1, lst f2):}} This sets up a dependency of a variable in the first argument {\em f1} on the list of algebraic variables {\em f2}. The dependency of {\em f1} on a particular variable can be removed by the command {\em depend.clear(f1, variable)} and the dependencies on all variables are removed by the command {\em depend.clear(f1)}.
 		One should maintain the same order of independent variables and the corresponding coefficients when they are placed in list {\em f2} and in the programming variables {\em twcPhase} respectively. 
@@ -686,7 +688,7 @@
 			F\left( \xi  \right) &= - \frac{{{A_1}}}{{2{A_2}}} - \frac{S}{{2{A_2}}}\coth \left( {\frac{S}{2}\xi  + C} \right) \;\;(\text{If } A_2 \neq 0 \text{ and } A_1 \text{or} A_0 \neq 0),\\
 			F\left( \xi  \right) &= {\left( { - \frac{{{A_1}}}{{2{A_0}}} + \frac{S}{{2{A_0}}}\tanh \left( {\frac{S}{2}\xi  + C} \right)} \right)^{ - 1}} \;\;(\text{If }A_0 \neq 0 \text{ and } A_1 \text{or} A_2 \neq 0),\\
 			F\left( \xi  \right) &= {\left( { - \frac{{{A_1}}}{{2{A_0}}} + \frac{S}{{2{A_0}}}\coth \left( {\frac{S}{2}\xi  + C} \right)} \right)^{ - 1}} \;\;(\text{If }A_0 \neq 0 \text{ and } A_1 \text{or} A_2 \neq 0),\\
-			\label{riccati_solu2e}F\left( \xi  \right) &=  - \frac{{{A_1}}}{{2{A_2}}} - \frac{S }{{2{A_2}}}\tanh \left( {\frac{{S \xi }}{2}+C} \right) + \frac{{\operatorname{sech} \left( {\frac{{S \xi }}{2}+C} \right)}}{{{C}\cosh \left( {\frac{{S \xi }}{2}+C} \right) - \frac{{2{A_2}}}{S }\sinh \left( {\frac{{S \xi }}{2}+C} \right)}}\\
+			\label{riccati_solu2e}F\left( \xi  \right) &=  - \frac{{{A_1}}}{{2{A_2}}} - \frac{S }{{2{A_2}}}\tanh \left( {\frac{{S \xi }}{2}+C} \right) + \frac{{\operatorname{sech}^2 \left( {\frac{{S \xi }}{2}+C} \right)}}{{{C} - \frac{{2{A_2}}}{S }\tanh \left( {\frac{{S \xi }}{2}+C} \right)}}\\
 			& \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,(\text{If } A_2 \neq 0 \text{ and } A_1 \text{or} A_0 \neq 0),\nonumber\\
 			\label{riccati_soluA2f}F\left( \xi  \right) &= {\text{ - }}\frac{{{A_0}}}{{{A_1}}} + C{e^{ {{A_1}\xi }}},\;\; (\text{If } A_2=0 \text{ and } A_1\neq 0),\\
 			F\left( \xi  \right) &= A_0\xi +C\;\;(\text{If }  A_2=A_1=0 \text{ and } A_0\neq 0 ),	
