@@ -20,7 +20,7 @@ const numeric *_num0_p = (const numeric *)&dynallocate<numeric>(0);
 const numeric *_num1_p = (const numeric *)&dynallocate<numeric>(1);
  //-------------------------------------------------
 
-
+map<string, ex> directory;
 
  //////////
 // inverse cotangent (arc cotangent)
@@ -645,8 +645,8 @@ static ex coth_deriv(const ex & x, unsigned deriv_param)
 {
         GINAC_ASSERT(deriv_param==0);
 
-        // d/dx tanh(x) -> 1-tanh(x)^2
-        return -power(sinh(x),_ex_2);
+        // d/dx coth(x) -> 1-coth(x)^2
+        return 1-power(coth(x),_ex2);
 }
 
 static ex coth_series(const ex &x,
@@ -856,7 +856,7 @@ static ex csch_deriv(const ex & x, unsigned deriv_param)
 {
         GINAC_ASSERT(deriv_param==0);
 
-        // d/dx sech(x) -> -sech(x)*tanh(x)
+        // d/dx csch(x) -> -csch(x)*coth(x)
         return -mul(csch(x), coth(x));
 }
 
@@ -1096,7 +1096,7 @@ REGISTER_FUNCTION(asech, eval_func(asech_eval).
 
 
 ///////////
-/// JacobiSN functions
+/// JacobiSN function
 ///////////
 
 static ex JacobiSN_deriv(const ex & x,const ex & m, unsigned deriv_param)
@@ -1283,6 +1283,45 @@ REGISTER_FUNCTION(Integrate, derivative_func(Integrate_deriv));
 // declare here to include all above functions.
 //////
 parser reader;
+/*ex reader(const string& _expr, const int& assume)
+{
+    //static map<string, ex> directory;
+    parser readerp;
+    const ex expr_ = readerp(_expr);
+    symtab table = readerp.get_syms();
+cout<<"endl"<<endl;
+    if(assume==posreal)
+    {
+        for(auto itr=table.begin();itr!=table.end();itr++)
+        {
+            map<string, ex>::iterator i = directory.find(itr->first);
+            if (i == directory.end())
+                directory.insert(make_pair(itr->first, possymbol(itr->first)));
+
+        }
+
+
+        parser readerp1(directory);
+        //cout<<readerp1(_expr)<<endl;
+        return readerp1(_expr);
+    }
+    else if (assume==Real)
+    {
+        for(auto itr=table.begin();itr!=table.end();itr++)
+        {
+            map<string, ex>::iterator i = directory.find(itr->first);
+            if (i == directory.end())
+                directory.insert(make_pair(itr->first, realsymbol(itr->first)));
+
+        }
+
+        parser readerp1(directory);
+        return readerp1(_expr);
+
+    }
+
+    return expr_;
+}*/
 
 
 /////////////////////////////////////////////////////////////

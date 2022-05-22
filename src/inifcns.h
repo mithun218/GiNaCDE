@@ -8,6 +8,10 @@
 #ifndef INIFCNS_H_INCLUDED
 #define INIFCNS_H_INCLUDED
 
+#define Real 1
+#define posreal 2
+#define noassume 3
+
 #include <ginac/ginac.h>
 
 using namespace std;
@@ -72,5 +76,7 @@ DECLARE_FUNCTION_3P(Integrate)
 
 /** generator of expressions **/
 extern parser reader;
+//extern map<string, ex> directory;
+//extern ex reader(const string& _expr, const int& assume=posreal);
 
 #endif // INIFCNS_H_INCLUDED

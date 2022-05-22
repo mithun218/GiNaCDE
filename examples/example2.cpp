@@ -19,7 +19,7 @@
         xvi. Nonlinear Telegraph Equation      */
 
 
-#include <GiNaCDE/GiNaCDE.h>
+#include "GiNaCDE.h"
 
 
 int main()

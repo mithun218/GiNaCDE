@@ -7,7 +7,7 @@
 
 
 
-#include <GiNaCDE/GiNaCDE.h>
+#include "GiNaCDE.h"
 
 
 int main()

@@ -13,7 +13,7 @@ GiNaCDE always transforms the NLPDE into an NLODE with respect to the traveling-
 F-expansion and modified F-expansion methods can be applied to higher-order NLPDEs. But, FIM is applicable to an NLPDE when its transformed NLODE with respect to the traveling-wave coordinate ![](img/Eqn5.png) is second-order only.
 However, there is no guarantee that the library always gives the complete solutions of all NLPDEs of the above form. Sometimes, the library may fail to give solutions due to the complexity of the problems.
 
-**N.B.: Currently, GiNaCDE determines the solutions of differential equations assuming all the constant parameters are strictly real and positive.**
+**N.B.: Now, GiNaCDE (>=v1.6.0) determines the solutions of differential equations without assuming all the constant parameters are strictly real and positive, i.e., all the constant parameters may be real and positive or real and negative numbers.**
 
 ## Features
 Some interesting features of GiNaCDE are
@@ -79,7 +79,7 @@ After compiling and running the above program, exact solutions with calculating 
 
  
 ### External dependencies
-GiNaCDE V1.5.0 requires the packages [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) and [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) (this library is optional and is used to build the GUI version of the GiNaCDE library). 
+GiNaCDE V1.6.0 requires the packages [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.8.1](https://www.ginac.de/archives/) and [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) (this library is optional and is used to build the GUI version of the GiNaCDE library). 
 
 ##### For Linux/MacOS machines:
 All the dependencies are available via the most common package managers `APT` on Ubuntu or Debian. Additionally, all dependencies can also be retrieved on `macOS` via the most common package managers [Homebrew](https://brew.sh/) and [MacPorts](https://ports.macports.org/). For example, CLN, GiNaC and GTK3 are installed via APT through

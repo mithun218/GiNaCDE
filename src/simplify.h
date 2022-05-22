@@ -14,11 +14,13 @@
 #define JacobiSimp 4
 #define AlgSimp2 5
 #define HyperSimp 6
+#define FuncSimp 7
 
 
 #include <iostream>
 #include <stdexcept>
 #include <ginac/ginac.h>
+#include "utility.h"
 
 using namespace std;
 using namespace GiNaC;
@@ -48,8 +50,8 @@ public:
     ~Collect_common_factorsc(){}
 };
 
-ex simplify(const ex& expr_, int rules = AlgSimp);
-ex simplifyRecur(const ex& expr_, int rules = AlgSimp);
+ex simplify(const ex& expr_, int rules = FuncSimp);
+ex fullsimplify(const ex& expr_, int rules = FuncSimp);
 
 class TrigArgSign_Complx:public map_function
 {
@@ -172,23 +174,6 @@ public:
     ~powBaseSubsLessThanDeg(){}
 };
 
-/** replacing base of fractional power with generated symbols  **/
-class fracNumericPowBasSubs:public map_function
-{
-    unsigned j;
-    ex expr;
-    string str;
-public:
-    exmap baseClt;
-    fracNumericPowBasSubs(){}
-    void set(void)
-    {
-        j = 0;
-        baseClt.clear();
-    }
-    ex operator()(const ex& e);
-    ~fracNumericPowBasSubs(){}
-};
 
 /** replacing base of fractional power with generated symbols  **/
 class fracPowBasSubs:public map_function
@@ -211,13 +196,48 @@ public:
     ~fracPowBasSubs(){}
 };
 
+/** replacing some functions with generated symbols  **/
+class funcSubs:public map_function
+{
+    unsigned j;
+    ex expr,expr2,expr3;
+    string str;
+public:
+    exmap baseClt;
+    funcSubs(){j=0;baseClt.clear();}
+    void set(void)
+    {
+        j = 0;
+        baseClt.clear();
+    }
+    ex operator()(const ex& e);
+    ~funcSubs(){}
+};
+
+/** Applying simplification rules assuming symbols are real and positive  **/
+class posRealSimplify:public map_function
+{
+    bool ispow;
+    ex expr,expr2,expr3;
+
+public:
+    posRealSimplify(){ispow=true;expr2=_ex1;expr3=_ex1;}
+    void set(void)
+    {
+        ispow=true;expr2=_ex1;expr3=_ex1;
+    }
+    ex operator()(const ex& e);
+    ~posRealSimplify(){}
+};
+
 
 extern simplifyc Simplify;
 extern  Collect_common_factorsc Collect_common_factors; // This collect all common factors including numerical numbers
 extern numSimplify numSimplifye;
 extern arguSimplify arguSimplifye;
-extern    expandinv expandinve;
-extern fracNumericPowBasSubs fracNumericPowBasSubsE;
+extern   expandinv expandinve;
 extern fracPowBasSubs fracPowBasSubsE;
+extern funcSubs funcSubsE;
+extern posRealSimplify posRealSimplifyE;
 
 #endif // SIMPLIFY_H_INCLUDED

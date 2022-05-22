@@ -2,7 +2,7 @@
 #                                                             #
 # File: CMakeLists.txt                                        #
 #                                                             #
-# - CMake configuration file to compile GiNaCDE V1.5.0          #
+# - CMake configuration file to compile GiNaCDE V1.6.0          #
 #                                                             #
 # Project name: GiNaCDE - GiNaC Differential Equation Solver  #
 # Contact: Mithun Bairagi <bairagirasulpur@gmail.com>         #
@@ -35,7 +35,7 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 # The version number.
 set (GINACDE_VERSION_MAJOR 1)
-set (GINACDE_VERSION_MINOR 5)
+set (GINACDE_VERSION_MINOR 6)
 set(GINACDE_VERSION_MAINTENANCE 0)
 
 set( GINACDE_VERSION "${GINACDE_VERSION_MAJOR}.${GINACDE_VERSION_MINOR}.${GINACDE_VERSION_MAINTENANCE}")

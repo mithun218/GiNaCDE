@@ -254,6 +254,7 @@ ex evaluatec::operator()(const ex& _e)
 ex evaluate(const ex& expr_)
 {
     ex _y=Simplify(expand(expr_));
+    //ex _y=(expand(expr_));
 
     ex _xprev;
     do
@@ -262,7 +263,8 @@ ex evaluate(const ex& expr_)
         _y = evaluateg(_y);
     } while(_xprev != _y);
 
-    return Simplify(expand(_y));
+    //return Simplify(expand(_y));
+    return _y;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
