@@ -20,6 +20,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <ginac/ginac.h>
+#include "utility.h"
 
 using namespace std;
 using namespace GiNaC;
@@ -173,23 +174,6 @@ public:
     ~powBaseSubsLessThanDeg(){}
 };
 
-/** replacing base of fractional power with generated symbols  **/
-class fracNumericPowBasSubs:public map_function
-{
-    unsigned j;
-    ex expr;
-    string str;
-public:
-    exmap baseClt;
-    fracNumericPowBasSubs(){j=0;baseClt.clear();}
-    void set(void)
-    {
-        j = 0;
-        baseClt.clear();
-    }
-    ex operator()(const ex& e);
-    ~fracNumericPowBasSubs(){}
-};
 
 /** replacing base of fractional power with generated symbols  **/
 class fracPowBasSubs:public map_function
@@ -230,14 +214,30 @@ public:
     ~funcSubs(){}
 };
 
+/** Applying simplification rules assuming symbols are real and positive  **/
+class posRealSimplify:public map_function
+{
+    bool ispow;
+    ex expr,expr2,expr3;
+
+public:
+    posRealSimplify(){ispow=true;expr2=_ex1;expr3=_ex1;}
+    void set(void)
+    {
+        ispow=true;expr2=_ex1;expr3=_ex1;
+    }
+    ex operator()(const ex& e);
+    ~posRealSimplify(){}
+};
+
 
 extern simplifyc Simplify;
 extern  Collect_common_factorsc Collect_common_factors; // This collect all common factors including numerical numbers
 extern numSimplify numSimplifye;
 extern arguSimplify arguSimplifye;
-extern    expandinv expandinve;
-extern fracNumericPowBasSubs fracNumericPowBasSubsE;
+extern   expandinv expandinve;
 extern fracPowBasSubs fracPowBasSubsE;
 extern funcSubs funcSubsE;
+extern posRealSimplify posRealSimplifyE;
 
 #endif // SIMPLIFY_H_INCLUDED

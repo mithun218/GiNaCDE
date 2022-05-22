@@ -79,7 +79,7 @@ After compiling and running the above program, exact solutions with calculating 
 
  
 ### External dependencies
-GiNaCDE V1.5.0 requires the packages [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) and [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) (this library is optional and is used to build the GUI version of the GiNaCDE library). 
+GiNaCDE V1.6.0 requires the packages [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.8.1](https://www.ginac.de/archives/) and [GTK+ 3.xx](https://download-fallback.gnome.org/sources/gtk+/3.24/) (this library is optional and is used to build the GUI version of the GiNaCDE library). 
 
 ##### For Linux/MacOS machines:
 All the dependencies are available via the most common package managers `APT` on Ubuntu or Debian. Additionally, all dependencies can also be retrieved on `macOS` via the most common package managers [Homebrew](https://brew.sh/) and [MacPorts](https://ports.macports.org/). For example, CLN, GiNaC and GTK3 are installed via APT through

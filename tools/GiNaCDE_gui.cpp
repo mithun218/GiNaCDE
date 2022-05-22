@@ -247,16 +247,19 @@ void solve_equations()
 
 void about()
 {
+    string aboutText = string("GiNaCDE GUI (v")+to_string(GINACDE_VERSION_MAJOR)+
+            string(".")+to_string(GINACDE_VERSION_MINOR)+
+            string(".")+to_string(GINACDE_VERSION_MAINTENANCE)+
+            string(") build with GiNaC 1.8.1,\n"
+             "A GUI tool for GiNaCDE library to solve NLPDE or NLODE using\n"
+             "F-expansion and First integral methods.\n"
+             "Distributed under the terms of the MIT License\n"
+             "(see <https://opensource.org/licenses/MIT>)\n\n"
+             "This software uses GTK+3 toolkit\n(https://www.gtk.org)");
      GtkWidget *infodialog = gtk_message_dialog_new(GTK_WINDOW(window),
                                    GTK_DIALOG_DESTROY_WITH_PARENT,
                                    GTK_MESSAGE_OTHER,
-                                   GTK_BUTTONS_OK,
-                   "GiNaCDE GUI (V1.5.0) build with GiNaC 1.8.1,\n"
-                   "A GUI tool for GiNaCDE library to solve NLPDE or NLODE using\n"
-                   "F-expansion and First integral methods.\n"
-                   "Distributed under the terms of the MIT License\n"
-                   "(see <https://opensource.org/licenses/MIT>)\n\n"
-                   "This software uses GTK+3 toolkit\n(https://www.gtk.org)");
+                                   GTK_BUTTONS_OK,&aboutText[0]);
 
     gtk_window_set_icon_name(GTK_WINDOW(infodialog), "custom_icon");
 

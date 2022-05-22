@@ -17,8 +17,8 @@
 using namespace std;
 using namespace GiNaC;
 
-size_t expandLevel = 20,addNumFrFactr = 8;
-long long int largstNumsimp=1000000000000; /* expandLevel: To expand an expression upto a specified  degree (used in solvec::polySoluWtAutoDegSelct)
+size_t expandLevel = 20,addNumFrFactr = 10;
+long long int largstNumsimp=10000000000000; /* expandLevel: To expand an expression upto a specified  degree (used in solvec::polySoluWtAutoDegSelct)
                                               // addNumFrFactr: To get factor upto specific number of "add" present (used in Factor in utility.cpp)
                                               // largstNumsimp: To get prime factors upto a specific number.(used in numSimplify::operator() )
                                                */
@@ -98,9 +98,9 @@ Collect_common_factorsc Collect_common_factors;
 numSimplify numSimplifye;
 arguSimplify arguSimplifye;
 expandinv expandinve;
-fracNumericPowBasSubs fracNumericPowBasSubsE;
 fracPowBasSubs fracPowBasSubsE;
 funcSubs funcSubsE;
+posRealSimplify posRealSimplifyE;
 
 int simplifyc::SetRules(int m)
 {
@@ -110,27 +110,6 @@ int simplifyc::SetRules(int m)
         AlgSimpRules[pow(0,wild(0))] = 0;
         AlgSimpRules[pow(wild(2),wild(0))*pow(wild(2),wild(1))] = pow(wild(2), wild(0)+wild(1));
         AlgSimpRules[wild(3)*pow(wild(2),wild(0))*pow(wild(2),wild(1))] = wild(3)*pow(wild(2), wild(0)+wild(1));
-        AlgSimpRules[pow(pow(wild(2),wild(0)),wild(1))] = pow(wild(2), wild(0)*wild(1));
-        AlgSimpRules[wild(3)*pow(pow(wild(2),wild(0)),wild(1))] = wild(3)*pow(wild(2), wild(0)*wild(1));
-        AlgSimpRules[pow(wild(3)*pow(wild(2),wild(0)),wild(1))] = pow(wild(3),wild(1))*pow(wild(2), wild(0)*wild(1));
-        AlgSimpRules[wild(4)*pow(wild(3)*pow(wild(2),wild(0)),wild(1))] = wild(4)*pow(wild(3),wild(1))*pow(wild(2), wild(0)*wild(1));
-        //AlgSimpRules[pow(wild(2),wild(0))*pow(wild(2),wild(1))] = pow(wild(2), wild(0)+wild(1));
-        //AlgSimpRules[pow(wild(1),wild(0))*pow(wild(2),wild(0))] = pow(wild(1)*wild(2), wild(0));
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////Following two simplification rules assume the algebraic symbols are real and positive///////////////////////
-        ///AlgSimpRules[pow(wild(1)*wild(2), wild(0))]=pow(wild(1),wild(0))*pow(wild(2),wild(0));
-        ///AlgSimpRules[wild(3)*pow(wild(1)*wild(2), wild(0))]=wild(3)*pow(wild(1),wild(0))*pow(wild(2),wild(0));
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        AlgSimpRules[pow(pow(wild(2),wild(0)),wild(1))] = pow(wild(2), wild(0)*wild(1));
-        AlgSimpRules[wild(3)*pow(pow(wild(2),wild(0)),wild(1))] = wild(3)*pow(wild(2), wild(0)*wild(1));
-        AlgSimpRules[pow(wild(3)*pow(wild(2),wild(0)),wild(1))] = pow(wild(3),wild(1))*pow(wild(2), wild(0)*wild(1));
-        AlgSimpRules[wild(4)*pow(wild(3)*pow(wild(2),wild(0)),wild(1))] = wild(4)*pow(wild(3),wild(1))*pow(wild(2), wild(0)*wild(1));
-        AlgSimpRules[sqrt(wild(2)*pow(wild(0),wild(1)))] = pow(wild(2),_ex1_2)*pow(wild(0),wild(1)*_ex1_2);
-        AlgSimpRules[wild(3)*sqrt(wild(2)*pow(wild(0),wild(1)))] = wild(3)*pow(wild(2),_ex1_2)*pow(wild(0),wild(1)*_ex1_2);
-
-        // (a^2*b^3)^4 = a^8*b^12
-       // AlgSimpRules[pow(pow(wild(0),wild(1))*pow(wild(2),wild(3)),wild(4))] = pow(wild(0),wild(1)*wild(4))*pow(wild(2),wild(3)*wild(4));
-       // AlgSimpRules[wild(5)*pow(pow(wild(0),wild(1))*pow(wild(2),wild(3)),wild(4))] = wild(5)*pow(wild(0),wild(1)*wild(4))*pow(wild(2),wild(3)*wild(4));
 
         AlgSimpRules[exp(wild(0))*exp(wild(1))] = exp(wild(0)+wild(1));
         AlgSimpRules[wild(2)*exp(wild(0))*exp(wild(1))] = wild(2)*exp(wild(0)+wild(1));
@@ -231,6 +210,11 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
 
     if (rules == AlgSimp)
     {
+        posRealSimplifyE.set();
+        //cout<<"before"<<y<<endl;
+        y = posRealSimplifyE(y);
+        //cout<<"after"<<y<<endl;
+
         this->SetRules(AlgSimp);
         TrigArgSign_Complx trigarg;
         ex xprev;
@@ -591,32 +575,7 @@ ex powBaseSubsLessThanDeg::operator()(const ex& _e)
     return _e.map(*this);
 }
 
-////////////////////////////////////////////////////////////////
-/** replacing base (works on symbol and numerics bases) of fractional with generated symbols.  **/
-ex fracNumericPowBasSubs::operator()(const ex& e)
-{
-    if(is_a<power>(e) && (is_a<numeric>(e.op(0))||is_a<symbol>(e.op(0)))&&
-        (denom(e.op(1))!=_ex1))
-    {
-        if((!baseClt.empty() && baseClt.find(e.op(1))==baseClt.end())
-            || baseClt.empty())
-        {
-            j=j+1;
 
-            str = "genSymb3_" + to_string(j);
-            expr = reader(str);
-            baseClt[e.op(1)]=expr;
-        }
-
-        if(!baseClt.empty() && baseClt.find(e.op(1))!=baseClt.end())
-        {
-            return pow(e.op(0),baseClt[e.op(1)]);
-        }
-
-    }
-
-     return e.map(*this);
-}
 
 /** replacing base of fractional power with generated symbols. This simplifies all fractional power with base expressions.  **/
 ex fracPowBasSubs::operator()(const ex& e)
@@ -753,6 +712,72 @@ ex funcSubs::operator()(const ex& e)
     }
 
      return e.map(*this);
+}
+
+
+
+////////////////////////////////////////////////////////////////
+/** Applying simplification rules assuming symbols are real and positive  **/
+ex posRealSimplify::operator()(const ex& e)
+{
+
+    if(is_a<power>(e))
+    {
+        expr = e;
+        expr3 = _ex1;
+        do
+        {
+            expr3=expr3*(expr.op(1));
+
+            if(is_a<symbol>(expr.op(0)))
+            {
+                return pow(expr.op(0),expr3);
+            }
+            else if (is_a<mul>(expr.op(0)))
+            {
+                if(is_a<numeric>((expr.op(0)).op(nops(expr.op(0))-1)))
+                {
+                    if(is_positive(ex_to<numeric>((expr.op(0)).op(nops(expr.op(0))-1))))
+                        return ((pow((expr.op(0)).op(nops(expr.op(0))-1),expr3))*pow(expr.op(0)/(expr.op(0)).op(nops(expr.op(0))-1),expr3)).map(*this);
+                    else if(is_negative(ex_to<numeric>((expr.op(0)).op(nops(expr.op(0))-1))))
+                        return ((pow(-((expr.op(0)).op(nops(expr.op(0))-1)),expr3))*pow(expr.op(0)/(-((expr.op(0)).op(nops(expr.op(0))-1))),expr3)).map(*this);
+
+                    else
+                    {
+                        /*expr2 = _ex1;
+                        for (size_t i=0;i<(nops(expr.op(0)));i++)
+                        {
+                            expr2 = expr2*pow((expr.op(0)).op(i),expr3);
+                        }*/
+                        return  e.map(*this);
+                    }
+                }
+                else
+                {
+                    /*expr2 = _ex1;
+                    for (size_t i=0;i<(nops(expr.op(0)));i++)
+                    {
+                        expr2 = expr2*pow((expr.op(0)).op(i),expr3);
+                    }*/
+                    return  e.map(*this);
+                }
+
+            }
+            else if(is_a<power>(expr.op(0)))
+            {
+                expr = expr.op(0);
+                ispow=true;
+            }
+            else
+            {
+                ispow=false;
+            }
+
+        }while(ispow);
+
+    }
+
+    return e.map(*this);
 }
 
 ////////////////////////////////////////////////////////////
