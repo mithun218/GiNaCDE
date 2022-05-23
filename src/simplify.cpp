@@ -100,7 +100,7 @@ arguSimplify arguSimplifye;
 expandinv expandinve;
 fracPowBasSubs fracPowBasSubsE;
 funcSubs funcSubsE;
-posRealSimplify posRealSimplifyE;
+powSimplify powSimplifyE;
 
 int simplifyc::SetRules(int m)
 {
@@ -210,9 +210,9 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
 
     if (rules == AlgSimp)
     {
-        posRealSimplifyE.set();
+        powSimplifyE.set();
         //cout<<"before"<<y<<endl;
-        y = posRealSimplifyE(y);
+        y = powSimplifyE(y);
         //cout<<"after"<<y<<endl;
 
         this->SetRules(AlgSimp);
@@ -717,8 +717,8 @@ ex funcSubs::operator()(const ex& e)
 
 
 ////////////////////////////////////////////////////////////////
-/** Applying simplification rules assuming symbols are real and positive  **/
-ex posRealSimplify::operator()(const ex& e)
+/** Applying the simplification rules (x^ay^b(x+y)^d)^c=x^(ac)y^(bc)((x+y)^d)^c and (-2(x+y)^b)^a=2^a(-((x+y)^b)^a  **/
+ex powSimplify::operator()(const ex& e)
 {
 
     if(is_a<power>(e))

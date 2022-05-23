@@ -214,20 +214,20 @@ public:
     ~funcSubs(){}
 };
 
-/** Applying simplification rules assuming symbols are real and positive  **/
-class posRealSimplify:public map_function
+/** Applying the simplification rules (x^ay^b(x+y)^d)^c=x^(ac)y^(bc)((x+y)^d)^c and (-2(x+y)^b)^a=2^a(-((x+y)^b)^a  **/
+class powSimplify:public map_function
 {
     bool ispow;
     ex expr,expr2,expr3;
 
 public:
-    posRealSimplify(){ispow=true;expr2=_ex1;expr3=_ex1;}
+    powSimplify(){ispow=true;expr2=_ex1;expr3=_ex1;}
     void set(void)
     {
         ispow=true;expr2=_ex1;expr3=_ex1;
     }
     ex operator()(const ex& e);
-    ~posRealSimplify(){}
+    ~powSimplify(){}
 };
 
 
@@ -238,6 +238,6 @@ extern arguSimplify arguSimplifye;
 extern   expandinv expandinve;
 extern fracPowBasSubs fracPowBasSubsE;
 extern funcSubs funcSubsE;
-extern posRealSimplify posRealSimplifyE;
+extern powSimplify powSimplifyE;
 
 #endif // SIMPLIFY_H_INCLUDED
