@@ -30,7 +30,7 @@
 		\end{center}
 		\vspace{3cm}
 		\begin{center}
-			\Large{GiNaCDE (V1.6.0)}
+			\Large{GiNaCDE (V1.6.1)}
 		\end{center}
 		\vspace{2cm} 
 		\begin{center} 
@@ -397,7 +397,7 @@
 		This variable is only available in F-expansion and mF-expansion methods.
 		
 		\item[] {\em \textbf{ex reader(string ``algbExpr''):}} We can create algebraic expressions from the {\em string} {\em ``algbExpr''} using the command {\em reader}. The generated expressions are {\em ex } objects.
-		\item[] {\em \textbf{ex simplify(string ``algbExpr'', int rules):}} The {\em simplify} command is used to apply simplification rules (such as power rule ($(x^m)^n\rightarrow x^{mn}$), combine rule ($x^mx^n\rightarrow x^{m+n}$), factor, normalization etc.) to an algebraic expression. To get simplifications for different types of functions, there are many \textit{rules}, such as: \textit{TrigSimp} (simplifications for trigonometric functions), \textit{TrigCombine} (combine the angle of trigonometric functions), \textit{logSimp} (simplifications for logarithm functions), \textit{JacobiSimp} (simplifications for Jacobi elliptic functions), \textit{HyperSimp} (simplifications for hyperbolic functions).
+		\item[] {\em \textbf{ex simplify(string ``algbExpr'', int rules):}} The {\em simplify} command is used to apply simplification rules (such as combine rule ($x^mx^n\rightarrow x^{m+n}$), factor, normalization etc.) to an algebraic expression. To get simplifications for different types of functions, there are many \textit{rules}, such as: \textit{TrigSimp} (simplifications for trigonometric functions), \textit{TrigCombine} (combine the angle of trigonometric functions), \textit{logSimp} (simplifications for logarithm functions), \textit{JacobiSimp} (simplifications for Jacobi elliptic functions), \textit{HyperSimp} (simplifications for hyperbolic functions).
 		One can also use {\em \textbf{ex fullsimplify(string ``algbExpr'', int rules)}} to get more simplifications.
 		%Generally, when an algebraic symbol (let $a$) is real, the algebraic rule $\sqrt{a^2}\rightarrow |a|$ can be applied. But in our case to derive the solutions of NLPDEs we assume all the constant parameters ($g_i,a_{ij},\boldsymbol{K},\boldsymbol{P}$ etc.) are strictly real, positive, and the rules like $\sqrt{a^2}\rightarrow a,\sqrt{-a^2}\rightarrow Ia, \sqrt{-a}\rightarrow I\sqrt{a}$ are successively applied. In {Maple} CAS, {\em simplify} routine along with {\em assume=positive} or {\em symbolic} option apply similar rules. One demerit of such rules is that the solutions which exist for negative values of parameters may be missed. 
 		
