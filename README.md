@@ -92,7 +92,7 @@ and on Homebrew via
 
 ##### For Windows machines:
 
- We have to install the libraries  [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.7.6](https://www.ginac.de/archives/) using the following commands:  
+ We have to install the libraries  [CLN >= 1.3.4](http://www.ginac.de/CLN/), [GiNaC >= 1.8.1](https://www.ginac.de/archives/) using the following commands:  
 ```        
         $ ./configure
         $ make
@@ -200,6 +200,6 @@ If you encounter a bug, please open a new [issue](https://github.com/mithun218/G
 Please provide sufficient information to reproduce the bug and include as much information as possible that can be helpful for fixing it.
 
 ## Citation
-If you use this software in your project, please cite the following article:
+If you use this software in your research works, please cite the following article:
 
 Bairagi, M., (2022). GiNaCDE: the high-performance F-expansion and First Integral Methods with C++ library for solving Nonlinear Differential Equations. Journal of Open Source Software, 7(72), 3885, https://doi.org/10.21105/joss.03885
