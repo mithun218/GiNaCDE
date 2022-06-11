@@ -31,12 +31,12 @@ extern long long int largstNumsimp; // this is the maximum number for simplifica
 class simplifyc
 {
     //int rules = AlgSimp;
-    exmap AlgSimpRules,AlgSimpRules2, TrigSimpRules1, TrigSimpRules2, HyperSimpRules1, HyperSimpRules2,
+    exmap AlgSimpRules1,AlgSimpRules2, AlgSimpRules3, TrigSimpRules1, TrigSimpRules2, HyperSimpRules1, HyperSimpRules2,
           TrigCombineRules, logSimpRules, JacobiSimpRules1, JacobiSimpRules2;
     int SetRules(int m = AlgSimp);
 public:
     simplifyc(){}
-    ex operator()(const ex& e,const int& rules = AlgSimp, const bool& isFracNegPowBaseGensymb = true);
+    ex operator()(const ex& e,const int& rules = AlgSimp);
     ~simplifyc(){}
 };
 
@@ -214,30 +214,25 @@ public:
     ~funcSubs(){}
 };
 
-/** Applying the simplification rules (x^ay^b(x+y)^d)^c=x^(ac)y^(bc)((x+y)^d)^c and (-2(x+y)^b)^a=2^a(-((x+y)^b)^a  **/
-class powSimplify:public map_function
+/** Applying the simplification rules x^(3/2)=x*x^(1/2)  **/
+class someMoreSimpRules:public map_function
 {
-    bool ispow;
-    ex expr,expr2,expr3;
+    int iNum;
 
 public:
-    powSimplify(){ispow=true;expr2=_ex1;expr3=_ex1;}
-    void set(void)
-    {
-        ispow=true;expr2=_ex1;expr3=_ex1;
-    }
+    someMoreSimpRules(){}
     ex operator()(const ex& e);
-    ~powSimplify(){}
+    ~someMoreSimpRules(){}
 };
 
 
 extern simplifyc Simplify;
-extern  Collect_common_factorsc Collect_common_factors; // This collect all common factors including numerical numbers
+extern Collect_common_factorsc Collect_common_factors; // This collect all common factors including numerical numbers
 extern numSimplify numSimplifye;
 extern arguSimplify arguSimplifye;
-extern   expandinv expandinve;
+extern expandinv expandinve;
 extern fracPowBasSubs fracPowBasSubsE;
 extern funcSubs funcSubsE;
-extern powSimplify powSimplifyE;
+extern someMoreSimpRules someMoreSimpRulesE;
 
 #endif // SIMPLIFY_H_INCLUDED

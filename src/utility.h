@@ -251,6 +251,16 @@ ex genSymbSubs(const ex& _e, const exmap& highDegSubsClt);
 isCltPowZero = true allow to get coefficients of _var^0. **/
 lst collectAllCoeff(const ex& _expr, const lst& _var, const bool& isCltPowZero, exmap& _varsWtcoeff);
 
+/** Getting numerator and denominator.
+ *  This functution determines numer/denom
+ *  accurately having fractional power.
+ *  Such as: Numer_Denom(1/(x/y)^(1/2)) returns {1,(x/y)^(1/2)}, but, cuurently, Ginac,s
+ *  numer_denom does not give correct results.
+ *  To avoid wrong results, this function replace all the base with fractional power by generated symbol, then it
+ *  determines numer/denom.
+ *  **/
+ex Numer_Denom(const ex& _expr);
+
 
 
 #endif // UTILITY_H_INCLUDED

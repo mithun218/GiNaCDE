@@ -612,6 +612,28 @@ lst collectAllCoeff(const ex& _expr, const lst& _var, const bool& isCltPowZero, 
 
     return totalCoeffClt;
 }
+
+
+/** Getting numerator and denominator. **/
+ex Numer_Denom(const ex& _expr)
+{
+    fracPowBasSubsE.set();
+    const ex temexpr_=fracPowBasSubsE(_expr);
+    ex nude;
+    lst nudeClt;
+    nude = temexpr_.numer_denom();
+
+    if(!fracPowBasSubsE.baseClt.empty())
+    {
+        nudeClt.append( genSymbSubs(nude.op(0),fracPowBasSubsE.baseClt));
+        nudeClt.append(genSymbSubs(nude.op(1),fracPowBasSubsE.baseClt));
+        fracPowBasSubsE.set();
+
+        return nudeClt;
+    }
+
+    return nude;
+}
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 

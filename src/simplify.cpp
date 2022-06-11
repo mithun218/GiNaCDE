@@ -100,21 +100,37 @@ arguSimplify arguSimplifye;
 expandinv expandinve;
 fracPowBasSubs fracPowBasSubsE;
 funcSubs funcSubsE;
-powSimplify powSimplifyE;
+someMoreSimpRules someMoreSimpRulesE;
 
 int simplifyc::SetRules(int m)
 {
     if(m == AlgSimp)
     {
-        // (0)^a = 0
-        AlgSimpRules[pow(0,wild(0))] = 0;
-        AlgSimpRules[pow(wild(2),wild(0))*pow(wild(2),wild(1))] = pow(wild(2), wild(0)+wild(1));
-        AlgSimpRules[wild(3)*pow(wild(2),wild(0))*pow(wild(2),wild(1))] = wild(3)*pow(wild(2), wild(0)+wild(1));
+        AlgSimpRules1[pow(wild(2), wild(0)+wild(1))] = pow(wild(2),wild(0))*pow(wild(2),wild(1));
+        AlgSimpRules1[wild(3)*pow(wild(2), wild(0)+wild(1))] = wild(3)*pow(wild(2),wild(0))*pow(wild(2),wild(1));
+        AlgSimpRules1[pow(wild(1),wild(2)-wild(4))] = pow(wild(1),wild(2))/pow(wild(1),wild(4));
+        AlgSimpRules1[pow(wild(1),wild(2)-1)] = pow(wild(1),wild(2))/wild(1);
+        AlgSimpRules1[pow(wild(2), _ex1+wild(1))] = wild(2)*pow(wild(2),wild(1));
 
-        AlgSimpRules[exp(wild(0))*exp(wild(1))] = exp(wild(0)+wild(1));
-        AlgSimpRules[wild(2)*exp(wild(0))*exp(wild(1))] = wild(2)*exp(wild(0)+wild(1));
-        AlgSimpRules[pow(exp(wild(0)),wild(1))] = exp(wild(0)*wild(1));
-        AlgSimpRules[wild(2)*pow(exp(wild(0)),wild(1))] = wild(2)*exp(wild(0)*wild(1));
+        //AlgSimpRules2[pow(0,wild(0))] = 0;
+        AlgSimpRules2[pow(wild(2),wild(0))*pow(wild(2),wild(1))] = pow(wild(2), wild(0)+wild(1));
+        AlgSimpRules2[wild(3)*pow(wild(2),wild(0))*pow(wild(2),wild(1))] = wild(3)*pow(wild(2), wild(0)+wild(1));
+        AlgSimpRules2[pow(wild(1),wild(2))/pow(wild(1),wild(4))] = pow(wild(1),wild(2)-wild(4));
+        AlgSimpRules2[pow(wild(1),wild(2))/wild(1)] = pow(wild(1),wild(2)-1);
+        AlgSimpRules2[wild(2)*pow(wild(2),wild(1))] = pow(wild(2), _ex1+wild(1));
+
+
+        /*
+        AlgSimpRules[pow(pow(wild(2),wild(0)),wild(1))] = pow(wild(2), wild(0)*wild(1));
+        AlgSimpRules[wild(3)*pow(pow(wild(2),wild(0)),wild(1))] = wild(3)*pow(wild(2), wild(0)*wild(1));
+        AlgSimpRules[pow(wild(3)*pow(wild(2),wild(0)),wild(1))] = pow(wild(3),wild(1))*pow(wild(2), wild(0)*wild(1));
+        AlgSimpRules[wild(4)*pow(wild(3)*pow(wild(2),wild(0)),wild(1))] = wild(4)*pow(wild(3),wild(1))*pow(wild(2), wild(0)*wild(1));
+        */
+
+        AlgSimpRules2[exp(wild(0))*exp(wild(1))] = exp(wild(0)+wild(1));
+        AlgSimpRules2[wild(2)*exp(wild(0))*exp(wild(1))] = wild(2)*exp(wild(0)+wild(1));
+        AlgSimpRules2[pow(exp(wild(0)),wild(1))] = exp(wild(0)*wild(1));
+        AlgSimpRules2[wild(2)*pow(exp(wild(0)),wild(1))] = wild(2)*exp(wild(0)*wild(1));
 
 
 
@@ -123,10 +139,9 @@ int simplifyc::SetRules(int m)
 
     else if(m == AlgSimp2)
     {
-        // (0)^a = 0
-        AlgSimpRules2[pow(0,wild(0))] = 0;
-        AlgSimpRules2[pow(wild(2),wild(0))*pow(wild(2),wild(1))] = pow(wild(2), wild(0)+wild(1));
-        AlgSimpRules2[wild(3)*pow(wild(2),wild(0))*pow(wild(2),wild(1))] = wild(3)*pow(wild(2), wild(0)+wild(1));
+        //AlgSimpRules3[pow(0,wild(0))] = 0;
+        AlgSimpRules3[pow(wild(2),wild(0))*pow(wild(2),wild(1))] = pow(wild(2), wild(0)+wild(1));
+        AlgSimpRules3[wild(3)*pow(wild(2),wild(0))*pow(wild(2),wild(1))] = wild(3)*pow(wild(2), wild(0)+wild(1));
 
         return 0;
     }
@@ -204,16 +219,14 @@ int simplifyc::SetRules(int m)
     return 0;
 }
 
-ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPowBaseGensymb)
+ex simplifyc::operator()(const ex& e, const int& rules)
 {
     ex y=e;
 
+
     if (rules == AlgSimp)
     {
-        powSimplifyE.set();
-        //cout<<"before"<<y<<endl;
-        y = powSimplifyE(y);
-        //cout<<"after"<<y<<endl;
+
 
         this->SetRules(AlgSimp);
         TrigArgSign_Complx trigarg;
@@ -221,8 +234,13 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         do
         {
             xprev = y;
-            y = y.subs(AlgSimpRules, subs_options::algebraic);
-            y = y.subs((lst){wild(2)*pow(wild(2),wild(1)) == pow(wild(2), _ex1+wild(1))},subs_options::subs_algebraic); //we apply this rule separately to increase speed.
+            y = y.subs(AlgSimpRules1, subs_options::algebraic);
+        } while(xprev != y);
+        do
+        {
+            xprev = y;
+            y = y.subs(AlgSimpRules2, subs_options::algebraic);
+            y = y.subs((lst){wild(2)*pow(wild(2),wild(1)) == pow(wild(2), _ex1+wild(1))},subs_options::algebraic); //we apply this rule separately to increase speed.
 
             y = trigarg(y);
             numSimplifye.primefactrs.clear();
@@ -238,9 +256,10 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         ex xprev;
         do
         {
+
             xprev = y;
-            y = y.subs(AlgSimpRules2, subs_options::algebraic);
-            y = y.subs((lst){wild(2)*pow(wild(2),wild(1)) == pow(wild(2), _ex1+wild(1))},subs_options::subs_algebraic); //we apply this rule separately to increase speed.
+            y = y.subs(AlgSimpRules3, subs_options::algebraic);
+            y = y.subs((lst){wild(2)*pow(wild(2),wild(1)) == pow(wild(2), _ex1+wild(1))},subs_options::algebraic); //we apply this rule separately to increase speed.
 
             y = trigarg(y);
             numSimplifye.primefactrs.clear();
@@ -259,14 +278,14 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         do
         {
             xprev = y;
-            y = (y.subs(TrigSimpRules1, subs_options::subs_algebraic));
+            y = (y.subs(TrigSimpRules1, subs_options::algebraic));
         } while(xprev != y);
 
         this->SetRules(HyperSimp);
         do
         {
             xprev = y;
-            y = (y.subs(HyperSimpRules1, subs_options::subs_algebraic));
+            y = (y.subs(HyperSimpRules1, subs_options::algebraic));
         } while(xprev != y);
 
 
@@ -274,12 +293,12 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         do
         {
             xprev = y;
-            y = (y.subs(JacobiSimpRules2, subs_options::subs_algebraic));
+            y = (y.subs(JacobiSimpRules2, subs_options::algebraic));
         } while(xprev != y);
         do
         {
             xprev = y;
-            y = y.subs(JacobiSimpRules1, subs_options::subs_algebraic);
+            y = y.subs(JacobiSimpRules1, subs_options::algebraic);
         } while(xprev != y);
 
 
@@ -287,7 +306,7 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         do
         {
             xprev = y;
-            y = y.subs(logSimpRules, subs_options::subs_algebraic);
+            y = y.subs(logSimpRules, subs_options::algebraic);
         } while(xprev != y);
 
         y = this->operator()(y,AlgSimp2);
@@ -305,12 +324,12 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
        do
        {
            xprev = y;
-           y = y.subs(TrigSimpRules1, subs_options::subs_algebraic);
+           y = y.subs(TrigSimpRules1, subs_options::algebraic);
        } while(xprev != y);
        do
        {
            xprev = y;
-           y = y.subs(TrigSimpRules2, subs_options::subs_algebraic);
+           y = y.subs(TrigSimpRules2, subs_options::algebraic);
        } while(xprev != y);
 
        y = this->operator()(y,AlgSimp2);
@@ -327,7 +346,7 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         do
         {
             xprev = y;
-            y = y.subs(TrigCombineRules, subs_options::subs_algebraic).expand(expand_options::expand_function_args);
+            y = y.subs(TrigCombineRules, subs_options::algebraic).expand(expand_options::expand_function_args);
         } while(xprev != y);
 
         y = this->operator()(y,AlgSimp);
@@ -345,12 +364,12 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
          do
          {
              xprev = y;
-             y = y.subs(HyperSimpRules1, subs_options::subs_algebraic);
+             y = y.subs(HyperSimpRules1, subs_options::algebraic);
          } while(xprev != y);
          do
          {
              xprev = y;
-             y = y.subs(HyperSimpRules2, subs_options::subs_algebraic);
+             y = y.subs(HyperSimpRules2, subs_options::algebraic);
          } while(xprev != y);
 
          y = this->operator()(y,AlgSimp2);
@@ -366,7 +385,7 @@ ex simplifyc::operator()(const ex& e, const int& rules,  const bool& isFracNegPo
         do
         {
             xprev = y;
-            y = y.subs(logSimpRules, subs_options::subs_algebraic).expand(expand_options::expand_function_args);
+            y = y.subs(logSimpRules, subs_options::algebraic).expand(expand_options::expand_function_args);
         } while(xprev != y);
 
         y = this->operator()(y,AlgSimp);
@@ -495,18 +514,18 @@ ex fracPowBasSubsLvl_1::operator()(const ex& e)
         tem = Simplify(collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(0)))))/
                        collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(1))))));
 
-        if((!baseCltLvl_1.empty() && baseCltLvl_1.find(pow(tem,pow(denom(e.op(1)),_ex_1)))==baseCltLvl_1.end())
+        if((!baseCltLvl_1.empty() && baseCltLvl_1.find(tem)==baseCltLvl_1.end())
             || baseCltLvl_1.empty())
         {
             j=j+1;
 
             str = "genSymb1_" + to_string(j);
             expr = reader(str);
-            baseCltLvl_1[pow(tem,pow(denom(e.op(1)),_ex_1))]=expr;
+            baseCltLvl_1[tem]=expr;
         }
 
-        if(!baseCltLvl_1.empty() && baseCltLvl_1.find(pow(tem,pow(denom(e.op(1)),_ex_1)))!=baseCltLvl_1.end())
-            return pow(baseCltLvl_1[pow(tem,pow(denom(e.op(1)),_ex_1))],numer(e.op(1)));
+        if(!baseCltLvl_1.empty() && baseCltLvl_1.find(tem)!=baseCltLvl_1.end())
+            return pow(baseCltLvl_1[tem],(e.op(1)));
     }
 
     return e.map(*this);
@@ -525,18 +544,18 @@ ex fracPowBasSubsFactor::operator()(const ex& e)
         tem = Simplify(collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(0)))))/
                        collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(1))))));
 
-        if((!baseClt.empty() && baseClt.find(pow(tem,pow(denom(e.op(1)),_ex_1)))==baseClt.end())
+        if((!baseClt.empty() && baseClt.find(tem)==baseClt.end())
             || baseClt.empty())
         {
             j=j+1;
 
             str = "genSymb1_" + to_string(j);
             expr = reader(str);
-            baseClt[pow(tem,pow(denom(e.op(1)),_ex_1))]=expr;
+            baseClt[tem]=expr;
         }
 
-        if(!baseClt.empty() && baseClt.find(pow(tem,pow(denom(e.op(1)),_ex_1)))!=baseClt.end())
-            return pow(baseClt[pow(tem,pow(denom(e.op(1)),_ex_1))],numer(e.op(1)));
+        if(!baseClt.empty() && baseClt.find(tem)!=baseClt.end())
+            return pow(baseClt[tem],(e.op(1)));
     }
 
     return e.map(*this);
@@ -585,8 +604,8 @@ ex fracPowBasSubs::operator()(const ex& e)
 
         numer_denomClt = (e.op(0)).numer_denom();
 
-        tem = Simplify(collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(0)),AlgSimp,false)))/
-                       collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(1)),AlgSimp,false))),AlgSimp,false);
+        tem = Simplify(collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(0)),AlgSimp)))/
+                       collect_common_factors(Factor(Simplify(expand(numer_denomClt.op(1)),AlgSimp))),AlgSimp);
         tem=Lvl_1(tem);
         if(!Lvl_1.baseCltLvl_1.empty())
         {
@@ -599,35 +618,35 @@ ex fracPowBasSubs::operator()(const ex& e)
                     for(int i = 0; i <=degree(tem,(*it).second); i++)
                     {
                         numer_denomClt = (tem.coeff((*it).second,i)).numer_denom();
-                        temtemexpr_ = temtemexpr_+ pow((*it).second,i)*Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify((numer_denomClt.op(0)),AlgSimp,false)))))/
-                                                                                        (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify((numer_denomClt.op(1)),AlgSimp,false))))),AlgSimp,false);
+                        temtemexpr_ = temtemexpr_+ pow((*it).second,i)*Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify((numer_denomClt.op(0)),AlgSimp)))))/
+                                                                                        (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify((numer_denomClt.op(1)),AlgSimp))))),AlgSimp);
                     }
                     tem = temtemexpr_;
                 }
                 else
                 {
                     numer_denomClt = tem.numer_denom();
-                    tem = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),AlgSimp,false)))))/
-                                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),AlgSimp,false))))),AlgSimp,false);
+                    tem = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),AlgSimp)))))/
+                                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),AlgSimp))))),AlgSimp);
                 }
             }
 
-            tem = Simplify(genSymbSubs(tem,Lvl_1.baseCltLvl_1),AlgSimp,false);
+            tem = Simplify(genSymbSubs(tem,Lvl_1.baseCltLvl_1),AlgSimp);
             Lvl_1.set();
         }
 
-        if((!baseClt.empty() && baseClt.find(pow(tem,pow(denom(e.op(1)),_ex_1)))==baseClt.end())
+        if((!baseClt.empty() && baseClt.find(tem)==baseClt.end())
            || baseClt.empty())
         {
             j=j+1;
 
             str = "genSymb4_" + to_string(j);
             expr = reader(str);
-            baseClt[pow(tem,pow(denom(e.op(1)),_ex_1))]=expr;
+            baseClt[tem]=expr;
         }
 
-        if(!baseClt.empty() && baseClt.find(pow(tem,pow(denom(e.op(1)),_ex_1)))!=baseClt.end())
-            return pow(baseClt[pow(tem,pow(denom(e.op(1)),_ex_1))],numer(e.op(1)));
+        if(!baseClt.empty() && baseClt.find(tem)!=baseClt.end())
+            return pow(baseClt[tem],(e.op(1)));
 
     }
 
@@ -717,67 +736,18 @@ ex funcSubs::operator()(const ex& e)
 
 
 ////////////////////////////////////////////////////////////////
-/** Applying the simplification rules (x^ay^b(x+y)^d)^c=x^(ac)y^(bc)((x+y)^d)^c and (-2(x+y)^b)^a=2^a(-((x+y)^b)^a  **/
-ex powSimplify::operator()(const ex& e)
+/** Applying the simplification rules  x^(3/2)=x*x^(1/2)**/
+ex someMoreSimpRules::operator()(const ex& e)
 {
 
-    if(is_a<power>(e))
+    if(is_a<power>(e) && (e.op(1)).info(info_flags::real) && denom(e.op(1)) != _ex1)
     {
-        expr = e;
-        expr3 = _ex1;
-        do
-        {
-            expr3=expr3*(expr.op(1));
-
-            if(is_a<symbol>(expr.op(0)))
-            {
-                return pow(expr.op(0),expr3);
-            }
-            else if (is_a<mul>(expr.op(0)))
-            {
-                if(is_a<numeric>((expr.op(0)).op(nops(expr.op(0))-1)))
-                {
-                    if(is_positive(ex_to<numeric>((expr.op(0)).op(nops(expr.op(0))-1))))
-                        return ((pow((expr.op(0)).op(nops(expr.op(0))-1),expr3))*pow(expr.op(0)/(expr.op(0)).op(nops(expr.op(0))-1),expr3)).map(*this);
-                    else if(is_negative(ex_to<numeric>((expr.op(0)).op(nops(expr.op(0))-1))))
-                        return ((pow(-((expr.op(0)).op(nops(expr.op(0))-1)),expr3))*pow(expr.op(0)/(-((expr.op(0)).op(nops(expr.op(0))-1))),expr3)).map(*this);
-
-                    else
-                    {
-                        /*expr2 = _ex1;
-                        for (size_t i=0;i<(nops(expr.op(0)));i++)
-                        {
-                            expr2 = expr2*pow((expr.op(0)).op(i),expr3);
-                        }*/
-                        return  e.map(*this);
-                    }
-                }
-                else
-                {
-                    /*expr2 = _ex1;
-                    for (size_t i=0;i<(nops(expr.op(0)));i++)
-                    {
-                        expr2 = expr2*pow((expr.op(0)).op(i),expr3);
-                    }*/
-                    return  e.map(*this);
-                }
-
-            }
-            else if(is_a<power>(expr.op(0)))
-            {
-                expr = expr.op(0);
-                ispow=true;
-            }
-            else
-            {
-                ispow=false;
-            }
-
-        }while(ispow);
-
+        iNum = (int)(ex_to<numeric>(e.op(1))).to_double();
+        if(iNum != 0)
+            return (pow(e.op(0),iNum)*pow(e.op(0),e.op(1)-iNum*_ex1)).map(*this);
     }
 
-    return e.map(*this);
+    return (e).map(*this);
 }
 
 ////////////////////////////////////////////////////////////
@@ -839,7 +809,7 @@ ex simplify(const ex& expr_, int rules)
         }
         //cout<<temexpr_<<endl;
 
-        temexpr_=Simplify(temexpr_,rules,false);
+        temexpr_=Simplify(temexpr_,rules);
 
         if(is_a<numeric>(temexpr_)) // This return numeric expressions without more simplify.
         {
@@ -850,14 +820,15 @@ ex simplify(const ex& expr_, int rules)
 
         powBaseSubsLessThanDeg baseSubs(0);     // At first all expressions having degree less than expandLevel is expanded
         temexpr_ = baseSubs(temexpr_);          // and expressions having degree greater then expandLevel is replaced by
-        temexpr_=Simplify(temexpr_,rules,false);// generated symbols.
-
+        temexpr_=Simplify(temexpr_,rules);      // generated symbols.
         temexprToSymMap = baseSubs.exprToSymMap;
 
-        numer_denomClt = temexpr_.numer_denom();
-        //cout<<numer_denomClt.op(1)<<endl;
-        temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0),expand_options::expand_function_args),rules,false)))))/
-                                (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1),expand_options::expand_function_args),rules,false))))),rules);
+
+        //cout<<temexpr_<<endl;
+        numer_denomClt = Numer_Denom(temexpr_);
+        temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0),expand_options::expand_function_args),rules)))))/
+                                (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1),expand_options::expand_function_args),rules))))),rules);
+
 
         do // This collect all common factors including numerical numbers
         {
@@ -868,6 +839,7 @@ ex simplify(const ex& expr_, int rules)
 
         } while(xprev != temexpr_);
         temexpr_ = temexpr_.subs(factSymb_==_ex1);
+
 
 
         fracPowBasSubsE.set();
@@ -885,36 +857,41 @@ ex simplify(const ex& expr_, int rules)
                     for(int i = 0; i <=degree(temexpr_,(*it).second); i++)
                     {
                         numer_denomClt = (temexpr_.coeff((*it).second,i)).numer_denom();
-                        temtemexpr_ = temtemexpr_+ pow((*it).second,i)*Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify((numer_denomClt.op(0)),rules,false)))))/
-                                                                 (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify((numer_denomClt.op(1)),rules,false))))),rules,false);
+                        temtemexpr_ = temtemexpr_+ pow((*it).second,i)*Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify((numer_denomClt.op(0)),rules)))))/
+                                                                 (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify((numer_denomClt.op(1)),rules))))),rules);
                     }
                     temexpr_ = temtemexpr_;
                 }
                 else
                 {
                     numer_denomClt = temexpr_.numer_denom();
-                    temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false)))))/
-                                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false))))),rules,false);
+                    temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules)))))/
+                                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules))))),rules);
                 }
             }
 
-            temexpr_ = Simplify(genSymbSubs(temexpr_,temBaseClt),rules,false);
+            temexpr_ = Simplify(genSymbSubs(temexpr_,temBaseClt),rules);
             fracPowBasSubsE.set();
+            //cout<<temexpr_<<endl;
         }
 
-        numer_denomClt = temexpr_.numer_denom();
-        temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules,false)))))/
-                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules,false))))),rules,false);
+
+        numer_denomClt = Numer_Denom(temexpr_);
+        temexpr_ = Simplify((is_a<numeric>(numer_denomClt.op(0))?numer_denomClt.op(0):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(0)),rules)))))/
+                            (is_a<numeric>(numer_denomClt.op(1))?numer_denomClt.op(1):collect_common_factors((Factor(Simplify(expand(numer_denomClt.op(1)),rules))))),rules);
 
 
-        temexpr_ = Simplify(genSymbSubs(temexpr_,temexprToSymMap),rules,false);
-        fracPowBasSubsE.set();
+
+        temexpr_ = Simplify(genSymbSubs(temexpr_,temexprToSymMap),rules);
+
         if(!funcSubsE.baseClt.empty())
         {
-            temexpr_ = Simplify(genSymbSubs(temexpr_,funcSubsE.baseClt),rules,false);
+            temexpr_ = Simplify(genSymbSubs(temexpr_,funcSubsE.baseClt),rules);
             funcSubsE.set();
             temexpr_=Simplify(temexpr_,FuncSimp);
         }
+
+        temexpr_=Simplify(someMoreSimpRulesE(temexpr_));
 
         if(expr_.info(info_flags::relation))
            return expr_.lhs()==(temexpr_);
