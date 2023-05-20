@@ -143,6 +143,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     }
 
 
+
     ex solu_form_subs = numer(Simplify(expand(Simplify(expand(evaluate(diffeq.subs(dpndt_varChng == solu_form)))).subs(diff_F, subs_options::algebraic))));
     lst coeffs;
     const ex Fd_=reader("Fd_"), F_ = reader("F_");
@@ -154,7 +155,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
 
         if(denom(Nvalue) != _ex1)
         {
-            solu_form_subs=Simplify(expand(solu_form_subs.subs(F==pow(F_,denom(Nvalue)),subs_options::algebraic)));
+            solu_form_subs=Simplify2(expand(solu_form_subs.subs(F==pow(F_,denom(Nvalue)),subs_options::algebraic)));
             solu_form_subs=solu_form_subs.subs(F_==F,subs_options::algebraic);
         }
         const int Fd_Degree = degree(solu_form_subs,Fd_);
@@ -177,7 +178,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     {
         if(denom(Nvalue) != _ex1)
         {
-            solu_form_subs=Simplify(expand(solu_form_subs.subs(F==pow(F_,denom(Nvalue)),subs_options::algebraic)));
+            solu_form_subs=Simplify2(expand(solu_form_subs.subs(F==pow(F_,denom(Nvalue)),subs_options::algebraic)));
             solu_form_subs=solu_form_subs.subs(F_==F,subs_options::algebraic);
         }
 
