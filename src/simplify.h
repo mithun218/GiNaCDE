@@ -50,6 +50,10 @@ public:
     ~Collect_common_factorsc(){}
 };
 
+/**this Simplify2 function simplify only the algebraic expressions containing
+fractional power, such as: simplify (x^(1/3))^4 as x^(4/3).**/
+ex Simplify2(const ex& expr_);
+
 ex simplify(const ex& expr_, int rules = FuncSimp);
 ex fullsimplify(const ex& expr_, int rules = FuncSimp);
 

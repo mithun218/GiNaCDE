@@ -777,6 +777,24 @@ ex Collect_common_factorsc::operator()(const ex& _e)
 
 ////////////////////////////////////////////////////////////
 
+ex Simplify2(const ex& expr_)
+{
+    exmap AlgSimpRules2;
+    AlgSimpRules2[pow(pow(wild(2),wild(0)),wild(1))] = pow(wild(2), wild(0)*wild(1));
+
+    ex xprev,y;
+    y = expr_;
+    do
+    {
+        xprev = y;
+        y = y.subs(AlgSimpRules2, subs_options::algebraic);
+    } while(xprev != y);
+
+    return y;
+}
+
+////////////////////////////////////////////////////////////
+
 ex simplify(const ex& expr_, int rules)
 {
     if(expr_==_ex0)
