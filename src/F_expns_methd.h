@@ -13,6 +13,7 @@ using namespace std;
 using namespace GiNaC;
 
 extern const symbol _n;
+extern const ex Fd_, F_,F;
 
 
 extern bool ASolve;

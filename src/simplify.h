@@ -51,7 +51,7 @@ public:
 };
 
 /**this Simplify2 function simplify only the algebraic expressions containing
-fractional power, such as: simplify (x^(1/3))^4 as x^(4/3).**/
+fractional power of F,F_,Fd_,X_,Y_; such as: simplify (F^(1/3))^4 as F^(4/3).**/
 ex Simplify2(const ex& expr_);
 
 ex simplify(const ex& expr_, int rules = FuncSimp);

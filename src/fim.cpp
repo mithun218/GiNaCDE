@@ -24,6 +24,8 @@ using namespace std;
 using namespace GiNaC;
 
 
+const ex Y_=reader("Y_"), X_=reader("X_");
+
 /////////////////////////////////////////////////////////////
 ex degreePartiVar::operator()(const ex & e)
 {
@@ -175,7 +177,8 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
         tra_wave_coord = indpndt_var;
 
 
-    const ex Y_=reader("Y_"), X_=reader("X_"), g_=reader("g_"), h_=reader("h_");
+    //const ex Y_=reader("Y_"), X_=reader("X_");
+    const ex g_=reader("g_"), h_=reader("h_");
 
     depend(Y_, {X_});
     depend(g_, {Y_});
@@ -832,25 +835,27 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
                         {
                             for(auto it1 = fstordrodeRhs.begin(); it1 != fstordrodeRhs.end(); it1++ )
                             {
-                                odetype = odeType_check(*it1,X_ );
-                                if(is_polynomial(*it1, X_)) //
+                                const ex temSimp = Simplify2(*it1);
+
+                                odetype = odeType_check(temSimp,X_ );
+                                if(is_polynomial(temSimp, X_)) //
                                 {
-                                    degAcoeff.append(degree(*it1, X_));
+                                    degAcoeff.append(degree(temSimp, X_));
                                     for(unsigned i = 0; i <degAcoeff[0]+1; i++)
-                                        degAcoeff.append(coeff(*it1, X_,i));
+                                        degAcoeff.append(coeff(temSimp, X_,i));
                                 }
                                 else if(odetype == fracbernouli) // handling y' = A*y^(n/2), y' = sqrt(A*y)
                                 {
-                                    ex temEx = simplify(*it1),Fd_;
-                                    const ex temSubs = Simplify(expand(temEx.subs(X_==pow(Fd_,_ex2))));
+                                    ex temEx = simplify(temSimp),Fd_;
+                                    const ex temSubs = Simplify2(Simplify(expand(temEx.subs(X_==pow(Fd_,_ex2)))));
                                     degAcoeff.append(degree(temSubs, Fd_)/_ex2);
                                     degAcoeff.append(Simplify(expand(coeff(temSubs, Fd_,degree(temSubs, Fd_)))));
                                 }
                                 else if(odetype != general)
                                 {
-                                    degAcoeff.append(degree((*it1).op(0), X_));
+                                    degAcoeff.append(degree((temSimp).op(0), X_));
                                     for (int i = 0; i < degAcoeff[0] + 1; i++)
-                                        degAcoeff.append(Simplify(expand(coeff((*it1).op(0), X_, i))));
+                                        degAcoeff.append(Simplify(expand(coeff((temSimp).op(0), X_, i))));
                                 }
 
 
