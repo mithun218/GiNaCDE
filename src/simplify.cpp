@@ -13,6 +13,8 @@
 #include "inifcns.h"
 #include "simplify.h"
 #include "solve.h"
+#include "F_expns_methd.h"
+#include "fim.h"
 
 using namespace std;
 using namespace GiNaC;
@@ -780,7 +782,24 @@ ex Collect_common_factorsc::operator()(const ex& _e)
 ex Simplify2(const ex& expr_)
 {
     exmap AlgSimpRules2;
-    AlgSimpRules2[pow(pow(wild(2),wild(0)),wild(1))] = pow(wild(2), wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(F,wild(0)),wild(1))] = pow(F, wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(F_,wild(0)),wild(1))] = pow(F_, wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(Fd_,wild(0)),wild(1))] = pow(Fd_, wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(X_,wild(0)),wild(1))] = pow(X_, wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(Y_,wild(0)),wild(1))] = pow(Y_, wild(0)*wild(1));
+
+    AlgSimpRules2[pow(pow(wild(2)*F,wild(0)),wild(1))] = pow(pow(wild(2),wild(0)),wild(1))*pow(F, wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(wild(2)*F_,wild(0)),wild(1))] = pow(pow(wild(2),wild(0)),wild(1))*pow(F_, wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(wild(2)*Fd_,wild(0)),wild(1))] = pow(pow(wild(2),wild(0)),wild(1))*pow(Fd_, wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(wild(2)*X_,wild(0)),wild(1))] = pow(pow(wild(2),wild(0)),wild(1))*pow(X_, wild(0)*wild(1));
+    AlgSimpRules2[pow(pow(wild(2)*Y_,wild(0)),wild(1))] = pow(pow(wild(2),wild(0)),wild(1))*pow(Y_, wild(0)*wild(1));
+
+    AlgSimpRules2[pow(wild(2)*pow(F,wild(0)),wild(1))] = pow(wild(2),wild(1))*pow(F, wild(0)*wild(1));
+    AlgSimpRules2[pow(wild(2)*pow(F_,wild(0)),wild(1))] = pow(wild(2),wild(1))*pow(F_, wild(0)*wild(1));
+    AlgSimpRules2[pow(wild(2)*pow(Fd_,wild(0)),wild(1))] = pow(wild(2),wild(1))*pow(Fd_, wild(0)*wild(1));
+    AlgSimpRules2[pow(wild(2)*pow(X_,wild(0)),wild(1))] = pow(wild(2),wild(1))*pow(X_, wild(0)*wild(1));
+    AlgSimpRules2[pow(wild(2)*pow(Y_,wild(0)),wild(1))] = pow(wild(2),wild(1))*pow(Y_, wild(0)*wild(1));
+
 
     ex xprev,y;
     y = expr_;

@@ -25,6 +25,7 @@ using namespace GiNaC;
 
 
 const symbol _n=symbol("_n");
+const ex Fd_=reader("Fd_"), F_ = reader("F_"), F = reader("F");
 
 
 bool ASolve = false;
@@ -48,7 +49,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     string symname;
     exvector asym, Asym;
     ex solu_form = _ex0, F_odesubs, odedeg;
-    ex F = reader("F");
+    //ex F = reader("F");
     depend(F, {indpndt_var});
     const int NvalueNumer = ex_to<numeric>(numer(Nvalue)).to_int();
     const ex NvalueDenom = ex_to<numeric>(denom(Nvalue));
@@ -144,20 +145,21 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
 
 
 
-    ex solu_form_subs = numer(Simplify(expand(Simplify(expand(evaluate(diffeq.subs(dpndt_varChng == solu_form)))).subs(diff_F, subs_options::algebraic))));
+    ex solu_form_subs = Simplify2(numer(Simplify(expand(Simplify(expand(evaluate(diffeq.subs(dpndt_varChng == solu_form)))).subs(diff_F, subs_options::algebraic)))));
     lst coeffs;
-    const ex Fd_=reader("Fd_"), F_ = reader("F_");
+    //const ex Fd_=reader("Fd_"), F_ = reader("F_");
 
     solutions << "The system of algebraic equations are: " << endl;
     if(method == F_expansion)
     {
-        solu_form_subs=Simplify(expand(solu_form_subs.subs((F_ode.op(0))==pow(Fd_,_ex2),subs_options::algebraic)));
+        solu_form_subs=Simplify2(Simplify(expand(solu_form_subs.subs((F_ode.op(0))==pow(Fd_,_ex2),subs_options::algebraic))));
 
         if(denom(Nvalue) != _ex1)
         {
-            solu_form_subs=Simplify2(expand(solu_form_subs.subs(F==pow(F_,denom(Nvalue)),subs_options::algebraic)));
+            solu_form_subs=Simplify2(Simplify(expand(solu_form_subs.subs(F==pow(F_,denom(Nvalue)),subs_options::algebraic))));
             solu_form_subs=solu_form_subs.subs(F_==F,subs_options::algebraic);
         }
+
         const int Fd_Degree = degree(solu_form_subs,Fd_);
 
         for(int i = 0; i < degree(solu_form_subs, F) + 1; i++)
@@ -236,6 +238,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
 
     solutions << "solving above system of equations for variables " << variables << "->" << endl << endl;
     cout << "System of equations are solved for the variables " << variables << "....."<< endl;
+
     solu_set_clt = solve(coeffs, variables );
 
     if(solu_set_clt.empty())
@@ -282,6 +285,7 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                 if(is_polynomial(temF_odesubs,F))
                     F_odesubs = collect(expand(temF_odesubs),F);
 
+                F_odesubs = Simplify2(F_odesubs);
 
                 tra_wave_coordSubs = ((tra_wave_coord.subs(*it)));
                 if(nops(phase)!=0)
@@ -301,11 +305,12 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
                         solutions << "diff(F," << indpndt_var << ",1) = "<<F_odesubs <<";" << endl;;
 
                     odetype = odeType_check(F_odesubs, F);
+
                     degAcoeff.remove_all();
                     if(odetype == fracbernouli) // handling y' = A*y^(n/2), y' = sqrt(A*y)
                     {
                         F_odesubs = simplify(F_odesubs);
-                        const ex temSubs = Simplify(expand(F_odesubs.subs(F==pow(Fd_,_ex2))));
+                        const ex temSubs = Simplify2(expand(F_odesubs.subs(F==pow(Fd_,_ex2))));
                         degAcoeff.append(degree(temSubs, Fd_)/_ex2);
                         degAcoeff.append(Simplify(expand(coeff(temSubs, Fd_,degree(temSubs, Fd_)))));
                     }

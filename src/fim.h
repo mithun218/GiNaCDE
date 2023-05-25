@@ -13,6 +13,8 @@
 using namespace std;
 using namespace GiNaC;
 
+extern const ex Y_, X_;
+
 /** degree of a particular variable **/
 class degreePartiVar:public map_function
 {
