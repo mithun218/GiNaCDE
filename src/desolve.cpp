@@ -658,6 +658,7 @@ ex twf::operator()(const ex& _e)
 
 int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool test)
 {
+
     constraints.remove_all();
     solutionClt.clear();
 
@@ -665,6 +666,101 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     ex temdiffeq, remainingDiffpart = _ex0;
     // collecting variables from twc, phase, paraInDiffSolve for which system of equations to be solved.
     lst variables;
+
+
+    vector<string> symbolClt, protectedSymbols;
+    stringstream symbolStr;
+
+    protectedSymbols.push_back("N");
+    protectedSymbols.push_back("F");
+    protectedSymbols.push_back("Fd");
+    protectedSymbols.push_back("Xun");
+    protectedSymbols.push_back("Yun");
+    protectedSymbols.push_back("hun");
+    protectedSymbols.push_back("gun");
+    protectedSymbols.push_back("a0Deg");
+    protectedSymbols.push_back("gDeg");
+    protectedSymbols.push_back("a1Deg");
+    protectedSymbols.push_back("F_");
+    protectedSymbols.push_back("Fd_");
+    protectedSymbols.push_back("X_");
+    protectedSymbols.push_back("Y_");
+    protectedSymbols.push_back("h_");
+    protectedSymbols.push_back("g_");
+    for(unsigned i=0;i<10;i++)
+    {
+
+        symbolStr<<"a_"<<i;
+        protectedSymbols.push_back(symbolStr.str());
+        symbolStr.str("");
+        symbolStr<<"b_"<<i;
+        protectedSymbols.push_back(symbolStr.str());
+        symbolStr.str("");
+        symbolStr<<"g_"<<i;
+        protectedSymbols.push_back(symbolStr.str());
+        symbolStr.str("");
+
+        symbolStr<<"a"<<i;
+        protectedSymbols.push_back(symbolStr.str());
+        symbolStr.str("");
+        symbolStr<<"b"<<i;
+        protectedSymbols.push_back(symbolStr.str());
+        symbolStr.str("");
+        symbolStr<<"g"<<i;
+        protectedSymbols.push_back(symbolStr.str());
+        symbolStr.str("");
+    }
+    for(unsigned i=0;i<10;i++)
+    {
+        for(unsigned j=0;j<10;j++)
+        {
+
+            symbolStr<<"a_"<<i<<j;
+            protectedSymbols.push_back(symbolStr.str());
+            symbolStr.str("");
+            symbolStr<<"b_"<<i<<j;
+            protectedSymbols.push_back(symbolStr.str());
+            symbolStr.str("");
+
+            symbolStr<<"a"<<i<<j;
+            protectedSymbols.push_back(symbolStr.str());
+            symbolStr.str("");
+            symbolStr<<"b"<<i<<j;
+            protectedSymbols.push_back(symbolStr.str());
+            symbolStr.str("");
+        }
+    }
+
+
+   symbol_finder.clear();
+   symbol_finder(diffeq);
+   for(auto itr=symbol_finder.symbols.begin();itr!=symbol_finder.symbols.end();itr++)
+   {
+       symbolStr<<*itr;
+       symbolClt.push_back(symbolStr.str());
+       symbolStr.str("");
+   }
+   symbol_finder.clear();
+
+   for(auto itr=protectedSymbols.begin();itr!=protectedSymbols.end();itr++)
+   {
+       if(std::find(symbolClt.begin(),symbolClt.end(),*itr)!=symbolClt.end())
+       {
+           cout<<"Evaluation stop: "<<*std::find(symbolClt.begin(),symbolClt.end(),*itr)<<" symbol is protected"<<endl;
+
+           solutions <<"Evaluation stop: "<<*std::find(symbolClt.begin(),symbolClt.end(),*itr)<<" symbol is protected"<<endl;
+           writetofile(solutions, dpndt_vars.op(0));
+
+           #ifdef GiNaCDE_gui
+           stringstream temstr;
+           temstr <<"Evaluation stop: "<<*std::find(symbolClt.begin(),symbolClt.end(),*itr)<<" symbol is protected.";
+           gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, &temstr.str()[0]);
+           //gtk_show_uri(gdk_screen_get_default(),&CurrentPath[0],GDK_CURRENT_TIME,NULL);
+           #endif // GiNaCDE_gui
+           return -1;
+       }
+   }
+
 
     if(method != FIM && nops(degAcoeff) == 0)
     {
