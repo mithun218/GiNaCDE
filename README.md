@@ -122,7 +122,10 @@ A successful compilation will lead to the creation of libraries, executables of 
 ```
     -DGINACDE_GUI_BUILD=off
 ```
+We have checked that the source files are successfully compiled on Windows
+platform using MSYS2 (https://www.msys2.org) when we use the command
 
+	cmake -G "MSYS Makefiles" -DGINACDE_GUI_BUILD=on <path-to-source>
 #### Automated Tests
 The [`test`](test/) folder contains tests. To run the tests, execute one of the following commands:
 ```
