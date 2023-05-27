@@ -637,7 +637,7 @@ ex Numer_Denom(const ex& _expr)
 }
 
 #ifdef GiNaCDE_gui
-void resultsinDialog(stringstream& solutions)
+int resultsinDialog(stringstream& solutions)
 {
 
     GtkTextBuffer *buffer;
@@ -666,7 +666,7 @@ void resultsinDialog(stringstream& solutions)
     gtk_widget_show_all(dialog);
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
-    return ;
+    return 0;
 }
 #endif //GiNaCDE_gui
 //////////////////////////////////////////////////////////////////////////////////
