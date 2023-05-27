@@ -539,9 +539,11 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     //gtk_show_uri_on_window(GTK_WINDOW(window),&CurrentPath[0],GDK_CURRENT_TIME,NULL);
     
     gtk_widget_set_sensitive(window,TRUE);
-    #endif // GiNaCDE_gui
+
 
     return 0;
+
+    #endif //GiNaCDE_gui
 }
 
 //////////////////////////////////////////////////////////////////////////////////
