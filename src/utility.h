@@ -24,7 +24,7 @@
 
 //#define factor_all 18
 #define Gtolerance GiNaC::pow(10,-10)
-#define GiNaCDE_gui
+//#define GiNaCDE_gui
 
 using namespace std;
 using namespace GiNaC;
