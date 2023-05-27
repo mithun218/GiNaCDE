@@ -540,10 +540,9 @@ int F_expans::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt
     
     gtk_widget_set_sensitive(window,TRUE);
 
+    #endif //GiNaCDE_gui
 
     return 0;
-
-    #endif //GiNaCDE_gui
 }
 
 //////////////////////////////////////////////////////////////////////////////////

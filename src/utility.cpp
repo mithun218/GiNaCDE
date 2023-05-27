@@ -666,7 +666,7 @@ void resultsinDialog(stringstream& solutions)
     gtk_widget_show_all(dialog);
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
-
+    return ;
 }
 #endif //GiNaCDE_gui
 //////////////////////////////////////////////////////////////////////////////////

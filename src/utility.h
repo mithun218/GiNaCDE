@@ -262,7 +262,7 @@ lst collectAllCoeff(const ex& _expr, const lst& _var, const bool& isCltPowZero, 
 ex Numer_Denom(const ex& _expr);
 
 #ifdef GiNaCDE_gui
-void resultsinDialog(stringstream& solutions);
+int resultsinDialog(stringstream& solutions);
 #endif //GiNaCDE_gui
 
 #endif // UTILITY_H_INCLUDED

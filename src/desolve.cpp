@@ -2136,7 +2136,9 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
     depend.clear(U, xi);
 
+#ifdef GiNaCDE_gui
     resultsinDialog(solutions);
+#endif //GiNaCDE_gui
 
     return ret;
 }
