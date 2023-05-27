@@ -2136,6 +2136,8 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
 
     depend.clear(U, xi);
 
+    resultsinDialog(solutions);
+
     return ret;
 }
 

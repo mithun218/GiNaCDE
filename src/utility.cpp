@@ -13,6 +13,7 @@
 #include "outform.h"
 #include "inifcns.h"
 #include "simplify.h"
+#include "desolve.h"
 
 using namespace std;
 using namespace GiNaC;
@@ -634,6 +635,40 @@ ex Numer_Denom(const ex& _expr)
 
     return nude;
 }
+
+#ifdef GiNaCDE_gui
+void resultsinDialog(stringstream& solutions)
+{
+
+    GtkTextBuffer *buffer;
+    GtkTextIter start, last;
+
+    GtkWidget *dialog=gtk_dialog_new();
+    gtk_window_set_decorated(GTK_WINDOW(dialog),TRUE);
+    gtk_window_set_title(GTK_WINDOW(dialog),"Solutions with calculating steps->");
+    gtk_window_set_modal( GTK_WINDOW(dialog), TRUE );
+    gtk_window_set_resizable(GTK_WINDOW(dialog), TRUE);
+    gtk_window_set_transient_for( GTK_WINDOW(dialog), GTK_WINDOW(window));
+    gtk_widget_set_size_request(GTK_WIDGET(dialog),1024,700);
+
+    GtkWidget *textview3 = gtk_text_view_new();
+    GtkWidget *swin1 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_container_set_border_width (GTK_CONTAINER (swin1), 5);
+    gtk_container_add (GTK_CONTAINER (swin1), textview3);
+
+    gtk_box_pack_start((GtkBox*)(GtkDialog*)(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),swin1,TRUE,TRUE,0);
+    //gtk_widget_set_tooltip_text(textview3,"Please enter the system of equations here.");
+    buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview3));
+    gtk_text_buffer_get_start_iter(buffer, &start);
+    gtk_text_buffer_get_end_iter(buffer, &last);
+    gtk_text_buffer_insert(buffer, &start, &solutions.str()[0],-1);
+
+    gtk_widget_show_all(dialog);
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+
+}
+#endif //GiNaCDE_gui
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 

@@ -24,7 +24,7 @@
 
 //#define factor_all 18
 #define Gtolerance GiNaC::pow(10,-10)
-//#define GiNaCDE_gui
+#define GiNaCDE_gui
 
 using namespace std;
 using namespace GiNaC;
@@ -261,6 +261,8 @@ lst collectAllCoeff(const ex& _expr, const lst& _var, const bool& isCltPowZero, 
  *  **/
 ex Numer_Denom(const ex& _expr);
 
-
+#ifdef GiNaCDE_gui
+void resultsinDialog(stringstream& solutions);
+#endif //GiNaCDE_gui
 
 #endif // UTILITY_H_INCLUDED
