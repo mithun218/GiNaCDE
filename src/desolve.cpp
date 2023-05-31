@@ -671,6 +671,7 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     vector<string> symbolClt, protectedSymbols;
     stringstream symbolStr;
 
+    /*list of protected symbols*/
     protectedSymbols.push_back("N");
     protectedSymbols.push_back("F");
     protectedSymbols.push_back("Fd");
@@ -681,12 +682,14 @@ int desolve(const ex& diffeq, const lst& dpndt_vars, const int& method, bool tes
     protectedSymbols.push_back("a0Deg");
     protectedSymbols.push_back("gDeg");
     protectedSymbols.push_back("a1Deg");
+    protectedSymbols.push_back("Const");
     protectedSymbols.push_back("F_");
     protectedSymbols.push_back("Fd_");
     protectedSymbols.push_back("X_");
     protectedSymbols.push_back("Y_");
     protectedSymbols.push_back("h_");
     protectedSymbols.push_back("g_");
+    protectedSymbols.push_back("C_");
     for(unsigned i=0;i<10;i++)
     {
 
