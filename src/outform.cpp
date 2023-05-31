@@ -160,8 +160,6 @@ string diffformchange(const ex& diffeq, const lst& dpndt_vars, const exset& indp
 
     stringstream tem1, tem2, solutionsdiffst, dpndt_varsStr;
     string solutionsdiff;
-    dpndt_varsStr << dpndt_vars.op(0);
-    const string dpndt_varsStr2 = dpndt_varsStr.str();
 
     solutionsdiffst << diffeq;
     solutionsdiff = solutionsdiffst.str();
@@ -169,234 +167,251 @@ string diffformchange(const ex& diffeq, const lst& dpndt_vars, const exset& indp
     if(output==ginac)
         return solutionsdiffst.str();
 
-    if(output == maple)
+    for(size_t dpndti=0;dpndti<nops(dpndt_vars);dpndti++)
     {
-        tem2 << dpndt_varsStr2 << "(";
-        for(auto it = indpndt_vars.begin(); it != indpndt_vars.end(); it++)
+        dpndt_varsStr << dpndt_vars.op(dpndti);
+        const string dpndt_varsStr2 = dpndt_varsStr.str();
+
+        if(output == maple)
         {
-            tem2 << *it;
-            if(next(it) != indpndt_vars.end())
-                tem2 << ",";
+            tem2 << dpndt_varsStr2 << "(";
+            for(auto it = indpndt_vars.begin(); it != indpndt_vars.end(); it++)
+            {
+                tem2 << *it;
+                if(next(it) != indpndt_vars.end())
+                    tem2 << ",";
+            }
+            tem2 << ")";
         }
-        tem2 << ")";
+        else if( output == mathematica )
+        {
+            tem2 << dpndt_varsStr2 << "[";
+
+            for(auto it = indpndt_vars.begin(); it != indpndt_vars.end(); it++)
+            {
+                tem2 << *it;
+                if(next(it) != indpndt_vars.end())
+                    tem2 << ",";
+            }
+            tem2 << "]";
+        }
+
+        if(dpndtWtIndpndt == "u")
+            dpndtWtIndpndt = tem2.str();
+
+        vector< string > tem1Clt,tem2Clt;
+
+        tem1Clt.push_back( "+" + dpndt_varsStr2 + "+" );
+        tem2Clt.push_back( "+"+tem2.str()+"+" );
+        tem1Clt.push_back( "-" + dpndt_varsStr2 + "+" );
+        tem2Clt.push_back( "-"+tem2.str()+"+" );
+        tem1Clt.push_back( "*" + dpndt_varsStr2 + "+" );
+        tem2Clt.push_back( "*"+tem2.str()+"+" );
+        tem1Clt.push_back( "(" + dpndt_varsStr2 + "+" );
+        tem2Clt.push_back( "("+tem2.str()+"+" );
+        tem1Clt.push_back( "^" + dpndt_varsStr2 + "+" );
+        tem2Clt.push_back( "^"+tem2.str()+"+" );
+        tem1Clt.push_back( "(" + dpndt_varsStr2 + "+" );
+        tem2Clt.push_back( "("+tem2.str()+"+" );
+        tem1Clt.push_back("[" + dpndt_varsStr2 + "+");
+        tem2Clt.push_back( "["+tem2.str()+"+" );
+
+
+        tem1Clt.push_back( "+" + dpndt_varsStr2 + "-" );
+        tem2Clt.push_back( "+"+tem2.str()+"-" );
+        tem1Clt.push_back( "-" + dpndt_varsStr2 + "-" );
+        tem2Clt.push_back( "-"+tem2.str()+"-" );
+        tem1Clt.push_back( "*" + dpndt_varsStr2 + "-" );
+        tem2Clt.push_back( "*"+tem2.str()+"-" );
+        tem1Clt.push_back( "/" + dpndt_varsStr2 + "-" );
+        tem2Clt.push_back( "/"+tem2.str()+"-" );
+        tem1Clt.push_back( "^" + dpndt_varsStr2 + "-" );
+        tem2Clt.push_back( "^"+tem2.str()+"-" );
+        tem1Clt.push_back("(" + dpndt_varsStr2 + "-" );
+        tem2Clt.push_back( "("+tem2.str()+"-" );
+        tem1Clt.push_back( "[" + dpndt_varsStr2 + "-" );
+        tem2Clt.push_back( "["+tem2.str()+"-" );
+
+
+        tem1Clt.push_back( "+" + dpndt_varsStr2 + "*" );
+        tem2Clt.push_back( "+"+tem2.str()+"*" );
+        tem1Clt.push_back( "-" + dpndt_varsStr2 + "*" );
+        tem2Clt.push_back( "-"+tem2.str()+"*" );
+        tem1Clt.push_back( "*" + dpndt_varsStr2 + "*" );
+        tem2Clt.push_back( "*"+tem2.str()+"*" );
+        tem1Clt.push_back( "*" + dpndt_varsStr2 + "*" );
+        tem2Clt.push_back( "*"+tem2.str()+"*" );
+        tem1Clt.push_back( "/" + dpndt_varsStr2 + "*" );
+        tem2Clt.push_back( "/"+tem2.str()+"*" );
+        tem1Clt.push_back( "^" + dpndt_varsStr2 + "*" );
+        tem2Clt.push_back( "^"+tem2.str()+"*" );
+        tem1Clt.push_back( "(" + dpndt_varsStr2 + "*" );
+        tem2Clt.push_back( "("+tem2.str()+"*" );
+        tem1Clt.push_back( "[" + dpndt_varsStr2 + "*" );
+        tem2Clt.push_back( "["+tem2.str()+"*" );
+
+
+        tem1Clt.push_back( "+" + dpndt_varsStr2 + "/" );
+        tem2Clt.push_back( "+"+tem2.str()+"/" );
+        tem1Clt.push_back( "/" + dpndt_varsStr2 + "/" );
+        tem2Clt.push_back( "/"+tem2.str()+"/" );
+        tem1Clt.push_back( "*" + dpndt_varsStr2 + "/" );
+        tem2Clt.push_back( "*"+tem2.str()+"/" );
+        tem1Clt.push_back( "/" + dpndt_varsStr2 + "/" );
+        tem2Clt.push_back( "/"+tem2.str()+"/" );
+        tem1Clt.push_back( "^" + dpndt_varsStr2 + "/" );
+        tem2Clt.push_back( "^"+tem2.str()+"/" );
+        tem1Clt.push_back( "(" + dpndt_varsStr2 + "/" );
+        tem2Clt.push_back( "("+tem2.str()+"/" );
+        tem1Clt.push_back( "[" + dpndt_varsStr2 + "/" );
+        tem2Clt.push_back( "["+tem2.str()+"/" );
+
+
+        tem1Clt.push_back( "+" + dpndt_varsStr2 + "^" );
+        tem2Clt.push_back( "+"+tem2.str()+"^" );
+        tem1Clt.push_back( "-" + dpndt_varsStr2 + "^" );
+        tem2Clt.push_back( "-"+tem2.str()+"^" );
+        tem1Clt.push_back( "^" + dpndt_varsStr2 + "^" );
+        tem2Clt.push_back( "^"+tem2.str()+"^" );
+        tem1Clt.push_back( "*" + dpndt_varsStr2 + "^" );
+        tem2Clt.push_back( "*"+tem2.str()+"^" );
+        tem1Clt.push_back( "/" + dpndt_varsStr2 + "^" );
+        tem2Clt.push_back( "/"+tem2.str()+"^" );
+        tem1Clt.push_back( "^" + dpndt_varsStr2 + "^" );
+        tem2Clt.push_back( "^"+tem2.str()+"^" );
+        tem1Clt.push_back( "(" + dpndt_varsStr2 + "^" );
+        tem2Clt.push_back( "("+tem2.str()+"^" );
+        tem1Clt.push_back( "[" + dpndt_varsStr2 + "^" );
+        tem2Clt.push_back( "["+tem2.str()+"^" );
+
+
+        tem1Clt.push_back( "(" + dpndt_varsStr2 + "," );
+        tem2Clt.push_back( "("+tem2.str()+"," );
+
+        tem1Clt.push_back( "," + dpndt_varsStr2 + ")" );
+        tem2Clt.push_back( ","+tem2.str()+")" );
+        tem1Clt.push_back( "+" + dpndt_varsStr2 + ")" );
+        tem2Clt.push_back( "+"+tem2.str()+")" );
+        tem1Clt.push_back( "-" + dpndt_varsStr2 + ")" );
+        tem2Clt.push_back( "-"+tem2.str()+")" );
+        tem1Clt.push_back( "*" + dpndt_varsStr2 + ")" );
+        tem2Clt.push_back( "*"+tem2.str()+")" );
+        tem1Clt.push_back( "^" + dpndt_varsStr2 + ")" );
+        tem2Clt.push_back( "^"+tem2.str()+")" );
+
+
+
+
+        tem1Clt.push_back( "[" + dpndt_varsStr2 + "," );
+        tem2Clt.push_back( "["+tem2.str()+"," );
+
+        tem1Clt.push_back( "," + dpndt_varsStr2 + "]" );
+        tem2Clt.push_back( ","+tem2.str()+"]" );
+
+
+        tem1Clt.push_back( "[" + dpndt_varsStr2 + "]" );
+        tem2Clt.push_back( "["+tem2.str()+"]" );
+
+        tem1Clt.push_back( "(" + dpndt_varsStr2 + ")" );
+        tem2Clt.push_back( "("+tem2.str()+")" );
+
+
+        tem1Clt.push_back( "," + dpndt_varsStr2 + "," );
+        tem2Clt.push_back( ","+tem2.str()+"," );
+        tem1Clt.push_back( "*" + dpndt_varsStr2 + "," );
+        tem2Clt.push_back( "*"+tem2.str()+"," );
+        tem1Clt.push_back( "+" + dpndt_varsStr2 + "," );
+        tem2Clt.push_back( "+"+tem2.str()+"," );
+        tem1Clt.push_back( "-" + dpndt_varsStr2 + "," );
+        tem2Clt.push_back( "-"+tem2.str()+"," );
+        tem1Clt.push_back( "/" + dpndt_varsStr2 + "," );
+        tem2Clt.push_back( "/"+tem2.str()+"," );
+
+        const size_t strleng = dpndt_varsStr2.length();
+        if(solutionsdiff.length()> strleng)
+        {
+            // Taking first and last two variables
+            const string temstr1 = solutionsdiff.substr(0,strleng+1);
+            const string temstr2 = solutionsdiff.substr(solutionsdiff.length()-strleng-1);
+
+            // changing in first dependent variable
+            if(temstr1.substr(0,strleng) == dpndt_varsStr2 && (temstr1[strleng]=='+' || temstr1[strleng]=='-' || temstr1[strleng]=='*' || temstr1[strleng]=='/' || temstr1[strleng]=='^'))
+            {
+                solutionsdiff.replace(0, strleng, tem2.str());
+            }
+            // changing in last dependent variable
+            else if(temstr2.substr(1) == dpndt_varsStr2 && (temstr2[0]=='+' || temstr2[0]=='-' || temstr2[0]=='*' || temstr2[0]=='/' || temstr2[0]=='^'))
+            {
+                solutionsdiff.replace(solutionsdiff.length()-strleng, strleng, tem2.str());
+            }
+        }
+
+        if( output == maple )
+        {
+            for( unsigned i = 0; i < tem1Clt.size(); i++ )
+            {
+                solutionsdiff = replacestring(solutionsdiff, tem1Clt[i], tem2Clt[i]);
+            }
+
+            solutionsdiff = (replacestring(solutionsdiff, "Diff", "diff"));
+        }
+        else if( output == mathematica )
+        {
+
+            for( unsigned i = 0; i < tem1Clt.size(); i++ )
+            {
+                solutionsdiff = replacestring(solutionsdiff, tem1Clt[i], tem2Clt[i]);
+            }
+
+            solutionsdiff = replacestring(solutionsdiff, "Diff", "D");
+        }
+
+
+        tem1.str("");
+        tem2.str("");
+        dpndt_varsStr.str("");
+        tem1Clt.clear();
+        tem2Clt.clear();
     }
-    else if( output == mathematica )
+
+
+    if(output==maple)
     {
-        tem2 << dpndt_varsStr2 << "[";
-
-        for(auto it = indpndt_vars.begin(); it != indpndt_vars.end(); it++)
-        {
-            tem2 << *it;
-            if(next(it) != indpndt_vars.end())
-                tem2 << ",";
-        }
-        tem2 << "]";
-    }
-
-    if(dpndtWtIndpndt == "u")
-        dpndtWtIndpndt = tem2.str();
-
-    vector< string > tem1Clt,tem2Clt;
-
-    tem1Clt.push_back( "+" + dpndt_varsStr2 + "+" );
-    tem2Clt.push_back( "+"+tem2.str()+"+" );
-    tem1Clt.push_back( "-" + dpndt_varsStr2 + "+" );
-    tem2Clt.push_back( "-"+tem2.str()+"+" );
-    tem1Clt.push_back( "*" + dpndt_varsStr2 + "+" );
-    tem2Clt.push_back( "*"+tem2.str()+"+" );
-    tem1Clt.push_back( "(" + dpndt_varsStr2 + "+" );
-    tem2Clt.push_back( "("+tem2.str()+"+" );
-    tem1Clt.push_back( "^" + dpndt_varsStr2 + "+" );
-    tem2Clt.push_back( "^"+tem2.str()+"+" );
-    tem1Clt.push_back( "(" + dpndt_varsStr2 + "+" );
-    tem2Clt.push_back( "("+tem2.str()+"+" );
-    tem1Clt.push_back("[" + dpndt_varsStr2 + "+");
-    tem2Clt.push_back( "["+tem2.str()+"+" );
-
-
-    tem1Clt.push_back( "+" + dpndt_varsStr2 + "-" );
-    tem2Clt.push_back( "+"+tem2.str()+"-" );
-    tem1Clt.push_back( "-" + dpndt_varsStr2 + "-" );
-    tem2Clt.push_back( "-"+tem2.str()+"-" );
-    tem1Clt.push_back( "*" + dpndt_varsStr2 + "-" );
-    tem2Clt.push_back( "*"+tem2.str()+"-" );
-    tem1Clt.push_back( "/" + dpndt_varsStr2 + "-" );
-    tem2Clt.push_back( "/"+tem2.str()+"-" );
-    tem1Clt.push_back( "^" + dpndt_varsStr2 + "-" );
-    tem2Clt.push_back( "^"+tem2.str()+"-" );
-    tem1Clt.push_back("(" + dpndt_varsStr2 + "-" );
-    tem2Clt.push_back( "("+tem2.str()+"-" );
-    tem1Clt.push_back( "[" + dpndt_varsStr2 + "-" );
-    tem2Clt.push_back( "["+tem2.str()+"-" );
-
-
-    tem1Clt.push_back( "+" + dpndt_varsStr2 + "*" );
-    tem2Clt.push_back( "+"+tem2.str()+"*" );
-    tem1Clt.push_back( "-" + dpndt_varsStr2 + "*" );
-    tem2Clt.push_back( "-"+tem2.str()+"*" );
-    tem1Clt.push_back( "*" + dpndt_varsStr2 + "*" );
-    tem2Clt.push_back( "*"+tem2.str()+"*" );
-    tem1Clt.push_back( "*" + dpndt_varsStr2 + "*" );
-    tem2Clt.push_back( "*"+tem2.str()+"*" );
-    tem1Clt.push_back( "/" + dpndt_varsStr2 + "*" );
-    tem2Clt.push_back( "/"+tem2.str()+"*" );
-    tem1Clt.push_back( "^" + dpndt_varsStr2 + "*" );
-    tem2Clt.push_back( "^"+tem2.str()+"*" );
-    tem1Clt.push_back( "(" + dpndt_varsStr2 + "*" );
-    tem2Clt.push_back( "("+tem2.str()+"*" );
-    tem1Clt.push_back( "[" + dpndt_varsStr2 + "*" );
-    tem2Clt.push_back( "["+tem2.str()+"*" );
-
-
-    tem1Clt.push_back( "+" + dpndt_varsStr2 + "/" );
-    tem2Clt.push_back( "+"+tem2.str()+"/" );
-    tem1Clt.push_back( "/" + dpndt_varsStr2 + "/" );
-    tem2Clt.push_back( "/"+tem2.str()+"/" );
-    tem1Clt.push_back( "*" + dpndt_varsStr2 + "/" );
-    tem2Clt.push_back( "*"+tem2.str()+"/" );
-    tem1Clt.push_back( "/" + dpndt_varsStr2 + "/" );
-    tem2Clt.push_back( "/"+tem2.str()+"/" );
-    tem1Clt.push_back( "^" + dpndt_varsStr2 + "/" );
-    tem2Clt.push_back( "^"+tem2.str()+"/" );
-    tem1Clt.push_back( "(" + dpndt_varsStr2 + "/" );
-    tem2Clt.push_back( "("+tem2.str()+"/" );
-    tem1Clt.push_back( "[" + dpndt_varsStr2 + "/" );
-    tem2Clt.push_back( "["+tem2.str()+"/" );
-
-
-    tem1Clt.push_back( "+" + dpndt_varsStr2 + "^" );
-    tem2Clt.push_back( "+"+tem2.str()+"^" );
-    tem1Clt.push_back( "-" + dpndt_varsStr2 + "^" );
-    tem2Clt.push_back( "-"+tem2.str()+"^" );
-    tem1Clt.push_back( "^" + dpndt_varsStr2 + "^" );
-    tem2Clt.push_back( "^"+tem2.str()+"^" );
-    tem1Clt.push_back( "*" + dpndt_varsStr2 + "^" );
-    tem2Clt.push_back( "*"+tem2.str()+"^" );
-    tem1Clt.push_back( "/" + dpndt_varsStr2 + "^" );
-    tem2Clt.push_back( "/"+tem2.str()+"^" );
-    tem1Clt.push_back( "^" + dpndt_varsStr2 + "^" );
-    tem2Clt.push_back( "^"+tem2.str()+"^" );
-    tem1Clt.push_back( "(" + dpndt_varsStr2 + "^" );
-    tem2Clt.push_back( "("+tem2.str()+"^" );
-    tem1Clt.push_back( "[" + dpndt_varsStr2 + "^" );
-    tem2Clt.push_back( "["+tem2.str()+"^" );
-
-
-    tem1Clt.push_back( "(" + dpndt_varsStr2 + "," );
-    tem2Clt.push_back( "("+tem2.str()+"," );
-
-    tem1Clt.push_back( "," + dpndt_varsStr2 + ")" );
-    tem2Clt.push_back( ","+tem2.str()+")" );
-    tem1Clt.push_back( "+" + dpndt_varsStr2 + ")" );
-    tem2Clt.push_back( "+"+tem2.str()+")" );
-    tem1Clt.push_back( "-" + dpndt_varsStr2 + ")" );
-    tem2Clt.push_back( "-"+tem2.str()+")" );
-    tem1Clt.push_back( "*" + dpndt_varsStr2 + ")" );
-    tem2Clt.push_back( "*"+tem2.str()+")" );
-    tem1Clt.push_back( "^" + dpndt_varsStr2 + ")" );
-    tem2Clt.push_back( "^"+tem2.str()+")" );
-
-
-
-
-    tem1Clt.push_back( "[" + dpndt_varsStr2 + "," );
-    tem2Clt.push_back( "["+tem2.str()+"," );
-
-    tem1Clt.push_back( "," + dpndt_varsStr2 + "]" );
-    tem2Clt.push_back( ","+tem2.str()+"]" );
-
-
-    tem1Clt.push_back( "[" + dpndt_varsStr2 + "]" );
-    tem2Clt.push_back( "["+tem2.str()+"]" );
-
-    tem1Clt.push_back( "(" + dpndt_varsStr2 + ")" );
-    tem2Clt.push_back( "("+tem2.str()+")" );
-
-
-    tem1Clt.push_back( "," + dpndt_varsStr2 + "," );
-    tem2Clt.push_back( ","+tem2.str()+"," );
-    tem1Clt.push_back( "*" + dpndt_varsStr2 + "," );
-    tem2Clt.push_back( "*"+tem2.str()+"," );
-    tem1Clt.push_back( "+" + dpndt_varsStr2 + "," );
-    tem2Clt.push_back( "+"+tem2.str()+"," );
-    tem1Clt.push_back( "-" + dpndt_varsStr2 + "," );
-    tem2Clt.push_back( "-"+tem2.str()+"," );
-    tem1Clt.push_back( "/" + dpndt_varsStr2 + "," );
-    tem2Clt.push_back( "/"+tem2.str()+"," );
-
-    const size_t strleng = dpndt_varsStr2.length();
-    if(solutionsdiff.length()> strleng)
-    {
-        // Taking first and last two variables
-        const string temstr1 = solutionsdiff.substr(0,strleng+1);
-        const string temstr2 = solutionsdiff.substr(solutionsdiff.length()-strleng-1);
-
-        // changing in first dependent variable
-        if(temstr1.substr(0,strleng) == dpndt_varsStr2 && (temstr1[strleng]=='+' || temstr1[strleng]=='-' || temstr1[strleng]=='*' || temstr1[strleng]=='/' || temstr1[strleng]=='^'))
-        {
-            solutionsdiff.replace(0, strleng, tem2.str());
-        }
-        // changing in last dependent variable
-        else if(temstr2.substr(1) == dpndt_varsStr2 && (temstr2[0]=='+' || temstr2[0]=='-' || temstr2[0]=='*' || temstr2[0]=='/' || temstr2[0]=='^'))
-        {
-            solutionsdiff.replace(solutionsdiff.length()-strleng, strleng, tem2.str());
-        }
-    }
-
-    if( output == maple )
-    {
-        for( unsigned i = 0; i < tem1Clt.size(); i++ )
-        {
-            solutionsdiff = replacestring(solutionsdiff, tem1Clt[i], tem2Clt[i]);
-        }
-
-        solutionsdiff = (replacestring(solutionsdiff, "Diff", "diff"));
-
         tem1.str("");
         tem2.str("");
 
         int difford = order(diffeq);
-
         for(auto it = indpndt_vars.begin(); it != indpndt_vars.end(); it++)
         {
             int varcount = 1;
             do
             {
-               tem1 << *it << "," << varcount;
-               tem2 << *it << "$" << varcount;
-               varcount++;
-               solutionsdiff = (replacestring(solutionsdiff, tem1.str(), tem2.str()));
-               tem1.str("");
-               tem2.str("");
+                tem1 << *it << "," << varcount;
+                tem2 << *it << "$" << varcount;
+                varcount++;
+                solutionsdiff = (replacestring(solutionsdiff, tem1.str(), tem2.str()));
+                tem1.str("");
+                tem2.str("");
             }while(varcount <= difford);
         }
 
     }
-    else if( output == mathematica )
+    else if(output==mathematica)
     {
-
-        for( unsigned i = 0; i < tem1Clt.size(); i++ )
-        {
-            solutionsdiff = replacestring(solutionsdiff, tem1Clt[i], tem2Clt[i]);
-        }
-
-        solutionsdiff = replacestring(solutionsdiff, "Diff", "D");
-
         tem1.str("");
         tem2.str("");
-
         int difford = order(diffeq);
         for(auto it = indpndt_vars.begin(); it != indpndt_vars.end(); it++)
         {
             int varcount = 1;
             do
             {
-               tem1 << *it << "," << varcount;
-               tem2 << "{" << *it << "," << varcount << "}";
-               varcount++;
-               solutionsdiff = (replacestring(solutionsdiff, tem1.str(), tem2.str()));
-               tem1.str("");
-               tem2.str("");
+                tem1 << *it << "," << varcount;
+                tem2 << "{" << *it << "," << varcount << "}";
+                varcount++;
+                solutionsdiff = (replacestring(solutionsdiff, tem1.str(), tem2.str()));
+                tem1.str("");
+                tem2.str("");
             }while(varcount <= difford);
         }
 
@@ -407,24 +422,28 @@ string diffformchange(const ex& diffeq, const lst& dpndt_vars, const exset& indp
 /////////////////////////////////////////////////////////////
 
 
-void writetofile(stringstream& stringbuf, const ex& dpndt_var)
+string writetofile(stringstream& stringbuf, const ex& dpndt_var)
 {    
     ofstream outfile;
-    stringstream dpndt_varStr;
+    stringstream dpndt_varStr, solutionStr;
 
     dpndt_varStr << dpndt_var<< " =";
 
     if(output == mathematica)
     {
-        outfile.open(filename);
-        outfile << replacestring(gmathematica(replacestring(replacestring(replacestring(replacestring(replacestring(replacestring(replacestring(stringbuf.str(),
+        solutionStr << replacestring(gmathematica(replacestring(replacestring(replacestring(replacestring(replacestring(replacestring(replacestring(stringbuf.str(),
                    "g_", "gun"), "h_", "hun"), "Y_", "Yun"), "X_", "Xun"), "C_", "Const"),"==", "="),"_","")),dpndt_varStr.str(),dpndtWtIndpndt+" =");
+
+        outfile.open(filename);
+        outfile<<solutionStr.str();
         outfile.close();
     }
     else if(output == maple)
     {
+        solutionStr << replacestring(replacestring(stringbuf.str(), "==", "="), dpndt_varStr.str(), dpndtWtIndpndt+" =");
+
         outfile.open(filename);
-        outfile << replacestring(replacestring(stringbuf.str(), "==", "="), dpndt_varStr.str(), dpndtWtIndpndt+" =");
+        outfile<<solutionStr.str();
         outfile.close();
     }
     else
@@ -432,9 +451,13 @@ void writetofile(stringstream& stringbuf, const ex& dpndt_var)
         outfile.open(filename);
         outfile << stringbuf.str();
         outfile.close();
+
+        return stringbuf.str();
     }
 
     dpndtWtIndpndt = "u";
+
+    return solutionStr.str();
 
 }
 /////////////////////////////////////////////////////////////

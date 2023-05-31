@@ -135,7 +135,6 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         solutions << "Evaluation stop: order of ode should be 2;" << endl;
         cout << "Evaluation stop: order of ode should be 2;" << endl;
-        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: order of ode should be 2;");
@@ -153,7 +152,6 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
        solutions << "Evaluation stop: unsupported ode;" << endl;
        cout << "Evaluation stop: unsupported ode;" <<hdifftrml<<"  "<<diffeq<< endl;
-        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported ode;");
@@ -192,7 +190,6 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         solutions << "Evaluation stop: provide minimum Value of N: " << lhsodetrm.degree(Y_) - 1 << endl;
         cout << "Evaluation stop: provide minimum Value of N: " << lhsodetrm.degree(Y_) - 1 << endl;
-        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "No solution exist;");
@@ -207,7 +204,6 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         solutions << "Evaluation stop: unsupported ode;" << endl;
         cout << "Evaluation stop: unsupported ode;" << endl;
-        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported ode;");
@@ -249,8 +245,23 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
         solutions << "We make the transformation, d xi = (" <<hdifftrm<<")*d eta to avoid singularity "<<hdifftrm <<" = 0 temporarily."<< endl;
         cout <<"Now, we make transformation, d xi = (" <<hdifftrm<<")*d eta, to avoid singularity "<<hdifftrm <<" = 0, temporarily." << endl;
         lhsodetrm = collect(Simplify(expand(lhsodetrm/exWtoutX)),Y_);
-        solutions << "Let "<<dpndt_varChng<<" = X_, Diff("<<dpndt_varChng<<",eta, 1) = Y_*("<<hdifftrm<<"), then we get\n Diff(X_,eta, 1) = Y_*("<<hdifftrm<<"),\n"<<
-        "Diff(Y_,eta, 1) = "<<lhsodetrm <<","<< endl << endl;
+
+        if(output==maple)
+        {
+            solutions << "Let "<<dpndt_varChng<<" = X_, diff("<<dpndt_varChng<<",eta) = Y_*("<<hdifftrm<<"), then we get\n diff(X_,eta) = Y_*("<<hdifftrm<<"),\n"<<
+                         "diff(Y_,eta) = "<<lhsodetrm <<","<< endl << endl;
+        }
+        else if(output==mathematica)
+        {
+            solutions << "Let "<<dpndt_varChng<<" = X_, D["<<dpndt_varChng<<",eta] = Y_*("<<hdifftrm<<"), then we get\n D[X_,eta] = Y_*("<<hdifftrm<<"),\n"<<
+                         "D[Y_,eta] = "<<lhsodetrm <<","<< endl << endl;
+        }
+        else
+        {
+            solutions << "Let "<<dpndt_varChng<<" = X_, Diff("<<dpndt_varChng<<",eta, 1) = Y_*("<<hdifftrm<<"), then we get\n Diff(X_,eta, 1) = Y_*("<<hdifftrm<<"),\n"<<
+                         "Diff(Y_,eta, 1) = "<<lhsodetrm <<","<< endl << endl;
+        }
+
         lhsodetrm = Simplify(expand(lhsodetrm));
     }
     else
@@ -277,13 +288,17 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
 
     substit.append(asym[Nvalue] == _ex1);
 
-    solutions<<lhstrm<<" = "<<rhstrm<<endl;
+    lst asymlst={};
+    ex lhstermTem;
+    for(auto it=asym.begin(); it!=asym.end();it++)
+        asymlst.append(*it);
+    solutions<<diffformchange(lhstrm,asymlst,{X_})<<" = "<<rhstrm<<endl;
 
     solutions << "Comparing the coefficients of " << Y_<<"^i (i =" << yddegree << " .., 0) in both sides, we have" << endl << endl;
 
     for(int i = yddegree; i >= 0; i--)
     {
-        solutions <<Simplify(lhstrm.coeff(Y_, i)) << " = " << Simplify(rhstrm).coeff(Y_, i) <<","<< endl;
+        solutions <<diffformchange(Simplify(lhstrm.coeff(Y_, i)), asymlst,{X_}) << " = " << Simplify(rhstrm).coeff(Y_, i) <<","<< endl;
     }
 
 
@@ -303,8 +318,7 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     if(hValue != _ex0 && !is_polynomial(hValue,X_))
     {
         solutions << "Evaluation stop: unsupported ode;" << endl;
-        cout << "Evaluation stop: unsupported ode;3" << endl;
-        writetofile(solutions, dpndt_var);
+        cout << "Evaluation stop: unsupported ode;" << endl;
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: unsupported ode;");
@@ -573,7 +587,6 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     {
         cout << "Evaluation stop: Balancing degree of X_ is failure." << endl;
         solutions << "Evaluation stop: Balancing degree of X_ is failure." << endl;
-        writetofile(solutions, dpndt_var);
 
         #ifdef GiNaCDE_gui
         gtk_statusbar_push (GTK_STATUSBAR(status_bar), 0, "Evaluation stop: Balancing degree of X_ is failure.");
@@ -995,7 +1008,6 @@ int fim::operator()(const ex diffeq, const ex dpndt_varChng, const ex dpndt_var,
     auto dur = endTime-beginTime;
     cout << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
     solutions << "Time: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count()/1000.0 << " seconds" << endl;
-    writetofile(solutions, dpndt_var);
 
     #ifdef GiNaCDE_gui
     stringstream temstr;

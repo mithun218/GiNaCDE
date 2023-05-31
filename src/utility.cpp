@@ -637,8 +637,9 @@ ex Numer_Denom(const ex& _expr)
 }
 
 #ifdef GiNaCDE_gui
-int resultsinDialog(stringstream& solutions)
+int resultsinDialog(stringstream& solutions, const ex&  dpndt_var)
 {
+    string solutionFormat;
 
     GtkTextBuffer *buffer;
     GtkTextIter start, last;
@@ -661,7 +662,8 @@ int resultsinDialog(stringstream& solutions)
     buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview3));
     gtk_text_buffer_get_start_iter(buffer, &start);
     gtk_text_buffer_get_end_iter(buffer, &last);
-    gtk_text_buffer_insert(buffer, &start, &solutions.str()[0],-1);
+    solutionFormat = writetofile(solutions, dpndt_var);
+    gtk_text_buffer_insert(buffer, &start, &solutionFormat[0],-1);
 
     gtk_widget_show_all(dialog);
     gtk_dialog_run(GTK_DIALOG(dialog));

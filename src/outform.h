@@ -31,6 +31,6 @@ string gmathematica(string _instr);
 
 string diffformchange(const ex& diffeq, const lst& dpndt_var, const exset& indpndt_var);
 
-void writetofile(stringstream&, const ex& dpndt_var);
+string writetofile(stringstream&, const ex& dpndt_var);
 
 #endif // OUTFORM_H_INCLUDED
