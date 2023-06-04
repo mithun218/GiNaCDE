@@ -10,7 +10,7 @@ using namespace GiNaC;
 
 int main()
 {
-    cout << "gtools - a tool for solving differential equation (GiNaCDE V" << GINACDE_VERSION_MAJOR << "." << GINACDE_VERSION_MINOR << "." <<GINACDE_VERSION_MAINTENANCE<<")"<< endl<< endl;
+    cout << "gtools - a tool for solving differential equation (GiNaCDE V" << GINACDE_VERSION_MAJOR << "." << GINACDE_VERSION_MINOR << "." <<GINACDE_VERSION_MAINTENANCE<<", build with GiNaC 1.8.6)"<< endl<< endl;
 
     string inputstr;
     int method;

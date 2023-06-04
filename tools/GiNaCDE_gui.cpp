@@ -250,7 +250,7 @@ void about()
     string aboutText = string("GiNaCDE GUI (v")+to_string(GINACDE_VERSION_MAJOR)+
             string(".")+to_string(GINACDE_VERSION_MINOR)+
             string(".")+to_string(GINACDE_VERSION_MAINTENANCE)+
-            string(") build with GiNaC 1.8.1,\n"
+            string(") build with GiNaC 1.8.6,\n"
              "A GUI tool for GiNaCDE library to solve NLPDE or NLODE using\n"
              "F-expansion and First integral methods.\n"
              "Distributed under the terms of the MIT License\n"

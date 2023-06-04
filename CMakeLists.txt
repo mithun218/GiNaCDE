@@ -7,7 +7,7 @@
 # Project name: GiNaCDE - GiNaC Differential Equation Solver  #
 # Contact: Mithun Bairagi <bairagirasulpur@gmail.com>         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Version: 1.7.0                                                #
+# Version: 1.7.1                                                #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
@@ -36,7 +36,7 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 # The version number.
 set (GINACDE_VERSION_MAJOR 1)
 set (GINACDE_VERSION_MINOR 7)
-set(GINACDE_VERSION_MAINTENANCE 0)
+set(GINACDE_VERSION_MAINTENANCE 1)
 
 set( GINACDE_VERSION "${GINACDE_VERSION_MAJOR}.${GINACDE_VERSION_MINOR}.${GINACDE_VERSION_MAINTENANCE}")
 set( PROJECT_VERSION ${GINACDE_VERSION} )
